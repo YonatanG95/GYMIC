@@ -5,6 +5,8 @@
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
+#define TCP_SERVER_IP "192.168.254.1"
+
 int open_netlink(void)
 {
     int sock;
@@ -366,7 +368,7 @@ void sendOverSocket(char* data, char* tag)
 	puts("Socket created");
 	
 	//server.sin_addr.s_addr = inet_addr("192.168.1.246");
-	server.sin_addr.s_addr = inet_addr("192.168.93.1");
+	server.sin_addr.s_addr = inet_addr(TCP_SERVER_IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons (1234);
 

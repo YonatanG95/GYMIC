@@ -1,7 +1,7 @@
 import zmq
 import threading
 import socket
-from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT, ARTIFACT_DICT
+from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT
 import random
 from Artifacts.artifact import Artifact
 
@@ -50,6 +50,8 @@ def zmqworker():
                 # Code for actual work
                 result = {"worker_id" : worker_id, 'data' : msg}
                 artifact = Artifact(msg)
+                artifact.parse_to_json()
+                artifact.send_to_elastic()
                 #TODO: Add send_to_elastic and parse_to_json here, and handle not all data recieved in one socket. PARSED DATA IS IN DESKTOP gymicOUTPUT.TXT
 
                 push_socket.send_json(result)
