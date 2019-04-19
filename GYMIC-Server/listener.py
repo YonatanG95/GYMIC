@@ -4,9 +4,12 @@ import socket
 import random
 import json
 
-from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT
+from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT, NUM_OF_WORKERS
 from Artifacts.artifact import Artifact
 from elastic_util import ElasticUtil
+
+# Output dict, Key-Value: IP-Artifacts list
+output_dict = {}
 
 
 def zmqserver():
@@ -59,9 +62,24 @@ def zmqworker():
             if msg is not None:
                 # Code for actual work
                 result = {"worker_id" : worker_id, 'data' : msg}
+
+                if msg.startswith("gymic_finish_thread"):
+                    # TODO: Amir - Call thread compare function here.
+                    pass
+                elif msg.startswith("gymic_finish_proc"):
+                    # TODO: Amir - Call process compare function here.
+                    pass
+
                 artifact = Artifact(msg, addr)
                 artifact.parse_to_json()
                 artifact.send_to_elastic()
+
+                # Add to output dictionary
+                if artifact.artifact_type != None:
+                    if output_dict.has_key(addr):
+                        output_dict[addr].append(artifact)
+                    else:
+                        output_dict[addr] = [artifact]
 
                 push_socket.send_json(result)
     except Exception as e:
@@ -113,7 +131,7 @@ def main():
         thread_zmqserver.daemon = True
         thread_zmqserver.start()
         workers = []
-        for i in xrange(1):
+        for i in xrange(NUM_OF_WORKERS):
             worker = threading.Thread(target=zmqworker)
             worker.daemon = True
             workers.append(worker)

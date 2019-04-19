@@ -7,7 +7,7 @@
 
 #define TCP_SERVER_IP "192.168.254.1"
 
-#define SLEEP_INTERVAL 400000
+#define SLEEP_INTERVAL 500000
 
 int open_netlink(void)
 {
@@ -75,6 +75,9 @@ void read_event(int sock)
 		char kernProcTag[16] = "kernelProcesses";
 		sendOverSocket(buffer, kernProcTag);
 		printf("%s\n","got the user processes");
+		char finishProcTag[19] = "gymic_finish_proc";
+		char finish[7] = "finish";
+		sendOverSocket(finish, finishProcTag);
 		//compareProc(processesK, processesU);
 	}
 	if(type == 2)
@@ -83,6 +86,9 @@ void read_event(int sock)
 		getUserThreads();
 		char kernThreadTag[14] = "kernelThreads";
 		sendOverSocket(buffer, kernThreadTag);
+		char finishThreadTag[21] = "gymic_finish_thread";
+		char finish[7] = "finish";
+		sendOverSocket(finish, finishThreadTag);
 		//compareThreads(threadsK, threadsU);
 	}
     } 
