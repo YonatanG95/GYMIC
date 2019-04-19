@@ -7,6 +7,8 @@
 
 #define TCP_SERVER_IP "192.168.254.1"
 
+#define SLEEP_INTERVAL 400000
+
 int open_netlink(void)
 {
     int sock;
@@ -359,7 +361,7 @@ void sendOverSocket(char* data, char* tag)
 	strcat(tag,data);
 	printf("%s", tag);
 	//Create Socket
-	usleep(100000);
+	usleep(SLEEP_INTERVAL);
 	sock = socket(AF_INET , SOCK_STREAM , 0);
 	if (sock == -1 )
 	{

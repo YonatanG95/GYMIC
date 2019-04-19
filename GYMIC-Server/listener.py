@@ -1,9 +1,12 @@
 import zmq
 import threading
 import socket
-from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT
 import random
+import json
+
+from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT
 from Artifacts.artifact import Artifact
+from elastic_util import ElasticUtil
 
 
 def zmqserver():
@@ -13,14 +16,16 @@ def zmqserver():
     try:
         server_socket.bind("tcp://{}:{}".format(ZMQ_SERVER_IP, ZMQ_SERVER_PORT))
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQServer BindError: " + e.message)
     try:
         while True:
             result = server_socket.recv_json()
             if result.has_key('worker_id'):
                 print "Worker {} finished printing".format(result["worker_id"])
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQServer ReceiveError: " + e.message)
 
 
 def zmqworker():
@@ -32,31 +37,36 @@ def zmqworker():
     try:
         pull_socket.connect("tcp://{}:{}".format(ZMQ_SERVER_IP, ZMQ_WORKER_PORT))
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQWorker PullConnectError: " + e.message)
 
     push_socket = context.socket(zmq.PUSH)
     try:
         push_socket.connect("tcp://{}:{}".format(ZMQ_SERVER_IP, ZMQ_SERVER_PORT))
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQWorker PushConnectError: " + e.message)
 
     try:
         while True:
             # Wait for next request from client
-            msg = pull_socket.recv()
+            msg_json = pull_socket.recv()
+            msg_dic = json.loads(msg_json)
+            msg = msg_dic.get("data")
+            addr = msg_dic.get("addr")
             print "Worker {0} Received request: {1}".format(worker_id, msg)
 
             if msg is not None:
                 # Code for actual work
                 result = {"worker_id" : worker_id, 'data' : msg}
-                artifact = Artifact(msg)
+                artifact = Artifact(msg, addr)
                 artifact.parse_to_json()
                 artifact.send_to_elastic()
-                #TODO: Add send_to_elastic and parse_to_json here, and handle not all data recieved in one socket. PARSED DATA IS IN DESKTOP gymicOUTPUT.TXT
 
                 push_socket.send_json(result)
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQWorker ReceiveError: " + e.message)
 
 def zmqsender(msg):
 
@@ -67,7 +77,8 @@ def zmqsender(msg):
         zmq_socket.send(msg)
         zmq_socket.close()
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("ZMQSender SendError: " + e.message)
 
 def tcpserver():
 
@@ -76,7 +87,8 @@ def tcpserver():
         sock.bind((TCP_SERVER_IP, TCP_SERVER_PORT))
         sock.listen(1)
     except Exception as e:
-        print e.message
+        es = ElasticUtil()
+        es.log_error("TCPServer BindError: " + e.message)
 
     while True:
         conn, addr = sock.accept()
@@ -84,25 +96,32 @@ def tcpserver():
             while True:
                 data = conn.recv(4096*5)
                 if data:
-                    zmqsender(data)
+                    msg = {"data": data, "addr" : addr[0]}
+                    zmqsender(json.dumps(msg))
                 else:
                     break
         except Exception as e:
-            print e.message
+            es = ElasticUtil()
+            es.log_error("TCPServer ReceiveError: " + e.message)
 
         finally:
             conn.close()
 
 def main():
-    thread_zmqserver = threading.Thread(target=zmqserver)
-    thread_zmqserver.daemon = True
-    thread_zmqserver.start()
-    workers = []
-    for i in xrange(1):
-        worker = threading.Thread(target=zmqworker)
-        worker.daemon = True
-        workers.append(worker)
-        worker.start()
+    try:
+        thread_zmqserver = threading.Thread(target=zmqserver)
+        thread_zmqserver.daemon = True
+        thread_zmqserver.start()
+        workers = []
+        for i in xrange(1):
+            worker = threading.Thread(target=zmqworker)
+            worker.daemon = True
+            workers.append(worker)
+            worker.start()
+
+    except Exception as e:
+        es = ElasticUtil()
+        es.log_error("Threads StartError: " + e.message)
 
     tcpserver()
 

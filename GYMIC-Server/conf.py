@@ -1,4 +1,3 @@
-#from Artifacts.UserThreads import UserThreads
 # All Configurations
 
 # ZMQ Configurations
@@ -14,7 +13,3 @@ TCP_SERVER_PORT = 1234
 # ELK Configurations
 ELK_SERVER_IP = "192.168.254.134"
 ELK_SERVER_PORT = 9200
-
-# Artifact Configurations
-#ARTIFACT_DICT = {}
-#ARTIFACT_DICT["userThreads"] = UserThreads

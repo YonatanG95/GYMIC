@@ -1,21 +1,30 @@
-from conf import ELK_SERVER_IP, ELK_SERVER_PORT
-import json
-from elasticsearch import Elasticsearch
-from Artifacts import UserThreads
+from elastic_util import ElasticUtil
+from user_threads import UserThreads
+from kernel_threads import KernelThreads
+from user_processes import UserProcesses
+from kernel_processes import KernelProcesses
 
 class Artifact:
-    def __init__(self, raw_data):
+    def __init__(self, raw_data, addr):
+        self.addr = addr
         self.raw_data = raw_data
         self.parsed_data = ""
 
         if raw_data.startswith("userThreads"): self.artifact_type = UserThreads
+        elif raw_data.startswith("kernelThreads"): self.artifact_type = KernelThreads
+        elif raw_data.startswith("userProcess"): self.artifact_type = UserProcesses
+        elif raw_data.startswith("kernelProcesses"): self.artifact_type = KernelProcesses
         else: self.artifact_type = None
 
 
 
     def parse_to_json(self):
         if self.artifact_type is not None:
-            self.parsed_data = self.artifact_type.parse_to_json(self.raw_data)
+            try:
+                self.parsed_data = self.artifact_type.parse_to_json(self.raw_data)
+            except Exception as e:
+                es = ElasticUtil()
+                es.log_error("ParseError: " + e.message)
         """
         processes = []
         processes = self.raw_data['data'].split("\n")
@@ -35,7 +44,7 @@ class Artifact:
 
     def send_to_elastic(self):
         if self.artifact_type is not None:
-            self.artifact_type.send_to_elastic(self.parsed_data)
+            self.artifact_type.send_to_elastic(self.parsed_data, self.addr)
 
     def append_data(self, new_data):
         self.raw_data += new_data
