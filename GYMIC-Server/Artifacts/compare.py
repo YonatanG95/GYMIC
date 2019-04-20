@@ -32,7 +32,6 @@ def compare_proc(artifacts_list, addr):
         s.sendall("Yes")
     else:
         s.sendall("No")
-    s.recv(1024)
     s.close()
 
 
