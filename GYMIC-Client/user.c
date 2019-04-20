@@ -76,6 +76,10 @@ void read_event(int sock)
 		char kernProcTag[16] = "kernelProcesses";
 		sendOverSocket(buffer, kernProcTag);
 		printf("%s\n","got the user processes");
+		int* networkU = getUserNetwork();
+		printf("%s\n","got the user Network");
+		int* modulesU = getUserModules();
+		printf("%s\n","got the user Modules");
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
@@ -314,6 +318,46 @@ int* getUserProcesses(void)
 		prores[k] = prolist[k];
 	}*/
 	//return &prores[0];
+	return 0;
+}
+
+int* getUserNetwork(void)
+{
+   	FILE *in=NULL;
+   	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	//in=popen("ps -Ao pid:1,comm:2", "r");
+	in=popen("netstat -naptu", "r");
+	int i = 0;
+	while(fgets(temp,sizeof(temp),in) !=NULL)
+	{
+		//printf("%s\n",temp);
+		//i++;
+		//printf("%d\n", i);
+		strcat(buf12,temp);
+	}
+	printf("%s\n",buf12);
+	sendOverSocket(buf12);
+	return 0;
+}
+
+int* getUserModules(void)
+{
+   	FILE *in=NULL;
+   	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	//in=popen("ps -Ao pid:1,comm:2", "r");
+	in=popen("lsmod", "r");
+	int i = 0;
+	while(fgets(temp,sizeof(temp),in) !=NULL)
+	{
+		//printf("%s\n",temp);
+		//i++;
+		//printf("%d\n", i);
+		strcat(buf12,temp);
+	}
+	printf("%s\n",buf12);
+	sendOverSocket(buf12);
 	return 0;
 }
 
