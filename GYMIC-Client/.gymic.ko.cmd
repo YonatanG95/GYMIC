@@ -1,1 +1,1 @@
-cmd_/home/student/Desktop/e/Dr/gymic.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/student/Desktop/e/Dr/gymic.ko /home/student/Desktop/e/Dr/gymic.o /home/student/Desktop/e/Dr/gymic.mod.o ;  true
+cmd_/home/student/Downloads/GYMIC/GYMIC-Client/gymic.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/student/Downloads/GYMIC/GYMIC-Client/gymic.ko /home/student/Downloads/GYMIC/GYMIC-Client/gymic.o /home/student/Downloads/GYMIC/GYMIC-Client/gymic.mod.o ;  true

