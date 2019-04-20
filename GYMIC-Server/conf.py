@@ -14,3 +14,6 @@ TCP_SERVER_PORT = 1234
 # ELK Configurations
 ELK_SERVER_IP = "192.168.254.134"
 ELK_SERVER_PORT = 9200
+
+# Lime Configurations
+LIME_PORT = 1235

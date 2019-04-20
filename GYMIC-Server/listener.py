@@ -7,6 +7,7 @@ import json
 from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT, NUM_OF_WORKERS
 from Artifacts.artifact import Artifact
 from elastic_util import ElasticUtil
+from utils import recv_dump
 
 # Output dict, Key-Value: IP-Artifacts list
 output_dict = {}
@@ -126,6 +127,7 @@ def tcpserver():
             conn.close()
 
 def main():
+
     try:
         thread_zmqserver = threading.Thread(target=zmqserver)
         thread_zmqserver.daemon = True

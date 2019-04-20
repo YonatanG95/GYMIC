@@ -11,7 +11,7 @@ class ElasticUtil():
         except Exception as e:
             print e.message
 
-    def send_to_elastic(self , index_name, doc_type, doc):
+    def send_to_elastic(self, index_name, doc_type, doc):
         try:
             res = self.es.index(index=index_name, doc_type=doc_type, body=doc)
         except Exception as e:
