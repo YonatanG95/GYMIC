@@ -16,7 +16,7 @@ def compare_proc(artifacts_list, addr):
             list1 = artifact.parsed_data
         elif artifact.artifact_type is KernelProcesses:
             list2 = artifact.parsed_data
-    #Get a list of processes that are not in both lists
+    ##Get a list of processes that are not in both lists
     diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
     #Delete from the diff list procceses that we know that suppose to be there
     for proc in diff_list:
