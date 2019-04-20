@@ -11,11 +11,17 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <limits.h>
+
 
 typedef struct {
     int iPid;
     int iTid;
 } Thread;
+
+#define init_module(module_image, len, param_values) syscall(__NR_init_module, module_image, len, param_values)
 
 int open_netlink(void);
 void read_event(int sock);
@@ -26,6 +32,8 @@ int* parseProcesses(char* buffer);
 int* getUserProcesses(void);
 void compareProc(int* procK, int* procU);
 void compareThreads(Thread* threadK, Thread* threadU);
+void sendOverSocket(char* data, char* tag);
+void take_dump();
 
 
 

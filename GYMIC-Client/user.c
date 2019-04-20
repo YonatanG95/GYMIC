@@ -6,6 +6,7 @@
 #define MYMGRP 21
 
 #define TCP_SERVER_IP "192.168.254.1"
+#define LIME_PORT 1235
 
 #define SLEEP_INTERVAL 500000
 
@@ -78,6 +79,7 @@ void read_event(int sock)
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
+
 		//compareProc(processesK, processesU);
 	}
 	if(type == 2)
@@ -414,11 +416,43 @@ void sendOverSocket(char* data, char* tag)
 	puts("Socket Closed\n");
 	return 0;
 }
+
+void take_dump() {
+    int fd;
+    size_t image_size;
+    struct stat st;
+    void *image;
+    char cwd[PATH_MAX];
+    char ko_module[9] = "/lime.ko";
+    char params[26];
+    sprintf(params, "%s%d%s", "path=tcp:", LIME_PORT, " format=lime");
+
+
+    if (getcwd(cwd, sizeof(cwd)) != NULL) {
+        strcat(cwd, ko_module);
+        fd = open(cwd, O_RDONLY);
+        fstat(fd, &st);
+        image_size = st.st_size;
+        image = malloc(image_size);
+        read(fd, image, image_size);
+        close(fd);
+        if (init_module(image, image_size, params) != 0) {
+            printf("Error loading module.\n");
+        }
+        else {
+            printf("Loaded module successfully.\n");
+        }
+        free(image);
+    }
+    else {
+        printf("getcwd failed.\n");
+    }
+}
+
 int main(int argc, char *argv[])
 {	
    
     int nls;
-	
     nls = open_netlink();
     if (nls < 0)
         return nls;
