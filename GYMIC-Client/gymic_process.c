@@ -35,11 +35,16 @@ int getThreads(void)
 	int c = 0;
 	struct task_struct *task;
 	struct task_struct *thread;
-	for_each_process_thread(task,thread)
+	rcu_read_lock();
+
+	// for_each_process_thread is for kernel 4+ and do-while is for kernel version under 4
+	//for_each_process_thread(task,thread)
+	do_each_thread(task, thread)
 	{
 		c++;
 		//pr_info("%d \t %d", task->pid, thread->pid);
-	}
+	} while_each_thread(task, thread);
+	rcu_read_unlock();
 	return c;
 }
 
@@ -49,12 +54,17 @@ void getThreadsOut(char* out)
 	struct task_struct *task;
 	struct task_struct *thread;
 	//char threads [c * (sizeof(int)*2 + 2) + 1];
-	for_each_process_thread(task,thread)
+	rcu_read_lock();
+
+	// for_each_process_thread is for kernel 4+ and do-while is for kernel version under 4
+	//for_each_process_thread(task,thread)
+	do_each_thread(task, thread)
 	{
-		char buf[sizeof(int)*2 + 2];
+		char buf[sizeof(int)*2 + sizeof(char) + 2];
 		sprintf(buf, "%d %d,", task->pid, thread->pid);
 		strcat(out, buf);
-	}
+	} while_each_thread(task, thread);
+	rcu_read_unlock();
 	//printk("threads %s\n", out);
 	//return threads;
 	//return " ";

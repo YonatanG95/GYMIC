@@ -89,22 +89,26 @@ static int __init gymic_main_init(void)
 	if (threads)
 	{
 		count = getThreads();
-		char threads [count * (sizeof(int)*2 + 2) + 13];
+		//char threads [count * (sizeof(int)*2 + 2) + 13];
+		char* threadsArr = kcalloc(65536, 1, GFP_KERNEL);
 		//sprintf(threads, "%d", count);
-		strcat(threads,"threads");
-		getThreadsOut(threads);
+		strcat(threadsArr,"threads");
+		getThreadsOut(threadsArr);
 		//printk("len out %d\n", strlen(threads));
-		send_to_user(threads);
+		send_to_user(threadsArr);
+		kfree(threadsArr);
 		//printk(out);
 	}
 	if (processes)
 	{
 		count = getProcessesCount();
-		char processes [count * (sizeof(int)+(sizeof(char)*28)+1) + 15];
+		//char processes [count * (sizeof(int)+(sizeof(char)*28)+1) + 15];
+		char* processesArr = kcalloc(65536, 1, GFP_KERNEL);
 		//sprintf(processes, "%d", count);
-		strcat(processes,"processes\n");
-		getProcessesOut(processes);
-		send_to_user(processes); 
+		strcat(processesArr,"processes\n");
+		getProcessesOut(processesArr);
+		send_to_user(processesArr);
+		kfree(processesArr);
 	}
 	if (syscall)
 	{
