@@ -5,7 +5,7 @@
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
-#define TCP_SERVER_IP "192.168.112.1"
+#define TCP_SERVER_IP "192.168.254.1"
 #define LIME_PORT 1235
 
 #define SLEEP_INTERVAL 500000
@@ -67,7 +67,7 @@ void read_event(int sock)
 	//printf("buf %s", buffer);
 	int type = checkType(buffer);
 	memcpy(saveBuff, buffer, 65536);
-	printf("%s", buffer);
+	//printf("%s", buffer);
 	if(type == 1)
 	{
 		
@@ -338,7 +338,9 @@ int* getUserNetwork(void)
 {
    	FILE *in=NULL;
    	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+   	memset(temp, 0 , sizeof(temp));
 	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	memset(buf12, 0 , sizeof(buf12));
 	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("netstat -naptu", "r");
 	char userNetTag[12] = "userNetwork";
@@ -359,7 +361,9 @@ int* getUserModules(void)
 {
    	FILE *in=NULL;
    	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+   	memset(temp, 0 , sizeof(temp));
 	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	memset(buf12, 0 , sizeof(buf12));
 	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("lsmod", "r");
 	int i = 0;
@@ -484,8 +488,6 @@ void socketForMemdump()
 #include<arpa/inet.h>
 #include<unistd.h>
 
-int main(int argc , char *argv[])
-{
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
 	char client_message[2000];
@@ -494,9 +496,9 @@ int main(int argc , char *argv[])
 	socket_desc = socket(AF_INET, SOCK_STREAM , 0);
 	if (socket == -1)
 	{
-		printf("Could not create socket")
+		printf("Could not create socket");
 	}
-	puts("Socket created")
+	printf("Socket created");
 	//Prepare the sockaddr_in structure
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
@@ -532,7 +534,7 @@ int main(int argc , char *argv[])
 	{
 		if (strcmp(client_message,"yes")==0)
 		{
-            take_dump()
+            take_dump();
 		}
 
 		//send the message back to client

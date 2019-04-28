@@ -113,12 +113,13 @@ static int __init gymic_main_init(void)
 	}
 	if (modules)
 	{
-		count = getProcessesCount();
-		char modules [(count+1) * 40 + 15];
+		count = getModulesCount();
+		char* modulesArr = kcalloc(65536, 1, GFP_KERNEL);
 		//sprintf(processes, "%d", count);
-		strcat(modules,"modules\n");
-		getModulesOut(modules);
-		send_to_user(modules);
+		strcat(modulesArr,"modules\n");
+		getModulesOut(modulesArr);
+		send_to_user(modulesArr);
+		kfree(modulesArr);
 	}
 	if (syscall)
 	{

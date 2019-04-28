@@ -74,6 +74,11 @@ def zmqworker():
                     compare_proc(output_dict[addr], addr)
                     pass
 
+                elif msg.startswith("gymic_finish_mod"):
+
+                    #TODO: Modules Compare function here for Amir
+                    pass
+
                 artifact = Artifact(msg, addr)
                 artifact.parse_to_json()
                 artifact.send_to_elastic()
