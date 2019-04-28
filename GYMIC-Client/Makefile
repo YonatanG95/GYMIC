@@ -1,6 +1,6 @@
 obj-m		:= gymic.o
 
-gymic-objs := gymic_main.o gymic_syscalls.o gymic_process.o netlink.o
+gymic-objs := gymic_main.o gymic_syscalls.o gymic_process.o gymic_modules.o netlink.o
 
 KERN_SRC	:= /lib/modules/$(shell uname -r)/build/
 KVER ?= $(shell uname -r)

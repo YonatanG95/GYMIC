@@ -20,6 +20,7 @@ dev_t gymic_main_device_num;
 // Modes
 bool processes = true;
 bool threads = true;
+bool modules = true;
 bool syscall = false;
 bool unlink = false;
 
@@ -109,6 +110,15 @@ static int __init gymic_main_init(void)
 		getProcessesOut(processesArr);
 		send_to_user(processesArr);
 		kfree(processesArr);
+	}
+	if (modules)
+	{
+		count = getProcessesCount();
+		char modules [(count+1) * 40 + 15];
+		//sprintf(processes, "%d", count);
+		strcat(modules,"modules\n");
+		getModulesOut(modules);
+		send_to_user(modules);
 	}
 	if (syscall)
 	{

@@ -5,7 +5,7 @@
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
-#define TCP_SERVER_IP "192.168.254.1"
+#define TCP_SERVER_IP "192.168.112.1"
 #define LIME_PORT 1235
 
 #define SLEEP_INTERVAL 500000
@@ -67,7 +67,7 @@ void read_event(int sock)
 	//printf("buf %s", buffer);
 	int type = checkType(buffer);
 	memcpy(saveBuff, buffer, 65536);
-	//printf("%s", buffer);
+	printf("%s", buffer);
 	if(type == 1)
 	{
 		
@@ -76,10 +76,6 @@ void read_event(int sock)
 		char kernProcTag[16] = "kernelProcesses";
 		sendOverSocket(buffer, kernProcTag);
 		printf("%s\n","got the user processes");
-		int* networkU = getUserNetwork();
-		printf("%s\n","got the user Network");
-		int* modulesU = getUserModules();
-		printf("%s\n","got the user Modules");
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
@@ -97,6 +93,19 @@ void read_event(int sock)
 		sendOverSocket(finish, finishThreadTag);
 		//compareThreads(threadsK, threadsU);
 	}
+	if(type == 3)
+	{
+	    getUserNetwork();
+		printf("%s\n","got the user Network");
+		getUserModules();
+		printf("%s\n","got the user Modules");
+		char kernModuleTag[14] = "kernelModules";
+		sendOverSocket(buffer, kernModuleTag);
+		char finishModule[17] = "gymic_finish_mod";
+		char finish[7] = "finish";
+		sendOverSocket(finish, finishModule);
+		//compareThreads(threadsK, threadsU);
+	}
     } 
 }
 
@@ -112,6 +121,10 @@ int checkType(char* in)
 	if(strncmp(in, "threads", strlen("threads")) == 0)	
 	{
 		return 2;
+	}
+	if(strncmp(in, "modules", strlen("modules")) == 0)
+	{
+		return 3;
 	}
 	return 0;
 }
@@ -328,6 +341,7 @@ int* getUserNetwork(void)
 	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
 	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("netstat -naptu", "r");
+	char userNetTag[12] = "userNetwork";
 	int i = 0;
 	while(fgets(temp,sizeof(temp),in) !=NULL)
 	{
@@ -336,8 +350,8 @@ int* getUserNetwork(void)
 		//printf("%d\n", i);
 		strcat(buf12,temp);
 	}
-	printf("%s\n",buf12);
-	sendOverSocket(buf12);
+	//printf("%s\n",buf12);
+	sendOverSocket(buf12, userNetTag);
 	return 0;
 }
 
@@ -349,6 +363,7 @@ int* getUserModules(void)
 	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("lsmod", "r");
 	int i = 0;
+	char userModTag[12] = "userModule";
 	while(fgets(temp,sizeof(temp),in) !=NULL)
 	{
 		//printf("%s\n",temp);
@@ -356,8 +371,8 @@ int* getUserModules(void)
 		//printf("%d\n", i);
 		strcat(buf12,temp);
 	}
-	printf("%s\n",buf12);
-	sendOverSocket(buf12);
+	//printf("%s\n",buf12);
+	sendOverSocket(buf12, userModTag);
 	return 0;
 }
 
