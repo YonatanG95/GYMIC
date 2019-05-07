@@ -7,6 +7,8 @@ from kernel_threads import KernelThreads
 from user_processes import UserProcesses
 from kernel_processes import KernelProcesses
 from conf import LIME_PORT
+from user_modules import  UserModules
+from kernel_modules import KernelModules
 
 def compare_proc(artifacts_list, addr):
     try:
@@ -108,3 +110,49 @@ def compare_threads(artifacts_list, addr):
 
         es = ElasticUtil()
         es.log_error("CompareThread Error: " + e.message)
+
+def compare_modules(artifacts_list, addr):
+    try:
+        for artifact in artifacts_list:
+            if artifact.artifact_type is UserModules:
+                list1 = artifact.parsed_data
+            elif artifact.artifact_type is KernelModules:
+                list2 = artifact.parsed_data
+        ##Get a list of modules that are not in both lists
+        diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((addr, LIME_PORT))
+        if len(diff_list)==0:
+            s.sendall("No")
+            s.close()
+        else:
+            s.sendall("Yes")
+            s.close()
+            es_util = ElasticUtil()
+
+            for module in diff_list:
+                if module in list1:
+                    doc = {"timestamp": datetime.utcnow(),
+                           "IP": addr,
+                           "UserModules.ModuleName": module,
+                           "inUser:": True,
+                           "inKernel:": False}
+
+                    # Connection successful
+
+                    es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
+                elif module in list2:
+
+                    doc = {"timestamp": datetime.utcnow(),
+                           "IP": addr,
+                           "KernelModules.ModuleName": module,
+                           "inUser:": False,
+                           "inKernel:": True}
+
+                    # Connection successful
+                    es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
+    except Exception as e:
+        es = ElasticUtil()
+        es.log_error("CompareModule Error: " + e.message)
