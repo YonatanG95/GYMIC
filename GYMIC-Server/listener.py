@@ -6,7 +6,7 @@ import json
 
 from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT, NUM_OF_WORKERS
 from Artifacts.artifact import Artifact
-from Artifacts.compare import compare_proc,compare_threads
+from Artifacts.compare import compare_proc,compare_threads,compare_modules
 from elastic_util import ElasticUtil
 from utils import recv_dump
 
@@ -68,16 +68,15 @@ def zmqworker():
                 if msg.startswith("gymic_finish_thread"):
 
                     compare_threads(output_dict[addr], addr)
-                    pass
+
                 elif msg.startswith("gymic_finish_proc"):
 
                     compare_proc(output_dict[addr], addr)
-                    pass
+
 
                 elif msg.startswith("gymic_finish_mod"):
+                    compare_modules(output_dict[addr],addr)
 
-                    #TODO: Modules Compare function here for Amir
-                    pass
 
                 artifact = Artifact(msg, addr)
                 artifact.parse_to_json()

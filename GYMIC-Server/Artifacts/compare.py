@@ -9,6 +9,7 @@ from kernel_processes import KernelProcesses
 from conf import LIME_PORT
 from user_modules import  UserModules
 from kernel_modules import KernelModules
+from utils import recv_dump
 
 def compare_proc(artifacts_list, addr):
     try:
@@ -36,6 +37,7 @@ def compare_proc(artifacts_list, addr):
         else:
             s.sendall("Yes")
             s.close()
+            recv_dump(addr)
             es_util = ElasticUtil()
 
             for tup in diff_list:
@@ -130,6 +132,7 @@ def compare_modules(artifacts_list, addr):
         else:
             s.sendall("Yes")
             s.close()
+            recv_dump(addr)
             es_util = ElasticUtil()
 
             for module in diff_list:

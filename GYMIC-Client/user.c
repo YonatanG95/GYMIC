@@ -7,8 +7,9 @@
 
 #define TCP_SERVER_IP "192.168.254.1"
 #define LIME_PORT 1235
-
 #define SLEEP_INTERVAL 500000
+
+bool isDumped = false;
 
 int open_netlink(void)
 {
@@ -79,7 +80,8 @@ void read_event(int sock)
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
-
+		// Open a listener and wait for a message to see if memdump is needed
+        socketForMemdump();
 		//compareProc(processesK, processesU);
 	}
 	if(type == 2)
@@ -104,6 +106,8 @@ void read_event(int sock)
 		char finishModule[17] = "gymic_finish_mod";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishModule);
+		// Open a listener and wait for a message to see if memdump is needed
+        socketForMemdump();
 		//compareThreads(threadsK, threadsU);
 	}
     } 
@@ -482,15 +486,14 @@ void sendOverSocket(char* data, char* tag)
 
 void socketForMemdump()
 {
-#include<stdio.h>
-#include<string.h>
-#include<sys/socket.h>
-#include<arpa/inet.h>
-#include<unistd.h>
-
+    if (isDumped)
+    {
+        return 0;
+    }
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
 	char client_message[2000];
+
 
 	//Create socket
 	socket_desc = socket(AF_INET, SOCK_STREAM , 0);
@@ -502,7 +505,7 @@ void socketForMemdump()
 	//Prepare the sockaddr_in structure
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port=htons(8888);
+	server.sin_port=htons(LIME_PORT);
 
 	//Bind
 	if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -534,6 +537,7 @@ void socketForMemdump()
 	{
 		if (strcmp(client_message,"yes")==0)
 		{
+		    isDumped=true;
             take_dump();
 		}
 
