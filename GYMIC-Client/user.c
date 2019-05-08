@@ -484,7 +484,7 @@ void sendOverSocket(char* data, char* tag)
 	return 0;
 }
 
-void socketForMemdump()
+int socketForMemdump()
 {
     if (isDumped)
     {
@@ -492,7 +492,8 @@ void socketForMemdump()
     }
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
-	char client_message[2000];
+	char client_message[10];
+	memset(client_message, 0, sizeof(client_message));
 
 
 	//Create socket
@@ -531,13 +532,16 @@ void socketForMemdump()
 		return 1;
 	}
 
+    read_size = recv(client_sock, client_message , 2000 , 0);
 
 	//Recieve a message from client
-	while( (read_size = recv(client_sock, client_message , 2000 , 0)) > 0)
+	if( read_size > 0)
 	{
-		if (strcmp(client_message,"yes")==0)
+		if (strcmp(client_message,"Yes")==0)
 		{
 		    isDumped=true;
+		    close(client_sock);
+		    close(socket_desc);
             take_dump();
 		}
 
@@ -554,7 +558,7 @@ void socketForMemdump()
 	{
 		perror("recv failed");
 	}
-
+    close(socket_desc);
 	return 0;
 }
 
@@ -579,12 +583,18 @@ void take_dump() {
         read(fd, image, image_size);
         close(fd);
         if (init_module(image, image_size, params) != 0) {
-            printf("Error loading module.\n");
+            printf("Error loading module - %s.\n", strerror(errno));
         }
         else {
             printf("Loaded module successfully.\n");
         }
         free(image);
+        if (delete_module("lime", O_NONBLOCK) != 0) {
+            printf("Error removing module - %s.\n", strerror(errno));
+        }
+        else {
+            printf("Removed module successfully\n");
+        }
     }
     else {
         printf("getcwd failed.\n");

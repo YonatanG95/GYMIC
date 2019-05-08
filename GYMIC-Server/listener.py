@@ -83,9 +83,9 @@ def zmqworker():
                 artifact.send_to_elastic()
 
                 # Add to output dictionary
-                if artifact.artifact_type != None:
+                if artifact.artifact_type is not None:
                     if output_dict.has_key(addr):
-                        output_dict[addr].append(artifact)
+                        output_dict.get(addr).append(artifact)
                     else:
                         output_dict[addr] = [artifact]
 
@@ -120,7 +120,7 @@ def tcpserver():
         conn, addr = sock.accept()
         try:
             while True:
-                data = conn.recv(4096*5)
+                data = conn.recv(65536)
                 if data:
                     msg = {"data": data, "addr" : addr[0]}
                     zmqsender(json.dumps(msg))
