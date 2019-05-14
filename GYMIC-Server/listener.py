@@ -121,7 +121,7 @@ def tcpserver():
         conn, addr = sock.accept()
         try:
             while True:
-                data = conn.recv(4096*5)
+                data = conn.recv(65536)
                 if data:
                     msg = {"data": data, "addr" : addr[0]}
                     zmqsender(json.dumps(msg))
