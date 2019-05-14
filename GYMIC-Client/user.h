@@ -14,6 +14,7 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 #include <limits.h>
+#include <errno.h>
 
 
 typedef struct {
@@ -22,6 +23,7 @@ typedef struct {
 } Thread;
 
 #define init_module(module_image, len, param_values) syscall(__NR_init_module, module_image, len, param_values)
+#define delete_module(name, flags) syscall(__NR_delete_module, name, flags)
 
 int open_netlink(void);
 void read_event(int sock);

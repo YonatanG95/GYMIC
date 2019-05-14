@@ -7,8 +7,9 @@
 
 #define TCP_SERVER_IP "192.168.254.1"
 #define LIME_PORT 1235
-
 #define SLEEP_INTERVAL 500000
+
+bool isDumped = false;
 
 int open_netlink(void)
 {
@@ -79,7 +80,8 @@ void read_event(int sock)
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
-
+		// Open a listener and wait for a message to see if memdump is needed
+        socketForMemdump();
 		//compareProc(processesK, processesU);
 	}
 	if(type == 2)
@@ -104,6 +106,8 @@ void read_event(int sock)
 		char finishModule[17] = "gymic_finish_mod";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishModule);
+		// Open a listener and wait for a message to see if memdump is needed
+        socketForMemdump();
 		//compareThreads(threadsK, threadsU);
 	}
     } 
@@ -480,17 +484,17 @@ void sendOverSocket(char* data, char* tag)
 	return 0;
 }
 
-void socketForMemdump()
+int socketForMemdump()
 {
-#include<stdio.h>
-#include<string.h>
-#include<sys/socket.h>
-#include<arpa/inet.h>
-#include<unistd.h>
-
+    if (isDumped)
+    {
+        return 0;
+    }
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
-	char client_message[2000];
+	char client_message[10];
+	memset(client_message, 0, sizeof(client_message));
+
 
 	//Create socket
 	socket_desc = socket(AF_INET, SOCK_STREAM , 0);
@@ -502,7 +506,7 @@ void socketForMemdump()
 	//Prepare the sockaddr_in structure
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port=htons(8888);
+	server.sin_port=htons(LIME_PORT);
 
 	//Bind
 	if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -528,12 +532,16 @@ void socketForMemdump()
 		return 1;
 	}
 
+    read_size = recv(client_sock, client_message , 2000 , 0);
 
 	//Recieve a message from client
-	while( (read_size = recv(client_sock, client_message , 2000 , 0)) > 0)
+	if( read_size > 0)
 	{
-		if (strcmp(client_message,"yes")==0)
+		if (strcmp(client_message,"Yes")==0)
 		{
+		    isDumped=true;
+		    close(client_sock);
+		    close(socket_desc);
             take_dump();
 		}
 
@@ -550,7 +558,7 @@ void socketForMemdump()
 	{
 		perror("recv failed");
 	}
-
+    close(socket_desc);
 	return 0;
 }
 
@@ -575,12 +583,18 @@ void take_dump() {
         read(fd, image, image_size);
         close(fd);
         if (init_module(image, image_size, params) != 0) {
-            printf("Error loading module.\n");
+            printf("Error loading module - %s.\n", strerror(errno));
         }
         else {
             printf("Loaded module successfully.\n");
         }
         free(image);
+        if (delete_module("lime", O_NONBLOCK) != 0) {
+            printf("Error removing module - %s.\n", strerror(errno));
+        }
+        else {
+            printf("Removed module successfully\n");
+        }
     }
     else {
         printf("getcwd failed.\n");
