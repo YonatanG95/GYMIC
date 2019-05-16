@@ -5,7 +5,7 @@
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
-#define TCP_SERVER_IP "192.168.254.1"
+#define TCP_SERVER_IP "192.168.196.1"
 #define LIME_PORT 1235
 #define SLEEP_INTERVAL 500000
 
@@ -294,7 +294,7 @@ int* getUserProcesses(void)
    	int* prolist[65536];
 	char userProcTag[12] = "userProcess";
    	//in=popen("ps -Ao pid:1", "r");
-	in2=popen("ps -Ao pid:1,comm:2", "r");
+	in2=popen("ps -Ao pid:1,\%cpu:1,comm", "r");
 	//in=popen("netstat", "r");
   	//fgets(temp, 255, in);
 	//char* prev[255];
