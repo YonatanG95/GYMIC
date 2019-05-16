@@ -19,13 +19,15 @@ class UserProcesses:
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()
         for line in parsed_data:
-
+            # print " --> " + line[-1]
             try:
-
+                name = line[-1].split(" ")[1]
+                cpu = line[-1].split(" ")[0]
                 doc = {"timestamp": datetime.utcnow(),
                        "IP": addr,
                        "UserProccesess.PID": line[0],
-                       "UserProcesses.ProcessName": line[-1]}
+                       "UserProcesses.ProcessName": name,
+                       "UserProcesses.CPU": cpu}
 
                 # Connection successful
                 es_util.send_to_elastic("gymic-userprocesses", "UserProcesses", doc)
