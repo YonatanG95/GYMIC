@@ -27,8 +27,8 @@ def compare_proc(artifacts_list, addr):
                     list1 = artifact.parsed_data
                 elif artifact.artifact_type is KernelProcesses and len(list2) == 0:
                     list2 = artifact.parsed_data
-                sleep(1)
-                timeout += 1
+            sleep(1)
+            timeout += 1
 
         if timeout == 10:
             es = ElasticUtil()
@@ -39,9 +39,12 @@ def compare_proc(artifacts_list, addr):
             return
 
         ##Get a list of processes that are not in both lists
+        print "IM HERE"
         diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+        print diff_list
         #Delete from the diff list procceses that we know that suppose to be there
         for proc in diff_list:
+            print "HERE " + proc
             if proc[-1] in irelevant_processes or proc[-1]=='':
                 diff_list.remove(proc)
 

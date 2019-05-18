@@ -11,8 +11,10 @@ class UserProcesses:
         raw_lines = raw_str.split("\n")
         for line in raw_lines:
             temp_line=line.split(" ", 1)
+            name = temp_line[-1].split(" ")[1]
+            cpu = temp_line[-1].split(" ")[0]
             if temp_line[-1] != None:
-                parsed_user_processes.append((temp_line[0],temp_line[-1]))
+                parsed_user_processes.append((temp_line[0], cpu, name))
         return parsed_user_processes
 
     @staticmethod
@@ -21,8 +23,8 @@ class UserProcesses:
         for line in parsed_data:
 
             try:
-                name = line[-1].split(" ")[1]
-                cpu = line[-1].split(" ")[0]
+                name = line[-1]
+                cpu = line[-2]
                 doc = {"timestamp": datetime.utcnow(),
                        "IP": addr,
                        "UserProccesess.PID": line[0],

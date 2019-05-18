@@ -66,15 +66,16 @@ def zmqworker():
                 result = {"worker_id" : worker_id, 'data' : msg}
 
                 if msg.startswith("gymic_finish_thread"):
-
+                    print "THREDS"
                     compare_threads(output_dict[addr], addr)
 
                 elif msg.startswith("gymic_finish_proc"):
-
+                    print "PROCS"
                     compare_proc(output_dict[addr], addr)
 
 
                 elif msg.startswith("gymic_finish_mod"):
+                    print "MODS"
                     compare_modules(output_dict[addr],addr)
 
 
