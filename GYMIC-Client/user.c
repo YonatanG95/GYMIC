@@ -76,7 +76,7 @@ void read_event(int sock)
 		getUserProcesses();
 		char kernProcTag[16] = "kernelProcesses";
 		sendOverSocket(buffer, kernProcTag);
-		printf("%s\n","got the user processes");
+		// printf("%s\n","got the user processes");
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
