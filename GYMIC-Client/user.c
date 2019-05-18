@@ -98,9 +98,9 @@ void read_event(int sock)
 	if(type == 3)
 	{
 	    getUserNetwork();
-		printf("%s\n","got the user Network");
+		// printf("%s\n","got the user Network");
 		getUserModules();
-		printf("%s\n","got the user Modules");
+		// printf("%s\n","got the user Modules");
 		char kernModuleTag[14] = "kernelModules";
 		sendOverSocket(buffer, kernModuleTag);
 		char finishModule[17] = "gymic_finish_mod";
@@ -434,7 +434,7 @@ void sendOverSocket(char* data, char* tag)
 	char server_reply[2000];
 	//strcat(tag, "\n");
 	strcat(tag,data);
-	printf("%s", tag);
+	//printf("%s", tag);
 	//Create Socket
 	usleep(SLEEP_INTERVAL);
 	sock = socket(AF_INET , SOCK_STREAM , 0);
