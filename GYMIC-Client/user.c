@@ -46,7 +46,7 @@ void read_event(int sock)
     struct msghdr msg;
     struct iovec iov;
     char buffer[65536];
-    char saveBuff[65536];
+    //char saveBuff[65536];
     int ret;
 	
     iov.iov_base = (void *) buffer;
@@ -67,7 +67,7 @@ void read_event(int sock)
 	sprintf(buffer, "%s", NLMSG_DATA((struct nlmsghdr *) &buffer));
 	//printf("buf %s", buffer);
 	int type = checkType(buffer);
-	memcpy(saveBuff, buffer, 65536);
+	//memcpy(saveBuff, buffer, 65536);
 	//printf("%s", buffer);
 	if(type == 1)
 	{
@@ -75,11 +75,15 @@ void read_event(int sock)
 		//int* processesK = parseProcesses(buffer);
 		getUserProcesses();
 		char kernProcTag[16] = "kernelProcesses";
+		char footer[7] = "EndData";
+		//strcat(buffer, footer);
 		sendOverSocket(buffer, kernProcTag);
+		sendOverSocket("", footer);
 		// printf("%s\n","got the user processes");
 		char finishProcTag[19] = "gymic_finish_proc";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishProcTag);
+		sendOverSocket("", footer);
 		// Open a listener and wait for a message to see if memdump is needed
         socketForMemdump();
 		//compareProc(processesK, processesU);
@@ -89,23 +93,31 @@ void read_event(int sock)
 		//Thread* threadsK = parseThreads(saveBuff);
 		getUserThreads();
 		char kernThreadTag[14] = "kernelThreads";
+		char footer[7] = "EndData";
+		//strcat(buffer, footer);
 		sendOverSocket(buffer, kernThreadTag);
+		sendOverSocket("", footer);
 		char finishThreadTag[21] = "gymic_finish_thread";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishThreadTag);
+		sendOverSocket("", footer);
 		//compareThreads(threadsK, threadsU);
 	}
 	if(type == 3)
 	{
-	    getUserNetwork();
+	    	getUserNetwork();
 		// printf("%s\n","got the user Network");
 		getUserModules();
 		// printf("%s\n","got the user Modules");
 		char kernModuleTag[14] = "kernelModules";
+		char footer[7] = "EndData";
+		//strcat(buffer, footer);
 		sendOverSocket(buffer, kernModuleTag);
+		sendOverSocket("", footer);
 		char finishModule[17] = "gymic_finish_mod";
 		char finish[7] = "finish";
 		sendOverSocket(finish, finishModule);
+		sendOverSocket("", footer);
 		// Open a listener and wait for a message to see if memdump is needed
         socketForMemdump();
 		//compareThreads(threadsK, threadsU);
@@ -115,7 +127,7 @@ void read_event(int sock)
 
 int checkType(char* in)
 {
-	
+	//printf("%.10s", in);
 	if(strncmp(in, "processes", strlen("processes")) == 0)
 	//if(strstr(in, "processes"))
 	{
@@ -212,7 +224,11 @@ Thread* getUserThreads(void)
 		thrres[k].iPid = thrlist[k].iPid;
 		thrres[k].iTid = thrlist[k].iTid;
 	}*/
+	char footer[7] = "EndData";
+	//strcat(buf123, footer);
+	//printf("%s", buf123);
 	sendOverSocket(buf123, userThreadTag);
+	sendOverSocket("", footer);
 	//free(ln);
 	pclose(in);
 	//free(in);
@@ -317,8 +333,10 @@ int* getUserProcesses(void)
 	}
 	//strcat(buf123 , "");
 	//printf("%s",buf1234);
+	char footer[7] = "EndData";
+	//strcat(buf1234, footer);
 	sendOverSocket(buf1234, userProcTag);
-	
+	sendOverSocket("", footer);
 	/*while(strcmp(temp,prev) != 0)
 	{
 		strcpy(prev, temp);
@@ -357,7 +375,10 @@ int* getUserNetwork(void)
 		strcat(buf12,temp);
 	}
 	//printf("%s\n",buf12);
+	char footer[7] = "EndData";
+	//strcat(buf12, footer);
 	sendOverSocket(buf12, userNetTag);
+	sendOverSocket("", footer);
 	return 0;
 }
 
@@ -380,7 +401,10 @@ int* getUserModules(void)
 		strcat(buf12,temp);
 	}
 	//printf("%s\n",buf12);
+	char footer[7] = "EndData";
+	//strcat(buf12, footer);
 	sendOverSocket(buf12, userModTag);
+	sendOverSocket("", footer);
 	return 0;
 }
 
