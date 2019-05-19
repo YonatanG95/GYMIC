@@ -60,27 +60,29 @@ def zmqworker():
             msg = msg_dic.get("data")
             addr = msg_dic.get("addr")
             print "Worker {0} Received request: {1}".format(worker_id, msg)
-
+            # print "msg: " + msg
             if msg is not None:
                 # Code for actual work
                 result = {"worker_id" : worker_id, 'data' : msg}
 
                 if msg.startswith("gymic_finish_thread"):
-
+                    print "THREDS"
                     compare_threads(output_dict[addr], addr)
 
                 elif msg.startswith("gymic_finish_proc"):
-
+                    print "PROCS"
                     compare_proc(output_dict[addr], addr)
 
 
                 elif msg.startswith("gymic_finish_mod"):
+                    print "MODS"
                     compare_modules(output_dict[addr],addr)
 
 
-                artifact = Artifact(msg, addr)
-                artifact.parse_to_json()
-                artifact.send_to_elastic()
+                if "finish" not in msg:
+                    artifact = Artifact(msg, addr)
+                    artifact.parse_to_json()
+                    artifact.send_to_elastic()
 
                 # Add to output dictionary
                 if artifact.artifact_type is not None:
@@ -90,6 +92,7 @@ def zmqworker():
                         output_dict[addr] = [artifact]
 
                 push_socket.send_json(result)
+
     except Exception as e:
         es = ElasticUtil()
         es.log_error("ZMQWorker ReceiveError: " + e.message)
@@ -116,22 +119,29 @@ def tcpserver():
         es = ElasticUtil()
         es.log_error("TCPServer BindError: " + e.message)
 
+    completed = ""
     while True:
         conn, addr = sock.accept()
         try:
             while True:
                 data = conn.recv(65536)
-                if data:
-                    msg = {"data": data, "addr" : addr[0]}
+                completed = completed + data
+
+                if "End" in completed:
+                    msg = {"data": completed[:completed.find("End")], "addr" : addr[0]}
                     zmqsender(json.dumps(msg))
+                    completed = completed[completed.find("End") + 7 : ]
+
                 else:
                     break
+
         except Exception as e:
             es = ElasticUtil()
             es.log_error("TCPServer ReceiveError: " + e.message)
 
         finally:
             conn.close()
+
 
 def main():
 
