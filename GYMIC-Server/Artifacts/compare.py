@@ -31,6 +31,7 @@ def compare_proc(artifacts_list, addr):
             timeout += 1
 
         if timeout == 10:
+            print "BYE"
             es = ElasticUtil()
             if len(list1) == 0:
                 es.log_error("CompareModule TimeOutError: UserModules not received")
