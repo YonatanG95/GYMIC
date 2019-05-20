@@ -18,7 +18,7 @@ def compare_proc(artifacts_list, addr):
     try:
         list2 = list1 = []
         global is_dumped
-        irelevant_processes=[]
+        irelevant_processes = []
         timeout = 0
         #irelevant_processes = ["ksoftirqd", "rcu_sched", "insmod", "system-udevd", "ps", "sh", "lsched"]
         while (len(list1) == 0 or len(list2) == 0) and timeout != 10:
@@ -31,22 +31,26 @@ def compare_proc(artifacts_list, addr):
             timeout += 1
 
         if timeout == 10:
-            print "BYE"
             es = ElasticUtil()
             if len(list1) == 0:
-                es.log_error("CompareModule TimeOutError: UserModules not received")
+                es.log_error("CompareModule TimeOutError: UserProcesses not received")
             elif len(list2) == 0:
-                es.log_error("CompareModule TimeOutError: KernelModules not received")
+                es.log_error("CompareModule TimeOutError: KernelProcesses not received")
+
+            # Signal to Workstation to not take a dump
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            s.send("No")
+            s.close()
             return
 
-        ##Get a list of processes that are not in both lists
-        print "IM HERE"
-        diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+        # Get a list of processes that are not in both lists
+        diff_list = [i for i in list1 + list2 if i not in list1 or i not in list2]
         print diff_list
-        #Delete from the diff list procceses that we know that suppose to be there
+
+        # Delete from the diff list procceses that we know that suppose to be there
         for proc in diff_list:
-            print "HERE " + proc
-            if proc[-1] in irelevant_processes or proc[-1]=='':
+            if proc[-1] in irelevant_processes or proc[-1] == '':
                 diff_list.remove(proc)
 
         if not is_dumped:
@@ -93,8 +97,8 @@ def compare_proc(artifacts_list, addr):
         es.log_error("CompareProc Error: " + e.message)
 
 
-        #If the list is not empty, we know that there are processes that are not in both user and kernel and we want to
-        #send packet to the server to take memdump.
+        # If the list is not empty, we know that there are processes that are not in both user and kernel and we want to
+        # send packet to the server to take memdump.
 
 
 
@@ -108,7 +112,7 @@ def compare_threads(artifacts_list, addr):
             elif artifact.artifact_type is KernelThreads:
                 list2 = artifact.parsed_data
 
-        diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+        diff_list = [i for i in list1 + list2 if i not in list1 or i not in list2]
         es_util = ElasticUtil()
         if len(diff_list) != 0:
             for tup in diff_list:
@@ -159,8 +163,15 @@ def compare_modules(artifacts_list, addr):
                 es.log_error("CompareModule TimeOutError: UserModules not received")
             elif len(list2) == 0:
                 es.log_error("CompareModule TimeOutError: KernelModules not received")
+
+            # Signal to Workstation to not take a dump
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            s.send("No")
+            s.close()
             return
-        ##Get a list of modules that are not in both lists
+
+        # Get a list of modules that are not in both lists
         diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
 
         if not is_dumped:

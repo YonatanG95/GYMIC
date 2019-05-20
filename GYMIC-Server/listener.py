@@ -66,16 +66,13 @@ def zmqworker():
                 result = {"worker_id" : worker_id, 'data' : msg}
 
                 if msg.startswith("gymic_finish_thread"):
-                    print "THREDS"
                     compare_threads(output_dict[addr], addr)
 
                 elif msg.startswith("gymic_finish_proc"):
-                    print "PROCS"
                     compare_proc(output_dict[addr], addr)
 
 
                 elif msg.startswith("gymic_finish_mod"):
-                    print "MODS"
                     compare_modules(output_dict[addr],addr)
 
 
@@ -128,9 +125,9 @@ def tcpserver():
                 completed = completed + data
 
                 if "End" in completed:
-                    msg = {"data": completed[:completed.find("End")], "addr" : addr[0]}
+                    msg = {"data": completed[:completed.find("End")], "addr": addr[0]}
                     zmqsender(json.dumps(msg))
-                    completed = completed[completed.find("End") + 7 : ]
+                    completed = completed[completed.find("End") + 7:]
 
                 else:
                     break

@@ -7,13 +7,13 @@ class UserProcesses:
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_processes = []
-        raw_str = raw_data.strip("userProcessPID COMMAND\n")
+        raw_str = raw_data.strip("userProcessPID %CPU COMMAND\n")
         raw_lines = raw_str.split("\n")
         for line in raw_lines:
-            temp_line=line.split(" ", 1)
-            name = temp_line[-1].split(" ")[1]
-            cpu = temp_line[-1].split(" ")[0]
-            if temp_line[-1] != None:
+            temp_line=line.split(" ")
+            name = temp_line[-1]
+            cpu = temp_line[-2]
+            if temp_line[-1] is not None:
                 parsed_user_processes.append((temp_line[0], cpu, name))
         return parsed_user_processes
 
@@ -33,7 +33,6 @@ class UserProcesses:
 
                 # Connection successful
                 es_util.send_to_elastic("gymic-userprocesses", "UserProcesses", doc)
-
 
             except Exception as e:
                 # Connection unsuccessful.
