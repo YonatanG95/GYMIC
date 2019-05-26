@@ -6,7 +6,7 @@ import json
 
 from conf import ZMQ_SERVER_PORT, ZMQ_WORKER_PORT, ZMQ_SERVER_IP, TCP_SERVER_IP, TCP_SERVER_PORT, NUM_OF_WORKERS
 from Artifacts.artifact import Artifact
-from Artifacts.compare import compare_proc,compare_threads,compare_modules
+from Artifacts.compare import compare_proc,compare_threads,compare_modules, searchForMiner
 from elastic_util import ElasticUtil
 from utils import recv_dump
 
@@ -70,7 +70,7 @@ def zmqworker():
 
                 elif msg.startswith("gymic_finish_proc"):
                     compare_proc(output_dict[addr], addr)
-
+                    searchForMiner(output_dict[addr], addr)
 
                 elif msg.startswith("gymic_finish_mod"):
                     compare_modules(output_dict[addr],addr)
@@ -81,14 +81,19 @@ def zmqworker():
                     artifact.parse_to_json()
                     artifact.send_to_elastic()
 
-                # Add to output dictionary
-                if artifact.artifact_type is not None:
-                    if output_dict.has_key(addr):
-                        output_dict.get(addr).append(artifact)
-                    else:
-                        output_dict[addr] = [artifact]
+                    # Add to output dictionary
+                    if artifact.artifact_type is not None:
+                        if output_dict.has_key(addr):
+                            try:
+                                output_dict[addr][artifact.artifact_header] = [artifact]
+                            except KeyError:
+                                pass
+                            #output_dict.get(addr).append(artifact)
+                        else:
+                            output_dict[addr] = {}
+                            output_dict[addr][artifact.artifact_header] = [artifact]
 
-                push_socket.send_json(result)
+                    push_socket.send_json(result)
 
     except Exception as e:
         es = ElasticUtil()
@@ -126,6 +131,7 @@ def tcpserver():
 
                 if "End" in completed:
                     msg = {"data": completed[:completed.find("End")], "addr": addr[0]}
+                    #print msg
                     zmqsender(json.dumps(msg))
                     completed = completed[completed.find("End") + 7:]
 

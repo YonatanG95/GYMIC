@@ -13,13 +13,27 @@ class Artifact:
         self.raw_data = raw_data
         self.parsed_data = ""
 
-        if raw_data.startswith("userThreads"): self.artifact_type = UserThreads
-        elif raw_data.startswith("kernelThreads"): self.artifact_type = KernelThreads
-        elif raw_data.startswith("userProcess"): self.artifact_type = UserProcesses
-        elif raw_data.startswith("kernelProcesses"): self.artifact_type = KernelProcesses
-        elif raw_data.startswith("userNetwork"): self.artifact_type = UserNetstat
-        elif raw_data.startswith("userModule"): self.artifact_type = UserModules
-        elif raw_data.startswith("kernelModule"): self.artifact_type = KernelModules
+        if raw_data.startswith("userThreads"):
+            self.artifact_type = UserThreads
+            self.artifact_header = "userThreads"
+        elif raw_data.startswith("kernelThreads"):
+            self.artifact_type = KernelThreads
+            self.artifact_header = "kernelThreads"
+        elif raw_data.startswith("userProcess"):
+            self.artifact_type = UserProcesses
+            self.artifact_header = "userProcess"
+        elif raw_data.startswith("kernelProcesses"):
+            self.artifact_type = KernelProcesses
+            self.artifact_header = "kernelProcesses"
+        elif raw_data.startswith("userNetwork"):
+            self.artifact_type = UserNetstat
+            self.artifact_header = "userNetwork"
+        elif raw_data.startswith("userModule"):
+            self.artifact_type = UserModules
+            self.artifact_header = "userModule"
+        elif raw_data.startswith("kernelModule"):
+            self.artifact_type = KernelModules
+            self.artifact_header = "kernelModule"
         else: self.artifact_type = None
 
 
