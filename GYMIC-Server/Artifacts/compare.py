@@ -43,7 +43,7 @@ def compare_proc(artifacts_list, addr):
         s.connect((addr, LIME_PORT))
         s.send("No")
         s.close()
-        return
+        #return
 
         list1 = artifacts_list["userProcess"].parsed_data
         list2 = artifacts_list["kernelProcesses"].parsed_data
@@ -57,19 +57,19 @@ def compare_proc(artifacts_list, addr):
             if proc[-1] in irelevant_processes or proc[-1] == '':
                 diff_list.remove(proc)
 
-        # if not is_dumped:
-        #
-        #     # Creating a socket so the server will memdump the workstation
-        #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #     s.connect((addr, LIME_PORT))
-        #     if len(diff_list) == 0:
-        #         s.send("No")
-        #         s.close()
-        #     else:
-        #         s.send("Yes")
-        #         s.close()
-        #         is_dumped = True
-        #         recv_dump(addr)
+        if not is_dumped:
+
+            # Creating a socket so the server will memdump the workstation
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            if len(diff_list) == 0:
+                s.send("No")
+                s.close()
+            else:
+                s.send("Yes")
+                s.close()
+                is_dumped = True
+                recv_dump(addr)
 
         es_util = ElasticUtil()
 
@@ -186,16 +186,16 @@ def compare_modules(artifacts_list, addr):
         # Get a list of modules that are not in both lists
         diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
 
-        # if not is_dumped:
-        #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #     s.connect((addr, LIME_PORT))
-        #     if len(diff_list) == 0:
-        #         s.send("No")
-        #         s.close()
-        #     else:
-        #         s.send("Yes")
-        #         s.close()
-        #         recv_dump(addr)
+        if not is_dumped:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            if len(diff_list) == 0:
+                s.send("No")
+                s.close()
+            else:
+                s.send("Yes")
+                s.close()
+                recv_dump(addr)
 
         es_util = ElasticUtil()
 
@@ -246,12 +246,13 @@ def searchForMiner(artifacts_list, addr):
         #     return
 
         list1 = artifacts_list["userProcess"].parsed_data
-
+        # print list1
         es_util = ElasticUtil()
         #print "---"
-        sumList = sum([value[1] for value in list1])
-        avgCpu = "AVG CPU " + sumList / len(list1)
-        print avgCpu
+        sumList = 0
+        sumList = sum([float(value[1]) for value in list1])
+        avgCpu = "AVG CPU " + str(sumList / len(list1))
+        # print avgCpu
         for proc in list1:
             if proc[1] > avgCpu * 2:
                 #print proc

@@ -23,14 +23,16 @@ def zmqserver():
     except Exception as e:
         es = ElasticUtil()
         es.log_error("ZMQServer BindError: " + e.message)
-    try:
-        while True:
-            result = server_socket.recv_json()
-            if result.has_key('worker_id'):
-                print "Worker {} finished printing".format(result["worker_id"])
-    except Exception as e:
-        es = ElasticUtil()
-        es.log_error("ZMQServer ReceiveError: " + e.message)
+
+    while True:
+        try:
+            while True:
+                result = server_socket.recv_json()
+                if result.has_key('worker_id'):
+                    print "Worker {} finished printing".format(result["worker_id"])
+        except Exception as e:
+            es = ElasticUtil()
+            es.log_error("ZMQServer ReceiveError: " + e.message)
 
 
 def zmqworker():
@@ -52,52 +54,64 @@ def zmqworker():
         es = ElasticUtil()
         es.log_error("ZMQWorker PushConnectError: " + e.message)
 
-    try:
-        while True:
-            # Wait for next request from client
-            msg_json = pull_socket.recv()
-            msg_dic = json.loads(msg_json)
-            msg = msg_dic.get("data")
-            addr = msg_dic.get("addr")
-            print "Worker {0} Received request: {1}".format(worker_id, msg)
-            # print "msg: " + msg
-            if msg is not None:
-                # Code for actual work
-                result = {"worker_id" : worker_id, 'data' : msg}
+    while True:
+        try:
+            while True:
+                # Wait for next request from client
+                msg_json = pull_socket.recv()
+                msg_dic = json.loads(msg_json)
+                msg = msg_dic.get("data")
+                addr = msg_dic.get("addr")
+                print "Worker {0} Received request: {1}".format(worker_id, msg[:20])
+                # print "msg: " + msg
+                if msg is not None:
+                    # Code for actual work
+                    result = {"worker_id" : worker_id, 'data' : msg}
 
-                if msg.startswith("gymic_finish_thread"):
-                    compare_threads(output_dict[addr], addr)
+                    if msg.startswith("gymic_finish_thread"):
+                        compare_threads(output_dict[addr], addr)
 
-                elif msg.startswith("gymic_finish_proc"):
-                    compare_proc(output_dict[addr], addr)
-                    searchForMiner(output_dict[addr], addr)
+                    elif msg.startswith("gymic_finish_proc"):
+                        compare_proc(output_dict[addr], addr)
+                        try:
+                            net = output_dict[addr]["userNetwork"]
+                            searchForMiner(output_dict[addr], addr)
+                        except KeyError:
+                            pass
 
-                elif msg.startswith("gymic_finish_mod"):
-                    compare_modules(output_dict[addr],addr)
+                    elif msg.startswith("gymic_finish_mod"):
+                        compare_modules(output_dict[addr],addr)
+
+                    elif msg.startswith("gymic_finish_net"):
+                        try:
+                            proc = output_dict[addr]["userProcess"]
+                            searchForMiner(output_dict[addr], addr)
+                        except KeyError:
+                            pass
 
 
-                if "finish" not in msg:
-                    artifact = Artifact(msg, addr)
-                    artifact.parse_to_json()
-                    artifact.send_to_elastic()
+                    if "finish" not in msg:
+                        artifact = Artifact(msg, addr)
+                        artifact.parse_to_json()
+                        artifact.send_to_elastic()
 
-                    # Add to output dictionary
-                    if artifact.artifact_type is not None:
-                        if output_dict.has_key(addr):
-                            try:
-                                output_dict[addr][artifact.artifact_header] = [artifact]
-                            except KeyError:
-                                pass
-                            #output_dict.get(addr).append(artifact)
-                        else:
-                            output_dict[addr] = {}
-                            output_dict[addr][artifact.artifact_header] = [artifact]
+                        # Add to output dictionary
+                        if artifact.artifact_type is not None:
+                            if output_dict.has_key(addr):
+                                try:
+                                    output_dict[addr][artifact.artifact_header] = artifact
+                                except KeyError:
+                                    pass
+                                #output_dict.get(addr).append(artifact)
+                            else:
+                                output_dict[addr] = {}
+                                output_dict[addr][artifact.artifact_header] = artifact
 
-                    push_socket.send_json(result)
+                        push_socket.send_json(result)
 
-    except Exception as e:
-        es = ElasticUtil()
-        es.log_error("ZMQWorker ReceiveError: " + e.message)
+        except Exception as e:
+            es = ElasticUtil()
+            es.log_error("ZMQWorker ReceiveError: " + e.message)
 
 def zmqsender(msg):
 
@@ -116,7 +130,7 @@ def tcpserver():
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((TCP_SERVER_IP, TCP_SERVER_PORT))
-        sock.listen(1)
+        sock.listen(10)
     except Exception as e:
         es = ElasticUtil()
         es.log_error("TCPServer BindError: " + e.message)
@@ -129,11 +143,11 @@ def tcpserver():
                 data = conn.recv(65536)
                 completed = completed + data
 
-                if "End" in completed:
-                    msg = {"data": completed[:completed.find("End")], "addr": addr[0]}
-                    #print msg
-                    zmqsender(json.dumps(msg))
-                    completed = completed[completed.find("End") + 7:]
+                if "End" in completed and "headerTag" in completed:
+                    if(completed[completed.find("headerTag") + 9 :completed.find("End")] != ""):
+                        msg = {"data": completed[completed.find("headerTag") + 9:completed.find("End")], "addr": addr[0]}
+                        zmqsender(json.dumps(msg))
+                        completed = completed[completed.find("End") + 7:]
 
                 else:
                     break
@@ -142,8 +156,8 @@ def tcpserver():
             es = ElasticUtil()
             es.log_error("TCPServer ReceiveError: " + e.message)
 
-        finally:
-            conn.close()
+        # finally:
+        #     conn.close()
 
 
 def main():
