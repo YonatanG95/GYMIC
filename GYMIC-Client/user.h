@@ -34,6 +34,7 @@ int* parseProcesses(char* buffer);
 int* getUserProcesses(void);
 int* getUserNetwork(void);
 int* getUserModules(void);
+int* getSysModules(void);
 void compareProc(int* procK, int* procU);
 void compareThreads(Thread* threadK, Thread* threadU);
 void sendOverSocket(char* data, char* tag);

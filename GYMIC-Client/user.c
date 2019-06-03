@@ -5,7 +5,7 @@
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
-#define TCP_SERVER_IP "192.168.196.1"
+#define TCP_SERVER_IP "192.168.112.1"
 #define LIME_PORT 1235
 #define SLEEP_INTERVAL 500000
 
@@ -108,6 +108,7 @@ void read_event(int sock)
 	    	getUserNetwork();
 		// printf("%s\n","got the user Network");
 		getUserModules();
+		getSysModules();
 		// printf("%s\n","got the user Modules");
 		char kernModuleTag[14] = "kernelModules";
 		char footer[7] = "EndData";
@@ -404,6 +405,32 @@ int* getUserModules(void)
 	char footer[7] = "EndData";
 	//strcat(buf12, footer);
 	sendOverSocket(buf12, userModTag);
+	sendOverSocket("", footer);
+	return 0;
+}
+
+int* getSysModules(void)
+{
+   	FILE *in=NULL;
+   	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+   	memset(temp, 0 , sizeof(temp));
+	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	memset(buf12, 0 , sizeof(buf12));
+	//in=popen("ps -Ao pid:1,comm:2", "r");
+	in=popen("ls /sys/module/*/initstate | sed -e 's/^\\/sys\\/module\\///' -e 's/\\/initstate$//'", "r");
+	int i = 0;
+	char sysModTag[12] = "sysModule";
+	while(fgets(temp,sizeof(temp),in) !=NULL)
+	{
+		//printf("%s\n",temp);
+		//i++;
+		//printf("%d\n", i);
+		strcat(buf12,temp);
+	}
+	//printf("%s\n",buf12);
+	char footer[7] = "EndData";
+	//strcat(buf12, footer);
+	sendOverSocket(buf12, sysModTag);
 	sendOverSocket("", footer);
 	return 0;
 }
