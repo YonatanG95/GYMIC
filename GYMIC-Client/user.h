@@ -38,6 +38,6 @@ void compareProc(int* procK, int* procU);
 void compareThreads(Thread* threadK, Thread* threadU);
 void sendOverSocket(char* data, char* tag);
 void take_dump();
-
+int* getSysModules(void);
 
 

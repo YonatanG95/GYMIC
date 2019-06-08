@@ -7,14 +7,15 @@ class UserProcesses:
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_processes = []
-        raw_str = raw_data.strip("userProcessPID %CPU COMMAND\n")
+        raw_str = raw_data.strip("userProcessPID %CPU COMMAND\n").strip("<defunct>")
         raw_lines = raw_str.split("\n")
         for line in raw_lines:
             temp_line=line.split(" ")
-            name = temp_line[-1]
-            cpu = temp_line[-2]
-            if temp_line[-1] is not None:
-                parsed_user_processes.append((temp_line[0], cpu, name))
+            name = temp_line[2]
+            cpu = float(temp_line[1])
+            pid = temp_line[0]
+            if name is not None:
+                parsed_user_processes.append((pid, cpu, name))
         return parsed_user_processes
 
     @staticmethod

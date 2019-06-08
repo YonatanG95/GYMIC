@@ -7,6 +7,8 @@ Description		:		Final Project
 ===============================================================================
 */
 #include "gymic_main.h"
+//#include "linux/unistd.h"
+#include <linux/delay.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("YONATANINONAMIRORYOSI");
@@ -14,6 +16,8 @@ MODULE_AUTHOR("YONATANINONAMIRORYOSI");
 int gymic_main_major=0;
 
 dev_t gymic_main_device_num;
+
+//unsigned int sleep(unsigned int seconds);
 
 // Data
 
@@ -51,8 +55,6 @@ static const struct file_operations gymic_main_fops= {
 
 static int __init gymic_main_init(void)
 {
-	/* TODO Auto-generated Function Stub */
-
 	int i;
 	int res;
 	
@@ -85,42 +87,7 @@ static int __init gymic_main_init(void)
 	
 	//Netlink
 	createNetlink();
-	int count = 0;
 	// Activate module features
-	if (threads)
-	{
-		count = getThreads();
-		//char threads [count * (sizeof(int)*2 + 2) + 13];
-		char* threadsArr = kcalloc(65536, 1, GFP_KERNEL);
-		//sprintf(threads, "%d", count);
-		strcat(threadsArr,"threads");
-		getThreadsOut(threadsArr);
-		//printk("len out %d\n", strlen(threads));
-		send_to_user(threadsArr);
-		kfree(threadsArr);
-		//printk(out);
-	}
-	if (processes)
-	{
-		count = getProcessesCount();
-		//char processes [count * (sizeof(int)+(sizeof(char)*28)+1) + 15];
-		char* processesArr = kcalloc(65536, 1, GFP_KERNEL);
-		//sprintf(processes, "%d", count);
-		strcat(processesArr,"processes\n");
-		getProcessesOut(processesArr);
-		send_to_user(processesArr);
-		kfree(processesArr);
-	}
-	if (modules)
-	{
-		count = getModulesCount();
-		char* modulesArr = kcalloc(65536, 1, GFP_KERNEL);
-		//sprintf(processes, "%d", count);
-		strcat(modulesArr,"modules\n");
-		getModulesOut(modulesArr);
-		send_to_user(modulesArr);
-		kfree(modulesArr);
-	}
 	if (syscall)
 	{
 		if (!replace_unlink())
@@ -133,6 +100,35 @@ static int __init gymic_main_init(void)
 			printk(KERN_INFO "Unable to replace unlinkat.");
 		}
 	}	
+	for(;;)
+	{
+		PINFO("Send Again");
+		if (threads)
+		{
+			char* threadsArr = kcalloc(65536, 1, GFP_KERNEL);
+			strcat(threadsArr,"threads");
+			getThreadsOut(threadsArr);
+			send_to_user(threadsArr);
+			kfree(threadsArr);
+		}
+	if (processes)
+	{
+		char* processesArr = kcalloc(65536, 1, GFP_KERNEL);
+		strcat(processesArr,"processes\n");
+		getProcessesOut(processesArr);
+		send_to_user(processesArr);
+		kfree(processesArr);
+	}
+		if (modules)
+		{
+			char* modulesArr = kcalloc(65536, 1, GFP_KERNEL);
+			strcat(modulesArr,"modules\n");
+			getModulesOut(modulesArr);
+			send_to_user(modulesArr);
+			kfree(modulesArr);
+		}
+		msleep(30000);
+	}
 	releaseNetlink();
 	return 0;
 }
@@ -155,8 +151,6 @@ static void __exit gymic_main_exit(void)
 	}
 
 	// End of Code
-
-	/* TODO Auto-generated Function Stub */
 
 	PINFO("EXIT\n");
 

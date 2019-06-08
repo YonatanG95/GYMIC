@@ -1,0 +1,1510 @@
+Python 2.7.15 (v2.7.15:ca079a3ea3, Apr 30 2018, 16:30:26) [MSC v.1500 64 bit (AMD64)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>>
+>>>
+>>> import elasticsearch
+>>> import rewuests
+
+Traceback (most recent call last):
+  File "<pyshell#3>", line 1, in <module>
+    import rewuests
+ImportError: No module named rewuests
+>>> import requests
+
+Traceback (most recent call last):
+  File "<pyshell#4>", line 1, in <module>
+    import requests
+ImportError: No module named requests
+>>> import requests
+>>> from elasticsearch import Elasticsearch
+>>> es = Elasticsearch()
+>>> es.close()
+
+Traceback (most recent call last):
+  File "<pyshell#8>", line 1, in <module>
+    es.close()
+AttributeError: 'Elasticsearch' object has no attribute 'close'
+>>> es = Elasticsearch([{'host': "192.168.17.128", 'port': 9200}])
+>>> res = es.search(index="gymic-userprocesses")
+>>> res[1]
+
+Traceback (most recent call last):
+  File "<pyshell#11>", line 1, in <module>
+    res[1]
+KeyError: 1
+>>> res
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'EYX5bmoBDgMVjelMNNPJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'143', u'UserProcesses.ProcessName': u'rcuob/6'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'I4X5bmoBDgMVjelMNdMf', u'_source': {u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'J4X5bmoBDgMVjelMNdMy', u'_source': {u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'154', u'UserProcesses.ProcessName': u'rcuob/17'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYX5bmoBDgMVjelMNdNE', u'_source': {u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4X5bmoBDgMVjelMNdNJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'OYX5bmoBDgMVjelMNdOq', u'_source': {u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'O4X5bmoBDgMVjelMNdOw', u'_source': {u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'164', u'UserProcesses.ProcessName': u'rcuob/27'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'TYX5bmoBDgMVjelMNtNG', u'_source': {u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'173', u'UserProcesses.ProcessName': u'rcuob/36'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UYX5bmoBDgMVjelMNtOD', u'_source': {u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'175', u'UserProcesses.ProcessName': u'rcuob/38'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'VoX5bmoBDgMVjelMNtPS', u'_source': {u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'178', u'UserProcesses.ProcessName': u'rcuob/41'}, u'_index': u'gymic-userprocesses'}], u'total': 180049, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 141, u'timed_out': False}
+>>> for doc in res ['hits']['hits']:
+	doc
+
+
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'EYX5bmoBDgMVjelMNNPJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'143', u'UserProcesses.ProcessName': u'rcuob/6'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'I4X5bmoBDgMVjelMNdMf', u'_source': {u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'J4X5bmoBDgMVjelMNdMy', u'_source': {u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'154', u'UserProcesses.ProcessName': u'rcuob/17'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYX5bmoBDgMVjelMNdNE', u'_source': {u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4X5bmoBDgMVjelMNdNJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'OYX5bmoBDgMVjelMNdOq', u'_source': {u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'O4X5bmoBDgMVjelMNdOw', u'_source': {u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'164', u'UserProcesses.ProcessName': u'rcuob/27'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'TYX5bmoBDgMVjelMNtNG', u'_source': {u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'173', u'UserProcesses.ProcessName': u'rcuob/36'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UYX5bmoBDgMVjelMNtOD', u'_source': {u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'175', u'UserProcesses.ProcessName': u'rcuob/38'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'VoX5bmoBDgMVjelMNtPS', u'_source': {u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'178', u'UserProcesses.ProcessName': u'rcuob/41'}, u'_index': u'gymic-userprocesses'}
+>>> for doc in res ['hits']['hits']:
+	doc['UserProccesess.PID']
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#17>", line 2, in <module>
+    doc['UserProccesess.PID']
+KeyError: 'UserProccesess.PID'
+>>> for doc in res ['hits']['hits']:
+	doc['_source']
+
+
+{u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'143', u'UserProcesses.ProcessName': u'rcuob/6'}
+{u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15'}
+{u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'154', u'UserProcesses.ProcessName': u'rcuob/17'}
+{u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20'}
+{u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21'}
+{u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26'}
+{u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'164', u'UserProcesses.ProcessName': u'rcuob/27'}
+{u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'173', u'UserProcesses.ProcessName': u'rcuob/36'}
+{u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'175', u'UserProcesses.ProcessName': u'rcuob/38'}
+{u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'178', u'UserProcesses.ProcessName': u'rcuob/41'}
+>>> for doc in res ['hits']['hits']:
+	doc['_source']['UserProccesess.PID']
+
+
+u'143'
+u'152'
+u'154'
+u'157'
+u'158'
+u'163'
+u'164'
+u'173'
+u'175'
+u'178'
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.PID']), doc['_source']['UserProccesess.ProcessName']
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#23>", line 2, in <module>
+    int(doc['_source']['UserProccesess.PID']), doc['_source']['UserProccesess.ProcessName']
+KeyError: 'UserProccesess.ProcessName'
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.PID']), doc['_source']['UserProcesses.ProcessName']
+
+
+(143, u'rcuob/6')
+(152, u'rcuob/15')
+(154, u'rcuob/17')
+(157, u'rcuob/20')
+(158, u'rcuob/21')
+(163, u'rcuob/26')
+(164, u'rcuob/27')
+(173, u'rcuob/36')
+(175, u'rcuob/38')
+(178, u'rcuob/41')
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.PID']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+(143, 'rcuob/6')
+(152, 'rcuob/15')
+(154, 'rcuob/17')
+(157, 'rcuob/20')
+(158, 'rcuob/21')
+(163, 'rcuob/26')
+(164, 'rcuob/27')
+(173, 'rcuob/36')
+(175, 'rcuob/38')
+(178, 'rcuob/41')
+>>> res = es.search(index="gymic-userprocesses", size=100)
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.PID']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+(143, 'rcuob/6')
+(152, 'rcuob/15')
+(154, 'rcuob/17')
+(157, 'rcuob/20')
+(158, 'rcuob/21')
+(163, 'rcuob/26')
+(164, 'rcuob/27')
+(173, 'rcuob/36')
+(175, 'rcuob/38')
+(178, 'rcuob/41')
+(185, 'rcuob/48')
+(190, 'rcuob/53')
+(192, 'rcuob/55')
+(196, 'rcuob/59')
+(198, 'rcuob/61')
+(202, 'rcuob/65')
+(207, 'rcuob/70')
+(209, 'rcuob/72')
+(213, 'rcuob/76')
+(214, 'rcuob/77')
+(217, 'rcuob/80')
+(220, 'rcuob/83')
+(222, 'rcuob/85')
+(225, 'rcuob/88')
+(227, 'rcuob/90')
+(228, 'rcuob/91')
+(235, 'rcuob/98')
+(238, 'rcuob/101')
+(241, 'rcuob/104')
+(252, 'rcuob/115')
+(255, 'rcuob/118')
+(257, 'rcuob/120')
+(259, 'rcuob/122')
+(263, 'rcuob/126')
+(266, 'watchdog/0')
+(276, 'kintegrityd')
+(290, 'fsnotify_mark')
+(291, 'ecryptfs-kthrea')
+(379, 'kpsmoused')
+(384, 'kworker/1:2')
+(391, 'scsi_eh_5')
+(392, 'scsi_eh_6')
+(404, 'scsi_eh_17')
+(406, 'scsi_eh_19')
+(410, 'scsi_eh_23')
+(414, 'scsi_eh_27')
+(415, 'scsi_eh_28')
+(417, 'scsi_eh_30')
+(894, 'bluetoothd')
+(951, 'ModemManager')
+(956, 'krfcommd')
+(1039, 'upstart-file-br')
+(1045, 'avahi-daemon')
+(1075, 'NetworkManager')
+(1178, 'cron')
+(1463, 'lightdm')
+(1827, 'gnome-keyring-d')
+(1946, 'upstart-dbus-br')
+(1963, 'unity-settings-')
+(1968, 'hud-service')
+(1996, 'gvfsd-fuse')
+(2086, 'indicator-appli')
+(2089, 'evolution-sourc')
+(2172, 'compiz')
+(39, 'rcuos/31')
+(40, 'rcuos/32')
+(58, 'rcuos/50')
+(64, 'rcuos/56')
+(66, 'rcuos/58')
+(76, 'rcuos/68')
+(81, 'rcuos/73')
+(82, 'rcuos/74')
+(98, 'rcuos/90')
+(100, 'rcuos/92')
+(107, 'rcuos/99')
+(108, 'rcuos/100')
+(110, 'rcuos/102')
+(113, 'rcuos/105')
+(115, 'rcuos/107')
+(116, 'rcuos/108')
+(121, 'rcuos/113')
+(130, 'rcuos/122')
+(131, 'rcuos/123')
+(132, 'rcuos/124')
+(133, 'rcuos/125')
+(136, 'rcu_bh')
+(151, 'rcuob/14')
+(159, 'rcuob/22')
+(162, 'rcuob/25')
+(179, 'rcuob/42')
+(186, 'rcuob/49')
+(187, 'rcuob/50')
+(207, 'rcuob/70')
+(208, 'rcuob/71')
+(214, 'rcuob/77')
+(216, 'rcuob/79')
+(227, 'rcuob/90')
+(228, 'rcuob/91')
+(232, 'rcuob/95')
+(18, 'rcuos/10')
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#32>", line 2, in <module>
+    int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+KeyError: 'UserProccesess.CPU'
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query" : {"bool": {"must" : {"exists" : {"field" : "UserProccesess.CPU"} } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 0, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query" : {"bool": {"must_not" : {"exists" : {"field" : "UserProccesess.CPU"} } } } })
+>>> res
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'EYX5bmoBDgMVjelMNNPJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'143', u'UserProcesses.ProcessName': u'rcuob/6'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'I4X5bmoBDgMVjelMNdMf', u'_source': {u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'J4X5bmoBDgMVjelMNdMy', u'_source': {u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'154', u'UserProcesses.ProcessName': u'rcuob/17'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYX5bmoBDgMVjelMNdNE', u'_source': {u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4X5bmoBDgMVjelMNdNJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'OYX5bmoBDgMVjelMNdOq', u'_source': {u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'O4X5bmoBDgMVjelMNdOw', u'_source': {u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'164', u'UserProcesses.ProcessName': u'rcuob/27'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'TYX5bmoBDgMVjelMNtNG', u'_source': {u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'173', u'UserProcesses.ProcessName': u'rcuob/36'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UYX5bmoBDgMVjelMNtOD', u'_source': {u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'175', u'UserProcesses.ProcessName': u'rcuob/38'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'VoX5bmoBDgMVjelMNtPS', u'_source': {u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'178', u'UserProcesses.ProcessName': u'rcuob/41'}, u'_index': u'gymic-userprocesses'}], u'total': 180049, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 5, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"datetime": {"gte":"2019-06-02", "lte":"2019-06-03" } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 1, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, data={"query": {"range": {"datetime": {"gte":"2019-06-02", "lte":"2019-06-03" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#39>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=10, data={"query": {"range": {"datetime": {"gte":"2019-06-02", "lte":"2019-06-03" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+TypeError: search() got an unexpected keyword argument 'data'
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"datetime": {"gte":"2019-06-02", "lte":"2019-06-03", } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 0, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"date_field": {"gte":"2019-06-02", "lte":"2019-06-03" } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 1, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"date_field": {"gte":"2019-06-02", "lte":"2019-06-03" } } } }){u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'EYX5bmoBDgMVjelMNNPJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'143', u'UserProcesses.ProcessName': u'rcuob/6'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'I4X5bmoBDgMVjelMNdMf', u'_source': {u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'J4X5bmoBDgMVjelMNdMy', u'_source': {u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'154', u'UserProcesses.ProcessName': u'rcuob/17'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYX5bmoBDgMVjelMNdNE', u'_source': {u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4X5bmoBDgMVjelMNdNJ', u'_source': {u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'OYX5bmoBDgMVjelMNdOq', u'_source': {u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'O4X5bmoBDgMVjelMNdOw', u'_source': {u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'164', u'UserProcesses.ProcessName': u'rcuob/27'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'TYX5bmoBDgMVjelMNtNG', u'_source': {u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'173', u'UserProcesses.ProcessName': u'rcuob/36'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UYX5bmoBDgMVjelMNtOD', u'_source': {u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'175', u'UserProcesses.ProcessName': u'rcuob/38'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'VoX5bmoBDgMVjelMNtPS', u'_source': {u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.168.17.131', u'UserProccesess.PID': u'178', u'UserProcesses.ProcessName': u'rcuob/41'}, u'_index': u'gymic-userprocesses'}], u'total': 180049, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 5, u'timed_out': False}
+SyntaxError: invalid syntax
+>>> import dateTime
+
+Traceback (most recent call last):
+  File "<pyshell#45>", line 1, in <module>
+    import dateTime
+ImportError: No module named dateTime
+>>> import date
+
+Traceback (most recent call last):
+  File "<pyshell#46>", line 1, in <module>
+    import date
+ImportError: No module named date
+>>> import Date
+
+Traceback (most recent call last):
+  File "<pyshell#47>", line 1, in <module>
+    import Date
+ImportError: No module named Date
+>>> import DateTime
+
+Traceback (most recent call last):
+  File "<pyshell#48>", line 1, in <module>
+    import DateTime
+ImportError: No module named DateTime
+>>> import Time
+
+Traceback (most recent call last):
+  File "<pyshell#49>", line 1, in <module>
+    import Time
+ImportError: No module named Time
+>>> s = Search(using=es, index="gymic-userprocesses")
+
+Traceback (most recent call last):
+  File "<pyshell#50>", line 1, in <module>
+    s = Search(using=es, index="gymic-userprocesses")
+NameError: name 'Search' is not defined
+>>> from elasticsearch import Search
+
+Traceback (most recent call last):
+  File "<pyshell#51>", line 1, in <module>
+    from elasticsearch import Search
+ImportError: cannot import name Search
+>>> from elasticsearch_dsl import Search
+>>> s = Search(using=es, index="gymic-userprocesses")
+>>> from elasticsearch_dsl import QueryString
+
+Traceback (most recent call last):
+  File "<pyshell#54>", line 1, in <module>
+    from elasticsearch_dsl import QueryString
+ImportError: cannot import name QueryString
+>>> s
+<elasticsearch_dsl.search.Search object at 0x0000000004B11EF0>
+>>> res = s.execute()
+>>> res
+<Response: [<Hit(gymic-userprocesses/EYX5bmoBDgMVjelMNNPJ): {u'timestamp': u'2019-04-30T15:59:46.848000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/I4X5bmoBDgMVjelMNdMf): {u'timestamp': u'2019-04-30T15:59:46.935000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/J4X5bmoBDgMVjelMNdMy): {u'timestamp': u'2019-04-30T15:59:46.954000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/LYX5bmoBDgMVjelMNdNE): {u'timestamp': u'2019-04-30T15:59:46.972000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/L4X5bmoBDgMVjelMNdNJ): {u'timestamp': u'2019-04-30T15:59:46.977000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/OYX5bmoBDgMVjelMNdOq): {u'timestamp': u'2019-04-30T15:59:47.073000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/O4X5bmoBDgMVjelMNdOw): {u'timestamp': u'2019-04-30T15:59:47.079000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/TYX5bmoBDgMVjelMNtNG): {u'timestamp': u'2019-04-30T15:59:47.229000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/UYX5bmoBDgMVjelMNtOD): {u'timestamp': u'2019-04-30T15:59:47.289000', u'IP': u'192.1...}>, <Hit(gymic-userprocesses/VoX5bmoBDgMVjelMNtPS): {u'timestamp': u'2019-04-30T15:59:47.370000', u'IP': u'192.1...}>]>
+>>> s = s.query(Range(** {'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+
+Traceback (most recent call last):
+  File "<pyshell#58>", line 1, in <module>
+    s = s.query(Range(** {'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+NameError: name 'Range' is not defined
+>>> from elasticsearch_dsl import Range
+>>> s = s.query(Range(** {'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+
+Traceback (most recent call last):
+  File "<pyshell#60>", line 1, in <module>
+    s = s.query(Range(** {'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+  File "D:\Python27\lib\site-packages\elasticsearch_dsl\wrappers.py", line 26, in __init__
+    raise ValueError('Range received an unknown operator %r' % k)
+ValueError: Range received an unknown operator '@timestamp'
+>>> s = s.query(Range(** {'timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+
+Traceback (most recent call last):
+  File "<pyshell#61>", line 1, in <module>
+    s = s.query(Range(** {'timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+  File "D:\Python27\lib\site-packages\elasticsearch_dsl\wrappers.py", line 26, in __init__
+    raise ValueError('Range received an unknown operator %r' % k)
+ValueError: Range received an unknown operator 'timestamp'
+>>> s = s.query(Range({'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+
+Traceback (most recent call last):
+  File "<pyshell#62>", line 1, in <module>
+    s = s.query(Range({'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+  File "D:\Python27\lib\site-packages\elasticsearch_dsl\wrappers.py", line 26, in __init__
+    raise ValueError('Range received an unknown operator %r' % k)
+ValueError: Range received an unknown operator '@timestamp'
+>>> s = s.query(Range(**{'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+
+Traceback (most recent call last):
+  File "<pyshell#63>", line 1, in <module>
+    s = s.query(Range(**{'@timestamp': {'gte': 'now-1d', 'lt': 'now'}}))
+  File "D:\Python27\lib\site-packages\elasticsearch_dsl\wrappers.py", line 26, in __init__
+    raise ValueError('Range received an unknown operator %r' % k)
+ValueError: Range received an unknown operator '@timestamp'
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"date_field": {"gte":"now-1d", "lt":"now" } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 0, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"datetime": {"gte":"now-1d", "lt":"now" } } } })
+>>> res
+{u'hits': {u'hits': [], u'total': 0, u'max_score': None}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 1, u'timed_out': False}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+>>> res
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'G4a_GGsBDgMVjelM1Q7H', u'_source': {u'timestamp': u'2019-06-02T15:12:33.757000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'37', u'UserProcesses.ProcessName': u'rcuos/29', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'IYa_GGsBDgMVjelM1Q7_', u'_source': {u'timestamp': u'2019-06-02T15:12:33.812000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'43', u'UserProcesses.ProcessName': u'rcuos/35', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'JIa_GGsBDgMVjelM1g4a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.831000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'46', u'UserProcesses.ProcessName': u'rcuos/38', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'KYa_GGsBDgMVjelM1g45', u'_source': {u'timestamp': u'2019-06-02T15:12:33.871000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'51', u'UserProcesses.ProcessName': u'rcuos/43', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'K4a_GGsBDgMVjelM1g5d', u'_source': {u'timestamp': u'2019-06-02T15:12:33.908000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'53', u'UserProcesses.ProcessName': u'rcuos/45', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LIa_GGsBDgMVjelM1g5r', u'_source': {u'timestamp': u'2019-06-02T15:12:33.921000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'54', u'UserProcesses.ProcessName': u'rcuos/46', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYa_GGsBDgMVjelM1g6C', u'_source': {u'timestamp': u'2019-06-02T15:12:33.927000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'55', u'UserProcesses.ProcessName': u'rcuos/47', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4a_GGsBDgMVjelM1g6P', u'_source': {u'timestamp': u'2019-06-02T15:12:33.957000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'57', u'UserProcesses.ProcessName': u'rcuos/49', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MIa_GGsBDgMVjelM1g6V', u'_source': {u'timestamp': u'2019-06-02T15:12:33.963000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'58', u'UserProcesses.ProcessName': u'rcuos/50', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MYa_GGsBDgMVjelM1g6a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.969000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'59', u'UserProcesses.ProcessName': u'rcuos/51', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}], u'total': 178359, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 45, u'timed_out': False}
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#71>", line 2, in <module>
+    int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+KeyError: 'UserProccesess.CPU'
+>>> for doc in res ['hits']['hits']:
+	doc
+
+
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'G4a_GGsBDgMVjelM1Q7H', u'_source': {u'timestamp': u'2019-06-02T15:12:33.757000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'37', u'UserProcesses.ProcessName': u'rcuos/29', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'IYa_GGsBDgMVjelM1Q7_', u'_source': {u'timestamp': u'2019-06-02T15:12:33.812000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'43', u'UserProcesses.ProcessName': u'rcuos/35', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'JIa_GGsBDgMVjelM1g4a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.831000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'46', u'UserProcesses.ProcessName': u'rcuos/38', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'KYa_GGsBDgMVjelM1g45', u'_source': {u'timestamp': u'2019-06-02T15:12:33.871000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'51', u'UserProcesses.ProcessName': u'rcuos/43', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'K4a_GGsBDgMVjelM1g5d', u'_source': {u'timestamp': u'2019-06-02T15:12:33.908000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'53', u'UserProcesses.ProcessName': u'rcuos/45', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LIa_GGsBDgMVjelM1g5r', u'_source': {u'timestamp': u'2019-06-02T15:12:33.921000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'54', u'UserProcesses.ProcessName': u'rcuos/46', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYa_GGsBDgMVjelM1g6C', u'_source': {u'timestamp': u'2019-06-02T15:12:33.927000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'55', u'UserProcesses.ProcessName': u'rcuos/47', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4a_GGsBDgMVjelM1g6P', u'_source': {u'timestamp': u'2019-06-02T15:12:33.957000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'57', u'UserProcesses.ProcessName': u'rcuos/49', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MIa_GGsBDgMVjelM1g6V', u'_source': {u'timestamp': u'2019-06-02T15:12:33.963000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'58', u'UserProcesses.ProcessName': u'rcuos/50', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MYa_GGsBDgMVjelM1g6a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.969000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'59', u'UserProcesses.ProcessName': u'rcuos/51', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+>>> for doc in res ['hits']['hits']:
+	int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#76>", line 2, in <module>
+    int(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+KeyError: 'UserProccesess.CPU'
+>>> for doc in res ['hits']['hits']:
+	float(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+
+Traceback (most recent call last):
+  File "<pyshell#78>", line 2, in <module>
+    float(doc['_source']['UserProccesess.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+KeyError: 'UserProccesess.CPU'
+>>> for doc in res ['hits']['hits']:
+	float(doc['_source'][u'UserProcesses.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+(0.0, 'rcuos/29')
+(0.0, 'rcuos/35')
+(0.0, 'rcuos/38')
+(0.0, 'rcuos/43')
+(0.0, 'rcuos/45')
+(0.0, 'rcuos/46')
+(0.0, 'rcuos/47')
+(0.0, 'rcuos/49')
+(0.0, 'rcuos/50')
+(0.0, 'rcuos/51')
+>>> res = es.search(index="gymic-userprocesses", size=100, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+>>> for doc in res ['hits']['hits']:
+	float(doc['_source'][u'UserProcesses.CPU']), str(doc['_source']['UserProcesses.ProcessName'])
+
+
+(0.0, 'rcuos/29')
+(0.0, 'rcuos/35')
+(0.0, 'rcuos/38')
+(0.0, 'rcuos/43')
+(0.0, 'rcuos/45')
+(0.0, 'rcuos/46')
+(0.0, 'rcuos/47')
+(0.0, 'rcuos/49')
+(0.0, 'rcuos/50')
+(0.0, 'rcuos/51')
+(0.0, 'rcuos/52')
+(0.0, 'rcuos/54')
+(0.0, 'rcuos/63')
+(0.0, 'rcuos/67')
+(0.0, 'rcuos/70')
+(0.0, 'rcuos/80')
+(0.0, 'rcuos/81')
+(0.0, 'rcuos/83')
+(0.0, 'rcuos/92')
+(0.0, 'rcuos/95')
+(0.0, 'rcuos/101')
+(0.0, 'rcuos/104')
+(0.0, 'rcuos/105')
+(0.0, 'rcuos/106')
+(0.0, 'rcuos/107')
+(0.0, 'rcuos/119')
+(0.0, 'rcuob/0')
+(0.0, 'rcuob/4')
+(0.0, 'rcuob/8')
+(0.0, 'rcuos/11')
+(0.0, 'rcuos/21')
+(0.0, 'rcuos/25')
+(0.0, 'rcuos/45')
+(0.0, 'rcuos/50')
+(0.0, 'rcuos/52')
+(0.0, 'rcuos/56')
+(0.0, 'rcuos/63')
+(0.0, 'rcuos/67')
+(0.0, 'rcuos/68')
+(0.0, 'rcuos/73')
+(0.0, 'rcuos/77')
+(0.0, 'rcuos/79')
+(0.0, 'rcuos/91')
+(0.0, 'rcuos/94')
+(0.0, 'rcuos/95')
+(0.0, 'rcuos/99')
+(0.0, 'rcuos/100')
+(0.0, 'rcuos/104')
+(0.0, 'rcuos/108')
+(0.0, 'rcuos/112')
+(0.0, 'rcuos/113')
+(0.0, 'rcuos/117')
+(0.0, 'rcuos/121')
+(0.0, 'rcuob/1')
+(0.0, 'rcuob/4')
+(0.0, 'rcuob/18')
+(0.0, 'rcuob/26')
+(0.0, 'rcuob/28')
+(0.0, 'rcuob/29')
+(0.0, 'rcuob/31')
+(0.0, 'rcuob/34')
+(0.0, 'rcuob/35')
+(0.0, 'rcuob/40')
+(0.0, 'rcuos/60')
+(0.0, 'rcuos/61')
+(0.0, 'rcuos/69')
+(0.0, 'rcuos/70')
+(0.0, 'rcuos/72')
+(0.0, 'rcuos/73')
+(0.0, 'rcuos/77')
+(0.0, 'rcuos/82')
+(0.0, 'rcuos/95')
+(0.0, 'rcuos/96')
+(0.0, 'rcuos/107')
+(0.0, 'rcuos/110')
+(0.0, 'rcuos/111')
+(0.0, 'rcuos/117')
+(0.0, 'rcuos/9')
+(0.0, 'rcuos/24')
+(0.0, 'rcuos/25')
+(0.0, 'rcuos/32')
+(0.0, 'rcuos/33')
+(0.0, 'rcuos/37')
+(0.0, 'rcuos/40')
+(0.0, 'rcuos/46')
+(0.0, 'rcuos/49')
+(0.0, 'rcuos/54')
+(0.0, 'rcuos/127')
+(0.0, 'rcuob/10')
+(0.0, 'rcuob/12')
+(0.0, 'rcuob/15')
+(0.0, 'rcuob/16')
+(0.0, 'rcuob/20')
+(0.0, 'rcuob/21')
+(0.0, 'rcuob/24')
+(0.0, 'kthreadd')
+(0.0, 'rcuos/8')
+(0.0, 'rcuos/16')
+(0.0, 'rcuos/25')
+(0.0, 'rcuos/2')
+>>> import pandas
+>>> dict = {}
+>>> res['hits']['hits']
+[{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'G4a_GGsBDgMVjelM1Q7H', u'_source': {u'timestamp': u'2019-06-02T15:12:33.757000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'37', u'UserProcesses.ProcessName': u'rcuos/29', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'IYa_GGsBDgMVjelM1Q7_', u'_source': {u'timestamp': u'2019-06-02T15:12:33.812000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'43', u'UserProcesses.ProcessName': u'rcuos/35', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'JIa_GGsBDgMVjelM1g4a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.831000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'46', u'UserProcesses.ProcessName': u'rcuos/38', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'KYa_GGsBDgMVjelM1g45', u'_source': {u'timestamp': u'2019-06-02T15:12:33.871000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'51', u'UserProcesses.ProcessName': u'rcuos/43', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'K4a_GGsBDgMVjelM1g5d', u'_source': {u'timestamp': u'2019-06-02T15:12:33.908000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'53', u'UserProcesses.ProcessName': u'rcuos/45', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LIa_GGsBDgMVjelM1g5r', u'_source': {u'timestamp': u'2019-06-02T15:12:33.921000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'54', u'UserProcesses.ProcessName': u'rcuos/46', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYa_GGsBDgMVjelM1g6C', u'_source': {u'timestamp': u'2019-06-02T15:12:33.927000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'55', u'UserProcesses.ProcessName': u'rcuos/47', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4a_GGsBDgMVjelM1g6P', u'_source': {u'timestamp': u'2019-06-02T15:12:33.957000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'57', u'UserProcesses.ProcessName': u'rcuos/49', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MIa_GGsBDgMVjelM1g6V', u'_source': {u'timestamp': u'2019-06-02T15:12:33.963000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'58', u'UserProcesses.ProcessName': u'rcuos/50', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MYa_GGsBDgMVjelM1g6a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.969000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'59', u'UserProcesses.ProcessName': u'rcuos/51', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Moa_GGsBDgMVjelM1g6p', u'_source': {u'timestamp': u'2019-06-02T15:12:33.975000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'60', u'UserProcesses.ProcessName': u'rcuos/52', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'NIa_GGsBDgMVjelM1g61', u'_source': {u'timestamp': u'2019-06-02T15:12:33.995000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'62', u'UserProcesses.ProcessName': u'rcuos/54', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'PYa_GGsBDgMVjelM1g72', u'_source': {u'timestamp': u'2019-06-02T15:12:34.061000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'71', u'UserProcesses.ProcessName': u'rcuos/63', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'QYa_GGsBDgMVjelM1w4v', u'_source': {u'timestamp': u'2019-06-02T15:12:34.118000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'75', u'UserProcesses.ProcessName': u'rcuos/67', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'RIa_GGsBDgMVjelM2A4A', u'_source': {u'timestamp': u'2019-06-02T15:12:34.323000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'78', u'UserProcesses.ProcessName': u'rcuos/70', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Toa_GGsBDgMVjelM2A5n', u'_source': {u'timestamp': u'2019-06-02T15:12:34.429000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'88', u'UserProcesses.ProcessName': u'rcuos/80', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'T4a_GGsBDgMVjelM2A51', u'_source': {u'timestamp': u'2019-06-02T15:12:34.443000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'89', u'UserProcesses.ProcessName': u'rcuos/81', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UYa_GGsBDgMVjelM2A6s', u'_source': {u'timestamp': u'2019-06-02T15:12:34.497000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'91', u'UserProcesses.ProcessName': u'rcuos/83', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Woa_GGsBDgMVjelM2Q5W', u'_source': {u'timestamp': u'2019-06-02T15:12:34.668000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'100', u'UserProcesses.ProcessName': u'rcuos/92', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'XYa_GGsBDgMVjelM2Q6B', u'_source': {u'timestamp': u'2019-06-02T15:12:34.712000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'103', u'UserProcesses.ProcessName': u'rcuos/95', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Y4a_GGsBDgMVjelM2Q7f', u'_source': {u'timestamp': u'2019-06-02T15:12:34.805000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'109', u'UserProcesses.ProcessName': u'rcuos/101', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Zoa_GGsBDgMVjelM2Q70', u'_source': {u'timestamp': u'2019-06-02T15:12:34.826000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'112', u'UserProcesses.ProcessName': u'rcuos/104', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Z4a_GGsBDgMVjelM2Q77', u'_source': {u'timestamp': u'2019-06-02T15:12:34.833000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'113', u'UserProcesses.ProcessName': u'rcuos/105', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'aIa_GGsBDgMVjelM2g4D', u'_source': {u'timestamp': u'2019-06-02T15:12:34.840000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'114', u'UserProcesses.ProcessName': u'rcuos/106', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'aYa_GGsBDgMVjelM2g4K', u'_source': {u'timestamp': u'2019-06-02T15:12:34.849000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'115', u'UserProcesses.ProcessName': u'rcuos/107', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'dYa_GGsBDgMVjelM2g6M', u'_source': {u'timestamp': u'2019-06-02T15:12:34.977000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'127', u'UserProcesses.ProcessName': u'rcuos/119', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'f4a_GGsBDgMVjelM2w5y', u'_source': {u'timestamp': u'2019-06-02T15:12:35.208000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'137', u'UserProcesses.ProcessName': u'rcuob/0', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'g4a_GGsBDgMVjelM2w6p', u'_source': {u'timestamp': u'2019-06-02T15:12:35.264000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'141', u'UserProcesses.ProcessName': u'rcuob/4', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'h4a_GGsBDgMVjelM2w7P', u'_source': {u'timestamp': u'2019-06-02T15:12:35.302000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'145', u'UserProcesses.ProcessName': u'rcuob/8', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'HYa_GGsBDgMVjelMdAco', u'_source': {u'timestamp': u'2019-06-02T15:12:08.767000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'19', u'UserProcesses.ProcessName': u'rcuos/11', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MYa_GGsBDgMVjelMdAev', u'_source': {u'timestamp': u'2019-06-02T15:12:08.903000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'29', u'UserProcesses.ProcessName': u'rcuos/21', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'OYa_GGsBDgMVjelMdAfp', u'_source': {u'timestamp': u'2019-06-02T15:12:08.960000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'33', u'UserProcesses.ProcessName': u'rcuos/25', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'YYa_GGsBDgMVjelMdgeT', u'_source': {u'timestamp': u'2019-06-02T15:12:09.387000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'53', u'UserProcesses.ProcessName': u'rcuos/45', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'a4a_GGsBDgMVjelMdwcJ', u'_source': {u'timestamp': u'2019-06-02T15:12:09.504000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'58', u'UserProcesses.ProcessName': u'rcuos/50', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'b4a_GGsBDgMVjelMdwcZ', u'_source': {u'timestamp': u'2019-06-02T15:12:09.520000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'60', u'UserProcesses.ProcessName': u'rcuos/52', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'd4a_GGsBDgMVjelMdwcu', u'_source': {u'timestamp': u'2019-06-02T15:12:09.542000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'64', u'UserProcesses.ProcessName': u'rcuos/56', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'hYa_GGsBDgMVjelMdwdw', u'_source': {u'timestamp': u'2019-06-02T15:12:09.608000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'71', u'UserProcesses.ProcessName': u'rcuos/63', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'jYa_GGsBDgMVjelMdweX', u'_source': {u'timestamp': u'2019-06-02T15:12:09.647000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'75', u'UserProcesses.ProcessName': u'rcuos/67', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'j4a_GGsBDgMVjelMdweb', u'_source': {u'timestamp': u'2019-06-02T15:12:09.650000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'76', u'UserProcesses.ProcessName': u'rcuos/68', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'mYa_GGsBDgMVjelMdwf0', u'_source': {u'timestamp': u'2019-06-02T15:12:09.739000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'81', u'UserProcesses.ProcessName': u'rcuos/73', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'oYa_GGsBDgMVjelMeAce', u'_source': {u'timestamp': u'2019-06-02T15:12:09.780000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'85', u'UserProcesses.ProcessName': u'rcuos/77', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'pIa_GGsBDgMVjelMeAc1', u'_source': {u'timestamp': u'2019-06-02T15:12:09.805000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'87', u'UserProcesses.ProcessName': u'rcuos/79', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'sIa_GGsBDgMVjelMeAex', u'_source': {u'timestamp': u'2019-06-02T15:12:09.929000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'99', u'UserProcesses.ProcessName': u'rcuos/91', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u's4a_GGsBDgMVjelMeAfK', u'_source': {u'timestamp': u'2019-06-02T15:12:09.953000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'102', u'UserProcesses.ProcessName': u'rcuos/94', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'tIa_GGsBDgMVjelMeAfQ', u'_source': {u'timestamp': u'2019-06-02T15:12:09.959000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'103', u'UserProcesses.ProcessName': u'rcuos/95', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'uIa_GGsBDgMVjelMeAfo', u'_source': {u'timestamp': u'2019-06-02T15:12:09.982000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'107', u'UserProcesses.ProcessName': u'rcuos/99', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'uYa_GGsBDgMVjelMeAfu', u'_source': {u'timestamp': u'2019-06-02T15:12:09.988000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'108', u'UserProcesses.ProcessName': u'rcuos/100', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'vYa_GGsBDgMVjelMeQdr', u'_source': {u'timestamp': u'2019-06-02T15:12:10.068000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'112', u'UserProcesses.ProcessName': u'rcuos/104', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'wYa_GGsBDgMVjelMeQeJ', u'_source': {u'timestamp': u'2019-06-02T15:12:10.143000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'116', u'UserProcesses.ProcessName': u'rcuos/108', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'xYa_GGsBDgMVjelMegdu', u'_source': {u'timestamp': u'2019-06-02T15:12:10.373000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'120', u'UserProcesses.ProcessName': u'rcuos/112', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'xoa_GGsBDgMVjelMegd3', u'_source': {u'timestamp': u'2019-06-02T15:12:10.383000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'121', u'UserProcesses.ProcessName': u'rcuos/113', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'yoa_GGsBDgMVjelMegeT', u'_source': {u'timestamp': u'2019-06-02T15:12:10.410000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'125', u'UserProcesses.ProcessName': u'rcuos/117', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'zoa_GGsBDgMVjelMegeu', u'_source': {u'timestamp': u'2019-06-02T15:12:10.437000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'129', u'UserProcesses.ProcessName': u'rcuos/121', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'14a_GGsBDgMVjelMewcL', u'_source': {u'timestamp': u'2019-06-02T15:12:10.528000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'138', u'UserProcesses.ProcessName': u'rcuob/1', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'2oa_GGsBDgMVjelMewc9', u'_source': {u'timestamp': u'2019-06-02T15:12:10.579000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'141', u'UserProcesses.ProcessName': u'rcuob/4', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'6Ia_GGsBDgMVjelMfAcQ', u'_source': {u'timestamp': u'2019-06-02T15:12:10.790000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'155', u'UserProcesses.ProcessName': u'rcuob/18', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'8Ia_GGsBDgMVjelMfAdm', u'_source': {u'timestamp': u'2019-06-02T15:12:10.878000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'163', u'UserProcesses.ProcessName': u'rcuob/26', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'8oa_GGsBDgMVjelMfAd0', u'_source': {u'timestamp': u'2019-06-02T15:12:10.891000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'165', u'UserProcesses.ProcessName': u'rcuob/28', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'84a_GGsBDgMVjelMfAd7', u'_source': {u'timestamp': u'2019-06-02T15:12:10.897000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'166', u'UserProcesses.ProcessName': u'rcuob/29', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'9Ya_GGsBDgMVjelMfAeI', u'_source': {u'timestamp': u'2019-06-02T15:12:10.911000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'168', u'UserProcesses.ProcessName': u'rcuob/31', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'-Ia_GGsBDgMVjelMfAeg', u'_source': {u'timestamp': u'2019-06-02T15:12:10.934000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'171', u'UserProcesses.ProcessName': u'rcuob/34', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'-Ya_GGsBDgMVjelMfAet', u'_source': {u'timestamp': u'2019-06-02T15:12:10.947000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'172', u'UserProcesses.ProcessName': u'rcuob/35', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'_oa_GGsBDgMVjelMfAfw', u'_source': {u'timestamp': u'2019-06-02T15:12:11.012000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'177', u'UserProcesses.ProcessName': u'rcuob/40', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'54W-GGsBDgMVjelM3f04', u'_source': {u'timestamp': u'2019-06-02T15:11:30.128000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'68', u'UserProcesses.ProcessName': u'rcuos/60', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'6oW-GGsBDgMVjelM3f1I', u'_source': {u'timestamp': u'2019-06-02T15:11:30.144000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'69', u'UserProcesses.ProcessName': u'rcuos/61', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'AoW-GGsBDgMVjelM3v44', u'_source': {u'timestamp': u'2019-06-02T15:11:30.379000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'77', u'UserProcesses.ProcessName': u'rcuos/69', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'BYW-GGsBDgMVjelM3v5B', u'_source': {u'timestamp': u'2019-06-02T15:11:30.393000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'78', u'UserProcesses.ProcessName': u'rcuos/70', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'C4W-GGsBDgMVjelM3v5e', u'_source': {u'timestamp': u'2019-06-02T15:11:30.411000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'80', u'UserProcesses.ProcessName': u'rcuos/72', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'DoW-GGsBDgMVjelM3v6D', u'_source': {u'timestamp': u'2019-06-02T15:11:30.459000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'81', u'UserProcesses.ProcessName': u'rcuos/73', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'GoW-GGsBDgMVjelM3v7U', u'_source': {u'timestamp': u'2019-06-02T15:11:30.540000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'85', u'UserProcesses.ProcessName': u'rcuos/77', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'KYW-GGsBDgMVjelM3_5E', u'_source': {u'timestamp': u'2019-06-02T15:11:30.651000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'90', u'UserProcesses.ProcessName': u'rcuos/82', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'T4W-GGsBDgMVjelM4f6t', u'_source': {u'timestamp': u'2019-06-02T15:11:31.268000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'103', u'UserProcesses.ProcessName': u'rcuos/95', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'UoW-GGsBDgMVjelM4f7F', u'_source': {u'timestamp': u'2019-06-02T15:11:31.291000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'104', u'UserProcesses.ProcessName': u'rcuos/96', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'c4W-GGsBDgMVjelM4v7S', u'_source': {u'timestamp': u'2019-06-02T15:11:31.562000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'115', u'UserProcesses.ProcessName': u'rcuos/107', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'fIW-GGsBDgMVjelM4_45', u'_source': {u'timestamp': u'2019-06-02T15:11:31.659000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'118', u'UserProcesses.ProcessName': u'rcuos/110', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'f4W-GGsBDgMVjelM4_5x', u'_source': {u'timestamp': u'2019-06-02T15:11:31.720000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'119', u'UserProcesses.ProcessName': u'rcuos/111', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'kYW-GGsBDgMVjelM5f5k', u'_source': {u'timestamp': u'2019-06-02T15:11:32.221000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'125', u'UserProcesses.ProcessName': u'rcuos/117', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'TYW-GGsBDgMVjelM1v0h', u'_source': {u'timestamp': u'2019-06-02T15:11:28.298000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'17', u'UserProcesses.ProcessName': u'rcuos/9', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'e4W-GGsBDgMVjelM1_35', u'_source': {u'timestamp': u'2019-06-02T15:11:28.786000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'32', u'UserProcesses.ProcessName': u'rcuos/24', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'foW-GGsBDgMVjelM2P0C', u'_source': {u'timestamp': u'2019-06-02T15:11:28.795000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'33', u'UserProcesses.ProcessName': u'rcuos/25', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'k4W-GGsBDgMVjelM2P2-', u'_source': {u'timestamp': u'2019-06-02T15:11:28.982000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'40', u'UserProcesses.ProcessName': u'rcuos/32', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'loW-GGsBDgMVjelM2P3I', u'_source': {u'timestamp': u'2019-06-02T15:11:28.991000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'41', u'UserProcesses.ProcessName': u'rcuos/33', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'ooW-GGsBDgMVjelM2f1Z', u'_source': {u'timestamp': u'2019-06-02T15:11:29.137000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'45', u'UserProcesses.ProcessName': u'rcuos/37', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'q4W-GGsBDgMVjelM2f28', u'_source': {u'timestamp': u'2019-06-02T15:11:29.237000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'48', u'UserProcesses.ProcessName': u'rcuos/40', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'vYW-GGsBDgMVjelM2v2g', u'_source': {u'timestamp': u'2019-06-02T15:11:29.423000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'54', u'UserProcesses.ProcessName': u'rcuos/46', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'xoW-GGsBDgMVjelM2_0g', u'_source': {u'timestamp': u'2019-06-02T15:11:29.583000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'57', u'UserProcesses.ProcessName': u'rcuos/49', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'1YW-GGsBDgMVjelM3P3Y', u'_source': {u'timestamp': u'2019-06-02T15:11:30.032000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'62', u'UserProcesses.ProcessName': u'rcuos/54', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'sYW-GGsBDgMVjelM5v7E', u'_source': {u'timestamp': u'2019-06-02T15:11:32.570000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'135', u'UserProcesses.ProcessName': u'rcuos/127', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'1YW-GGsBDgMVjelM6P7p', u'_source': {u'timestamp': u'2019-06-02T15:11:33.120000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'147', u'UserProcesses.ProcessName': u'rcuob/10', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'24W-GGsBDgMVjelM6f47', u'_source': {u'timestamp': u'2019-06-02T15:11:33.201000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'149', u'UserProcesses.ProcessName': u'rcuob/12', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'44W-GGsBDgMVjelM6f6Q', u'_source': {u'timestamp': u'2019-06-02T15:11:33.287000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'152', u'UserProcesses.ProcessName': u'rcuob/15', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'5oW-GGsBDgMVjelM6f6Z', u'_source': {u'timestamp': u'2019-06-02T15:11:33.298000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'153', u'UserProcesses.ProcessName': u'rcuob/16', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'8oW-GGsBDgMVjelM6f66', u'_source': {u'timestamp': u'2019-06-02T15:11:33.330000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'157', u'UserProcesses.ProcessName': u'rcuob/20', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'9YW-GGsBDgMVjelM6f7C', u'_source': {u'timestamp': u'2019-06-02T15:11:33.338000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'158', u'UserProcesses.ProcessName': u'rcuob/21', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'_oW-GGsBDgMVjelM6v4n', u'_source': {u'timestamp': u'2019-06-02T15:11:33.437000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'161', u'UserProcesses.ProcessName': u'rcuob/24', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'-oa_GGsBDgMVjelM1A0C', u'_source': {u'timestamp': u'2019-06-02T15:12:33.305000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'2', u'UserProcesses.ProcessName': u'kthreadd', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Boa_GGsBDgMVjelM1A6S', u'_source': {u'timestamp': u'2019-06-02T15:12:33.448000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'16', u'UserProcesses.ProcessName': u'rcuos/8', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'Doa_GGsBDgMVjelM1A7p', u'_source': {u'timestamp': u'2019-06-02T15:12:33.535000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'24', u'UserProcesses.ProcessName': u'rcuos/16', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'F4a_GGsBDgMVjelM1Q6H', u'_source': {u'timestamp': u'2019-06-02T15:12:33.693000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'33', u'UserProcesses.ProcessName': u'rcuos/25', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'C4a_GGsBDgMVjelMcwdV', u'_source': {u'timestamp': u'2019-06-02T15:12:08.555000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'10', u'UserProcesses.ProcessName': u'rcuos/2', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}]
+
+>>> res['hits']['hits']['_source']
+
+Traceback (most recent call last):
+
+  File "<pyshell#87>", line 1, in <module>
+    res['hits']['hits']['_source']
+TypeError: list indices must be integers, not str
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df.h
+
+Traceback (most recent call last):
+  File "<pyshell#90>", line 1, in <module>
+    df.h
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'h'
+>>> df.head()
+                     IP  ...                   timestamp
+_source  192.168.17.134  ...  2019-06-02T15:12:33.757000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.812000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.831000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.871000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.908000
+
+[5 rows x 5 columns]
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=3)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#92>", line 1, in <module>
+    df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=3)['_source'].T
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 228, in concat
+    copy=copy, sort=sort)
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 327, in __init__
+    axis = sample._get_axis_number(axis)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 361, in _get_axis_number
+    .format(axis, type(cls)))
+ValueError: No axis named 3 for object type <type 'type'>
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=2)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#93>", line 1, in <module>
+    df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=2)['_source'].T
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 228, in concat
+    copy=copy, sort=sort)
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 327, in __init__
+    axis = sample._get_axis_number(axis)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 361, in _get_axis_number
+    .format(axis, type(cls)))
+ValueError: No axis named 2 for object type <type 'type'>
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=3)['_source'].Tres = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#94>", line 1, in <module>
+    df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=3)['_source'].Tres = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 228, in concat
+    copy=copy, sort=sort)
+  File "D:\Python27\lib\site-packages\pandas\core\reshape\concat.py", line 327, in __init__
+    axis = sample._get_axis_number(axis)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 361, in _get_axis_number
+    .format(axis, type(cls)))
+ValueError: No axis named 3 for object type <type 'type'>
+>>> res = es.search(index="gymic-userprocesses", size=10, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+>>> res
+{u'hits': {u'hits': [{u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'G4a_GGsBDgMVjelM1Q7H', u'_source': {u'timestamp': u'2019-06-02T15:12:33.757000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'37', u'UserProcesses.ProcessName': u'rcuos/29', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'IYa_GGsBDgMVjelM1Q7_', u'_source': {u'timestamp': u'2019-06-02T15:12:33.812000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'43', u'UserProcesses.ProcessName': u'rcuos/35', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'JIa_GGsBDgMVjelM1g4a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.831000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'46', u'UserProcesses.ProcessName': u'rcuos/38', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'KYa_GGsBDgMVjelM1g45', u'_source': {u'timestamp': u'2019-06-02T15:12:33.871000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'51', u'UserProcesses.ProcessName': u'rcuos/43', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'K4a_GGsBDgMVjelM1g5d', u'_source': {u'timestamp': u'2019-06-02T15:12:33.908000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'53', u'UserProcesses.ProcessName': u'rcuos/45', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LIa_GGsBDgMVjelM1g5r', u'_source': {u'timestamp': u'2019-06-02T15:12:33.921000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'54', u'UserProcesses.ProcessName': u'rcuos/46', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'LYa_GGsBDgMVjelM1g6C', u'_source': {u'timestamp': u'2019-06-02T15:12:33.927000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'55', u'UserProcesses.ProcessName': u'rcuos/47', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'L4a_GGsBDgMVjelM1g6P', u'_source': {u'timestamp': u'2019-06-02T15:12:33.957000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'57', u'UserProcesses.ProcessName': u'rcuos/49', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MIa_GGsBDgMVjelM1g6V', u'_source': {u'timestamp': u'2019-06-02T15:12:33.963000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'58', u'UserProcesses.ProcessName': u'rcuos/50', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}, {u'_score': 1.0, u'_type': u'UserProcesses', u'_id': u'MYa_GGsBDgMVjelM1g6a', u'_source': {u'timestamp': u'2019-06-02T15:12:33.969000', u'IP': u'192.168.17.134', u'UserProccesess.PID': u'59', u'UserProcesses.ProcessName': u'rcuos/51', u'UserProcesses.CPU': u'0.0'}, u'_index': u'gymic-userprocesses'}], u'total': 178359, u'max_score': 1.0}, u'_shards': {u'successful': 5, u'failed': 0, u'skipped': 0, u'total': 5}, u'took': 128, u'timed_out': False}
+>>> pandas.Dat
+
+Traceback (most recent call last):
+  File "<pyshell#97>", line 1, in <module>
+    pandas.Dat
+AttributeError: 'module' object has no attribute 'Dat'
+>>> pandas.DataFrame(res['hit']['hit'], columns=['UserProcesses.CPU'])
+
+Traceback (most recent call last):
+  File "<pyshell#98>", line 1, in <module>
+    pandas.DataFrame(res['hit']['hit'], columns=['UserProcesses.CPU'])
+KeyError: 'hit'
+>>> pandas.DataFrame(res['hits']['hits'], columns=['UserProcesses.CPU'])
+   UserProcesses.CPU
+0                NaN
+1                NaN
+2                NaN
+3                NaN
+4                NaN
+5                NaN
+6                NaN
+7                NaN
+8                NaN
+9                NaN
+>>> pandas.DataFrame(res['hits']['hits'], columns=['_source'])
+                                             _source
+0  {u'timestamp': u'2019-06-02T15:12:33.757000', ...
+1  {u'timestamp': u'2019-06-02T15:12:33.812000', ...
+2  {u'timestamp': u'2019-06-02T15:12:33.831000', ...
+3  {u'timestamp': u'2019-06-02T15:12:33.871000', ...
+4  {u'timestamp': u'2019-06-02T15:12:33.908000', ...
+5  {u'timestamp': u'2019-06-02T15:12:33.921000', ...
+6  {u'timestamp': u'2019-06-02T15:12:33.927000', ...
+7  {u'timestamp': u'2019-06-02T15:12:33.957000', ...
+8  {u'timestamp': u'2019-06-02T15:12:33.963000', ...
+9  {u'timestamp': u'2019-06-02T15:12:33.969000', ...
+>>> pandas.DataFrame(res['hits']['hits'], columns=['_source']['UserProcesses.CPU'])
+
+Traceback (most recent call last):
+  File "<pyshell#101>", line 1, in <module>
+    pandas.DataFrame(res['hits']['hits'], columns=['_source']['UserProcesses.CPU'])
+TypeError: list indices must be integers, not str
+>>> pandas.DataFrame(list(res['hits']['hits']), columns=['UserProcesses.CPU'])
+   UserProcesses.CPU
+0                NaN
+1                NaN
+2                NaN
+3                NaN
+4                NaN
+5                NaN
+6                NaN
+7                NaN
+8                NaN
+9                NaN
+>>> Select.from_dict(res).to_pandas()
+
+Traceback (most recent call last):
+  File "<pyshell#103>", line 1, in <module>
+    Select.from_dict(res).to_pandas()
+NameError: name 'Select' is not defined
+>>> from elasticsearch_dsl import Select
+
+Traceback (most recent call last):
+  File "<pyshell#104>", line 1, in <module>
+    from elasticsearch_dsl import Select
+ImportError: cannot import name Select
+>>> from pandas import Select
+
+Traceback (most recent call last):
+  File "<pyshell#105>", line 1, in <module>
+    from pandas import Select
+ImportError: cannot import name Select
+>>> from pandastcsearch inport Select
+SyntaxError: invalid syntax
+>>> from pandastcsearch import Select
+
+Traceback (most recent call last):
+  File "<pyshell#107>", line 1, in <module>
+    from pandastcsearch import Select
+ImportError: No module named pandastcsearch
+>>> from pandasticsearch import Select
+>>> pandas_df = Select.from_dict(res).to_pandas()
+>>> pandas_df
+               IP UserProccesess.PID  ...          _type                   timestamp
+0  192.168.17.134                 37  ...  UserProcesses  2019-06-02T15:12:33.757000
+1  192.168.17.134                 43  ...  UserProcesses  2019-06-02T15:12:33.812000
+2  192.168.17.134                 46  ...  UserProcesses  2019-06-02T15:12:33.831000
+3  192.168.17.134                 51  ...  UserProcesses  2019-06-02T15:12:33.871000
+4  192.168.17.134                 53  ...  UserProcesses  2019-06-02T15:12:33.908000
+5  192.168.17.134                 54  ...  UserProcesses  2019-06-02T15:12:33.921000
+6  192.168.17.134                 55  ...  UserProcesses  2019-06-02T15:12:33.927000
+7  192.168.17.134                 57  ...  UserProcesses  2019-06-02T15:12:33.957000
+8  192.168.17.134                 58  ...  UserProcesses  2019-06-02T15:12:33.963000
+9  192.168.17.134                 59  ...  UserProcesses  2019-06-02T15:12:33.969000
+
+[10 rows x 9 columns]
+>>> pandas_df = Select.from_dict(res, columns = ['UserProccesess.PID']).to_pandas()
+
+Traceback (most recent call last):
+  File "<pyshell#111>", line 1, in <module>
+    pandas_df = Select.from_dict(res, columns = ['UserProccesess.PID']).to_pandas()
+TypeError: from_dict() got an unexpected keyword argument 'columns'
+>>> pandas_df = Select.from_dict(res).to_pandas()
+>>> pandas.DataFrame.from_dict(res).to_pandas()
+
+Traceback (most recent call last):
+  File "<pyshell#113>", line 1, in <module>
+    pandas.DataFrame.from_dict(res).to_pandas()
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'to_pandas'
+
+>>> pandas.DataFrame.from_dict(res)
+            _shards  ... took
+failed          0.0  ...  128
+hits            NaN  ...  128
+max_score       NaN  ...  128
+skipped         0.0  ...  128
+successful      5.0  ...  128
+total           5.0  ...  128
+
+[6 rows x 4 columns]
+>>> pandas_df = Select.from_dict(res).select('UserProccesess.PID')
+
+Traceback (most recent call last):
+  File "<pyshell#115>", line 1, in <module>
+    pandas_df = Select.from_dict(res).select('UserProccesess.PID')
+AttributeError: 'Select' object has no attribute 'select'
+>>> pandas_df = pandas.DataFrame.from_dict(res).to_pandas()
+
+Traceback (most recent call last):
+  File "<pyshell#116>", line 1, in <module>
+    pandas_df = pandas.DataFrame.from_dict(res).to_pandas()
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'to_pandas'
+>>> pandas_df = Select.from_dict(res).to_pandas()
+>>> pandas_df.select('UserProccesess.PID')
+
+Warning (from warnings module):
+  File "__main__", line 2
+FutureWarning: 'select' is deprecated and will be removed in a future release. You can use .loc[labels.map(crit)] as a replacement
+
+Traceback (most recent call last):
+  File "<pyshell#118>", line 1, in <module>
+    pandas_df.select('UserProccesess.PID')
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 3651, in select
+    np.asarray([bool(crit(label)) for label in axis_values])]
+TypeError: 'str' object is not callable
+>>> pandas_df.select('UserProccesess.PID').collect()
+
+Traceback (most recent call last):
+  File "<pyshell#119>", line 1, in <module>
+    pandas_df.select('UserProccesess.PID').collect()
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 3651, in select
+    np.asarray([bool(crit(label)) for label in axis_values])]
+TypeError: 'str' object is not callable
+>>> pandas_df.filter().select('UserProccesess.PID').collect()
+
+Traceback (most recent call last):
+  File "<pyshell#120>", line 1, in <module>
+    pandas_df.filter().select('UserProccesess.PID').collect()
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 4583, in filter
+    raise TypeError('Must pass either `items`, `like`, or `regex`')
+TypeError: Must pass either `items`, `like`, or `regex`
+>>> df = pandas_df
+>>> df.columns
+Index([u'IP', u'UserProccesess.PID', u'UserProcesses.CPU',
+       u'UserProcesses.ProcessName', u'_id', u'_index', u'_score', u'_type',
+       u'timestamp'],
+      dtype='object')
+>>> df = pd.concat(map(pd.DataFrame.from_dict, res), axis=1)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#123>", line 1, in <module>
+    df = pd.concat(map(pd.DataFrame.from_dict, res), axis=1)['_source'].T
+NameError: name 'pd' is not defined
+>>> df = pandas.concat(map(pd.DataFrame.from_dict, res), axis=1)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#124>", line 1, in <module>
+    df = pandas.concat(map(pd.DataFrame.from_dict, res), axis=1)['_source'].T
+NameError: name 'pd' is not defined
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res), axis=1)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#125>", line 1, in <module>
+    df = pandas.concat(map(pandas.DataFrame.from_dict, res), axis=1)['_source'].T
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 1138, in from_dict
+    return cls(data, index=index, columns=columns, dtype=dtype)
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 468, in __init__
+    raise ValueError('DataFrame constructor not properly called!')
+ValueError: DataFrame constructor not properly called!
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df
+                     IP  ...                   timestamp
+_source  192.168.17.134  ...  2019-06-02T15:12:33.757000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.812000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.831000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.871000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.908000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.921000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.927000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.957000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.963000
+_source  192.168.17.134  ...  2019-06-02T15:12:33.969000
+
+[10 rows x 5 columns]
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']]
+>>> df1
+        UserProcesses.ProcessName UserProcesses.CPU
+_source                  rcuos/29               0.0
+_source                  rcuos/35               0.0
+_source                  rcuos/38               0.0
+_source                  rcuos/43               0.0
+_source                  rcuos/45               0.0
+_source                  rcuos/46               0.0
+_source                  rcuos/47               0.0
+_source                  rcuos/49               0.0
+_source                  rcuos/50               0.0
+_source                  rcuos/51               0.0
+>>> df1['class'] = 0
+
+Warning (from warnings module):
+  File "__main__", line 2
+SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+>>> df['class'] = 0
+>>> df
+                     IP UserProccesess.PID  ...                   timestamp class
+_source  192.168.17.134                 37  ...  2019-06-02T15:12:33.757000     0
+_source  192.168.17.134                 43  ...  2019-06-02T15:12:33.812000     0
+_source  192.168.17.134                 46  ...  2019-06-02T15:12:33.831000     0
+_source  192.168.17.134                 51  ...  2019-06-02T15:12:33.871000     0
+_source  192.168.17.134                 53  ...  2019-06-02T15:12:33.908000     0
+_source  192.168.17.134                 54  ...  2019-06-02T15:12:33.921000     0
+_source  192.168.17.134                 55  ...  2019-06-02T15:12:33.927000     0
+_source  192.168.17.134                 57  ...  2019-06-02T15:12:33.957000     0
+_source  192.168.17.134                 58  ...  2019-06-02T15:12:33.963000     0
+_source  192.168.17.134                 59  ...  2019-06-02T15:12:33.969000     0
+
+[10 rows x 6 columns]
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> df1['class'] = 0
+>>> df1
+        UserProcesses.ProcessName UserProcesses.CPU  class
+_source                  rcuos/29               0.0      0
+_source                  rcuos/35               0.0      0
+_source                  rcuos/38               0.0      0
+_source                  rcuos/43               0.0      0
+_source                  rcuos/45               0.0      0
+_source                  rcuos/46               0.0      0
+_source                  rcuos/47               0.0      0
+_source                  rcuos/49               0.0      0
+_source                  rcuos/50               0.0      0
+_source                  rcuos/51               0.0      0
+>>> res = es.search(index="gymic-userprocesses", size=100000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#136>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=100000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 232, in perform_request
+    raise ConnectionError("N/A", str(e), e)
+ConnectionError: ConnectionError((<urllib3.connection.HTTPConnection object at 0x0000000004B11860>, 'Connection to 192.168.17.128 timed out. (connect timeout=10)')) caused by: ConnectTimeoutError((<urllib3.connection.HTTPConnection object at 0x0000000004B11860>, 'Connection to 192.168.17.128 timed out. (connect timeout=10)'))
+>>> res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#137>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 232, in perform_request
+    raise ConnectionError("N/A", str(e), e)
+ConnectionError: ConnectionError((<urllib3.connection.HTTPConnection object at 0x0000000017133F28>, 'Connection to 192.168.17.128 timed out. (connect timeout=10)')) caused by: ConnectTimeoutError((<urllib3.connection.HTTPConnection object at 0x0000000017133F28>, 'Connection to 192.168.17.128 timed out. (connect timeout=10)'))
+>>> res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#138>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 239, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\base.py", line 131, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+TransportError: TransportError(503, u'search_phase_execution_exception')
+>>> es = Elasticsearch([{'host': "192.168.17.128", 'port': 9200}])
+>>> res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#140>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=50000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 239, in perform_request
+    self._raise_error(response.status, raw_data)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\base.py", line 131, in _raise_error
+    raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+TransportError: TransportError(500, u'search_phase_execution_exception', u'Result window is too large, from + size must be less than or equal to: [10000] but was [50000]. See the scroll api for a more efficient way to request large data sets. This limit can be set by changing the [index.max_result_window] index level setting.')
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-1d", "lt":"now" } } } })
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> df1['class'] = 0
+>>> import pickel
+
+Traceback (most recent call last):
+  File "<pyshell#145>", line 1, in <module>
+    import pickel
+ImportError: No module named pickel
+>>> import pickle
+>>> def save_object(obj, filename):
+    with open(filename, 'wb') as output:  # Overwrites any existing file.
+        pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+
+
+>>> save_object(res, r'D:\Projects\res.pkl')
+>>> from pyod.models.knn import KNN
+>>> X = df1[u'UserProcesses.ProcessName'].values
+>>> df1
+        UserProcesses.ProcessName UserProcesses.CPU  class
+_source                  rcuos/29               0.0      0
+_source                  rcuos/35               0.0      0
+_source                  rcuos/38               0.0      0
+_source                  rcuos/43               0.0      0
+_source                  rcuos/45               0.0      0
+_source                  rcuos/46               0.0      0
+_source                  rcuos/47               0.0      0
+_source                  rcuos/49               0.0      0
+_source                  rcuos/50               0.0      0
+_source                  rcuos/51               0.0      0
+_source                  rcuos/52               0.0      0
+_source                  rcuos/54               0.0      0
+_source                  rcuos/63               0.0      0
+_source                  rcuos/67               0.0      0
+_source                  rcuos/70               0.0      0
+_source                  rcuos/80               0.0      0
+_source                  rcuos/81               0.0      0
+_source                  rcuos/83               0.0      0
+_source                  rcuos/92               0.0      0
+_source                  rcuos/95               0.0      0
+_source                 rcuos/101               0.0      0
+_source                 rcuos/104               0.0      0
+_source                 rcuos/105               0.0      0
+_source                 rcuos/106               0.0      0
+_source                 rcuos/107               0.0      0
+_source                 rcuos/119               0.0      0
+_source                   rcuob/0               0.0      0
+_source                   rcuob/4               0.0      0
+_source                   rcuob/8               0.0      0
+_source                  rcuos/11               0.0      0
+...                           ...               ...    ...
+_source                 rcuos/126                 0      0
+_source                   rcuob/4                 0      0
+_source                  rcuob/33                 0      0
+_source                  rcuob/46                 0      0
+_source                  rcuob/47                 0      0
+_source                  rcuob/48                 0      0
+_source                  rcuob/60                 0      0
+_source                  rcuob/64                 0      0
+_source                  rcuob/67                 0      0
+_source                  rcuob/85                 0      0
+_source                  rcuob/90                 0      0
+_source                  rcuob/94                 0      0
+_source                 rcuob/107                 0      0
+_source                 rcuob/109                 0      0
+_source                 rcuob/113                 0      0
+_source                 rcuob/114                 0      0
+_source                 rcuob/117                 0      0
+_source                 rcuob/118                 0      0
+_source                 rcuob/121                 0      0
+_source               ksoftirqd/1                 0      0
+_source                        md                 0      0
+_source                   kswapd0                 0      0
+_source                khugepaged                 0      0
+_source                    crypto                 0      0
+_source                  kthrotld                 0      0
+_source                 kpsmoused                 0      0
+_source                mpt_poll_0                 0      0
+_source                 scsi_eh_5                 0      0
+_source                 scsi_eh_7                 0      0
+_source                 scsi_eh_9                 0      0
+
+[10000 rows x 3 columns]
+>>> Y = df1[u'UserProcesses.CPU'].values
+>>> Z = df1['class'].values
+>>> clf = KNN(contamination=0.02, n_neighbors=5)
+>>> clf.fit(x)
+
+Traceback (most recent call last):
+  File "<pyshell#156>", line 1, in <module>
+    clf.fit(x)
+NameError: name 'x' is not defined
+>>> clf.fit(X)
+
+Traceback (most recent call last):
+  File "<pyshell#157>", line 1, in <module>
+    clf.fit(X)
+  File "D:\Python27\lib\site-packages\pyod\models\knn.py", line 170, in fit
+    X = check_array(X)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 527, in check_array
+    array = np.asarray(array, dtype=dtype, order=order)
+  File "D:\Python27\lib\site-packages\numpy\core\numeric.py", line 538, in asarray
+    return array(a, dtype, copy=False, order=order)
+ValueError: could not convert string to float: rcuos/29
+>>> clf.fit(Y)
+
+Traceback (most recent call last):
+  File "<pyshell#158>", line 1, in <module>
+    clf.fit(Y)
+  File "D:\Python27\lib\site-packages\pyod\models\knn.py", line 170, in fit
+    X = check_array(X)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 527, in check_array
+    array = np.asarray(array, dtype=dtype, order=order)
+  File "D:\Python27\lib\site-packages\numpy\core\numeric.py", line 538, in asarray
+    return array(a, dtype, copy=False, order=order)
+ValueError: could not convert string to float: sh
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-14h", "lt":"now" } } } })
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> X = df1[u'UserProcesses.ProcessName'].values
+>>> Y = df1[u'UserProcesses.CPU'].values
+>>> Z = df1['class'].values
+
+Traceback (most recent call last):
+  File "<pyshell#164>", line 1, in <module>
+    Z = df1['class'].values
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2927, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 2659, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'class'
+>>> df1['class'] = 0
+>>> X = df1[u'UserProcesses.ProcessName'].values
+>>> Y = df1[u'UserProcesses.CPU'].values
+>>> Z = df1['class'].values
+>>> clf = KNN(contamination=0.02, n_neighbors=5)
+>>> clf.fit(Y)
+
+Traceback (most recent call last):
+  File "<pyshell#170>", line 1, in <module>
+    clf.fit(Y)
+  File "D:\Python27\lib\site-packages\pyod\models\knn.py", line 170, in fit
+    X = check_array(X)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 552, in check_array
+    "if it contains a single sample.".format(array))
+ValueError: Expected 2D array, got 1D array instead:
+array=[0. 0. 0. ... 0. 0. 0.].
+Reshape your data either using array.reshape(-1, 1) if your data has a single feature or array.reshape(1, -1) if it contains a single sample.
+>>> Y = df1[u'UserProcesses.CPU'].values.reshape(-1,1)
+>>> clf.fit(Y)
+KNN(algorithm='auto', contamination=0.02, leaf_size=30, method='largest',
+  metric='minkowski', metric_params=None, n_jobs=1, n_neighbors=5, p=2,
+  radius=1.0)
+>>> clf.lables_
+
+Traceback (most recent call last):
+  File "<pyshell#173>", line 1, in <module>
+    clf.lables_
+AttributeError: 'KNN' object has no attribute 'lables_'
+>>> clf.labels_
+array([0, 0, 0, ..., 0, 0, 0])
+>>> clf.decision_scores_
+array([0., 0., 0., ..., 0., 0., 0.])
+>>> from pyod.utils import evaluate_print
+>>> evaluate_print('KNN', Y, clf.decision_scores_)
+
+Traceback (most recent call last):
+  File "<pyshell#177>", line 1, in <module>
+    evaluate_print('KNN', Y, clf.decision_scores_)
+  File "D:\Python27\lib\site-packages\pyod\utils\data.py", line 309, in evaluate_print
+    roc=np.round(roc_auc_score(y, y_pred), decimals=4),
+  File "D:\Python27\lib\site-packages\sklearn\metrics\ranking.py", line 356, in roc_auc_score
+    sample_weight=sample_weight)
+  File "D:\Python27\lib\site-packages\sklearn\metrics\base.py", line 74, in _average_binary_score
+    raise ValueError("{0} format is not supported".format(y_type))
+ValueError: unknown format is not supported
+>>> evaluate_print('KNN', X, clf.decision_scores_)
+
+Traceback (most recent call last):
+  File "<pyshell#178>", line 1, in <module>
+    evaluate_print('KNN', X, clf.decision_scores_)
+  File "D:\Python27\lib\site-packages\pyod\utils\data.py", line 309, in evaluate_print
+    roc=np.round(roc_auc_score(y, y_pred), decimals=4),
+  File "D:\Python27\lib\site-packages\sklearn\metrics\ranking.py", line 356, in roc_auc_score
+    sample_weight=sample_weight)
+  File "D:\Python27\lib\site-packages\sklearn\metrics\base.py", line 74, in _average_binary_score
+    raise ValueError("{0} format is not supported".format(y_type))
+ValueError: multiclass format is not supported
+>>> evaluate_print('KNN', Z, clf.decision_scores_)
+
+Traceback (most recent call last):
+  File "<pyshell#179>", line 1, in <module>
+    evaluate_print('KNN', Z, clf.decision_scores_)
+  File "D:\Python27\lib\site-packages\pyod\utils\data.py", line 309, in evaluate_print
+    roc=np.round(roc_auc_score(y, y_pred), decimals=4),
+  File "D:\Python27\lib\site-packages\sklearn\metrics\ranking.py", line 356, in roc_auc_score
+    sample_weight=sample_weight)
+  File "D:\Python27\lib\site-packages\sklearn\metrics\base.py", line 77, in _average_binary_score
+    return binary_metric(y_true, y_score, sample_weight=sample_weight)
+  File "D:\Python27\lib\site-packages\sklearn\metrics\ranking.py", line 324, in _binary_roc_auc_score
+    raise ValueError("Only one class present in y_true. ROC AUC score "
+ValueError: Only one class present in y_true. ROC AUC score is not defined in that case.
+>>> clf.fit(X,Y)
+
+Traceback (most recent call last):
+  File "<pyshell#180>", line 1, in <module>
+    clf.fit(X,Y)
+  File "D:\Python27\lib\site-packages\pyod\models\knn.py", line 170, in fit
+    X = check_array(X)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 527, in check_array
+    array = np.asarray(array, dtype=dtype, order=order)
+  File "D:\Python27\lib\site-packages\numpy\core\numeric.py", line 538, in asarray
+    return array(a, dtype, copy=False, order=order)
+ValueError: could not convert string to float: rcuob/118
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> X = df1[u'UserProcesses.ProcessName'].values.reshape(-1,1)
+>>> Y = df1[u'UserProcesses.CPU'].values
+>>> clf = KNN(contamination=0.02, n_neighbors=5)
+>>> clf.fit(X)
+
+Traceback (most recent call last):
+  File "<pyshell#185>", line 1, in <module>
+    clf.fit(X)
+  File "D:\Python27\lib\site-packages\pyod\models\knn.py", line 170, in fit
+    X = check_array(X)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 527, in check_array
+    array = np.asarray(array, dtype=dtype, order=order)
+  File "D:\Python27\lib\site-packages\numpy\core\numeric.py", line 538, in asarray
+    return array(a, dtype, copy=False, order=order)
+ValueError: could not convert string to float: rcuob/118
+>>> from sklearn import preprocessing
+>>> le = preprocessing.LabelEncoder()
+>>> weather_encoded=le.fit_transform(df1[u'UserProcesses.ProcessName'])
+>>>
+KeyboardInterrupt
+>>> weather_encoded[:5]
+array([136, 142, 144,  99, 425])
+>>> weather_encoded[:25]
+array([136, 142, 144,  99, 425,  96,  75,  26, 372, 395, 379, 383,  22,
+        80,   8,  36,  17,   3, 427,  28,  70, 428,   5, 414,   6])
+>>> weather_encoded[:35]
+array([136, 142, 144,  99, 425,  96,  75,  26, 372, 395, 379, 383,  22,
+        80,   8,  36,  17,   3, 427,  28,  70, 428,   5, 414,   6,   9,
+        62,  63, 424, 109,  34,  41,  46, 410, 430])
+>>> weather_encoded[:85]
+array([136, 142, 144,  99, 425,  96,  75,  26, 372, 395, 379, 383,  22,
+        80,   8,  36,  17,   3, 427,  28,  70, 428,   5, 414,   6,   9,
+        62,  63, 424, 109,  34,  41,  46, 410, 430,  13,  49, 289, 292,
+       307, 308, 309, 314, 323, 325, 336, 338, 339, 344, 346, 353, 354,
+       356, 360, 361, 364, 246, 250, 270, 274, 114, 160, 161, 167, 174,
+       178, 183, 190, 192, 197, 207, 213, 218, 224, 225, 227, 234, 331,
+       338, 349, 350, 360, 362, 364, 250])
+>>> name = le.fit_transform(df1[u'UserProcesses.ProcessName'])
+>>> cpu = le.fit_transform(df1[u'UserProcesses.CPU'])
+>>> cpu[:40]
+array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+>>> features=list(zip(name,cpu))
+>>> from sklearn.neighbors import KNeighborsClassifier
+>>> model = KNeighborsClassifier(n_neighbors=3)
+>>> model.fit(features,label)
+
+Traceback (most recent call last):
+  File "<pyshell#199>", line 1, in <module>
+    model.fit(features,label)
+NameError: name 'label' is not defined
+>>> label=le.fit_transform(play)
+
+Traceback (most recent call last):
+  File "<pyshell#200>", line 1, in <module>
+    label=le.fit_transform(play)
+NameError: name 'play' is not defined
+>>> model.fit(features)
+
+Traceback (most recent call last):
+  File "<pyshell#201>", line 1, in <module>
+    model.fit(features)
+TypeError: fit() takes exactly 3 arguments (2 given)
+>>> df1['class'] = 0
+>>> cl = le.fit_transform(df1['class'])
+>>> model.fit(features,cl)
+KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=None, n_neighbors=3, p=2,
+           weights='uniform')
+>>> predicted= model.predict([[0,2]])
+>>> print(predicted)
+[0]
+>>> predicted= model.predict([[687,18]])
+>>> predicted= model.predict([[687,27]])
+>>> predicted= model.predict([[380,27]])
+>>> predicted= model.predict([[380,2]])
+>>> predicted= model.predict([[380,2]])print(predicted)
+SyntaxError: invalid syntax
+>>> print(predicted)
+[0]
+>>> predicted= model.predict([[687,27]])
+>>> print(predicted)
+[0]
+>>> rom sklearn.ensemble import IsolationForest
+SyntaxError: invalid syntax
+>>> from sklearn.ensemble import IsolationForest
+>>> import matplotlib.pyplot as plt
+import numpy as np
+>>> import numpy as np
+>>> import pandas as pd
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-14h", "lt":"now" } } } })
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#221>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 231, in perform_request
+    raise ConnectionTimeout("TIMEOUT", str(e), e)
+ConnectionTimeout: ConnectionTimeout caused by - ReadTimeoutError(HTTPConnectionPool(host='192.168.17.128', port=9200): Read timed out. (read timeout=10))
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+
+Traceback (most recent call last):
+  File "<pyshell#222>", line 1, in <module>
+    res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+  File "D:\Python27\lib\site-packages\elasticsearch\client\utils.py", line 84, in _wrapped
+    return func(*args, params=params, **kwargs)
+  File "D:\Python27\lib\site-packages\elasticsearch\client\__init__.py", line 811, in search
+    "GET", _make_path(index, "_search"), params=params, body=body
+  File "D:\Python27\lib\site-packages\elasticsearch\transport.py", line 318, in perform_request
+    status, headers_response, data = connection.perform_request(method, url, params, body, headers=headers, ignore=ignore, timeout=timeout)
+  File "D:\Python27\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 231, in perform_request
+    raise ConnectionTimeout("TIMEOUT", str(e), e)
+ConnectionTimeout: ConnectionTimeout caused by - ReadTimeoutError(HTTPConnectionPool(host='192.168.17.128', port=9200): Read timed out. (read timeout=10))
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> df1['class'] = 0
+Columns: [UserProcesses.ProcessName, UserProcesses.CPU, class]
+Index: []
+>>> df1.loc[df1['UserProcesses.ProcessName'] == 'sh']
+        UserProcesses.ProcessName UserProcesses.CPU  class
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+...                           ...               ...    ...
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+_source                        sh                 0      0
+
+[3419 rows x 3 columns]
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-18h", "lt":"now" } } } })
+>>> return "sh" in res
+SyntaxError: 'return' outside function
+>>> "sh" in res
+False
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-5h", "lt":"now" } } } })
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU']].copy()
+>>> df1['class'] = 0
+UserProcesses.ProcessName    5903
+UserProcesses.CPU            5903
+class                        5903
+dtype: int64
+>>> df1.loc[df1['UserProcesses.ProcessName'] == 'sh', 'class'] = 1
+>>> df1.head()
+        UserProcesses.ProcessName UserProcesses.CPU  class
+_source                   rcuos/4                 0      0
+_source                   rcuos/5                 0      0
+_source                   rcuos/6                 0      0
+_source                   rcuos/7                 0      0
+_source                  rcuos/12                 0      0
+>>> le = preprocessing.LabelEncoder()
+>>> name = le.fit_transform(df1[u'UserProcesses.ProcessName'])
+>>> cpu = df1[u'UserProcesses.CPU']
+>>> cpu[:10]
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+_source    0
+Name: UserProcesses.CPU, dtype: object
+>>> cpuList = cpu.to_list
+>>> cpulist[:10]
+
+Traceback (most recent call last):
+  File "<pyshell#246>", line 1, in <module>
+    cpulist[:10]
+NameError: name 'cpulist' is not defined
+>>> cpuList[:10]
+
+Traceback (most recent call last):
+  File "<pyshell#247>", line 1, in <module>
+    cpuList[:10]
+TypeError: 'instancemethod' object has no attribute '__getitem__'
+>>> cpuList
+<bound method Series.tolist of _source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source    0.1
+          ...
+_source    0.3
+_source      0
+_source    0.1
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source    0.2
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+_source      0
+Name: UserProcesses.CPU, Length: 5903, dtype: object>
+>>> cpuList = cpu.to_list()
+>>> cpuList[:5]
+[0.0, 0.0, 0.0, 0.0, 0.0]
+>>> classList = df1['class'].to_list()
+>>> classList[:5]
+[0L, 0L, 0L, 0L, 0L]
+>>> features=list(zip(name,cpuList))
+>>> model = KNeighborsClassifier(n_neighbors=3)
+>>> model.fit(features, classList)
+KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=None, n_neighbors=3, p=2,
+           weights='uniform')
+>>> predicted= model.predict([[0,2]])
+>>> predicted
+array([0], dtype=int64)
+>>> le.transform("xmrig")
+
+Traceback (most recent call last):
+  File "<pyshell#258>", line 1, in <module>
+    le.transform("xmrig")
+  File "D:\Python27\lib\site-packages\sklearn\preprocessing\label.py", line 252, in transform
+    y = column_or_1d(y, warn=True)
+  File "D:\Python27\lib\site-packages\sklearn\utils\validation.py", line 797, in column_or_1d
+    raise ValueError("bad input shape {0}".format(shape))
+ValueError: bad input shape ()
+>>> le.transform(["xmrig"])
+array([435], dtype=int64)
+>>> predicted= model.predict([[435,2]])
+>>> predicted
+array([0], dtype=int64)
+>>> predicted= model.predict([[435,145]])
+>>> predicted
+array([1], dtype=int64)
+>>> predicted= model.predict([[435,122]])
+>>> predicted
+array([1], dtype=int64)
+>>> predicted= model.predict([[435,99]])
+>>> predicted= model.predict([[435,99]])
+>>> ]])
+>>>predicted
+SyntaxError: invalid syntax
+>>> predicted
+array([1], dtype=int64)
+>>> le.transform(["sh"])
+array([408], dtype=int64)
+>>> predicted= model.predict([[408,99]])
+>>> predicted
+array([1], dtype=int64)
+>>> predicted= model.predict([[408,5]])
+>>> predicted= model.predict([[408,5]])
+>>> predicted
+array([0], dtype=int64)
+>>> predicted= model.predict([[408,55]])
+>>> predicted
+array([0], dtype=int64)
+>>> predicted= model.predict([[408,90]])
+>>> predicted
+array([1], dtype=int64)
+>>> predicted= model.predict([[408,78]])
+>>> predicted
+array([0], dtype=int64)
+>>> predicted= model.predict([[435,78]])
+>>> predicted
+array([0], dtype=int64)
+>>> df1.to_pickle(r"D:\Projects\dataFrame")
+>>> print(predicted)
+[0]
+>>> predicted[0]
+0
+>>> le.transform(["sh"])[0]
+408
+>>>
