@@ -11,14 +11,16 @@ from conf import LIME_PORT
 from user_modules import  UserModules
 from kernel_modules import KernelModules
 from utils import recv_dump
+from ml import minerMLMode_inspect, minerMLMode_createModel
 
-is_dumped = False
+#is_dumped = False
+mlModel = None
 
 def compare_proc(artifacts_list, addr):
     print "Compare processes"
     try:
         list2 = list1 = []
-        global is_dumped
+        #global is_dumped
         irelevant_processes = []
         # timeout = 0
         # #irelevant_processes = ["ksoftirqd", "rcu_sched", "insmod", "system-udevd", "ps", "sh", "lsched"]
@@ -39,11 +41,11 @@ def compare_proc(artifacts_list, addr):
         #         es.log_error("CompareModule TimeOutError: KernelProcesses not received")
         #
             #Signal to Workstation to not take a dump
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((addr, LIME_PORT))
-        s.send("No")
-        s.close()
-        return
+        # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # s.connect((addr, LIME_PORT))
+        # s.send("No")
+        # s.close()
+        #return
 
         list1 = artifacts_list["userProcess"].parsed_data
         list2 = artifacts_list["kernelProcesses"].parsed_data
@@ -57,19 +59,22 @@ def compare_proc(artifacts_list, addr):
             if proc[-1] in irelevant_processes or proc[-1] == '':
                 diff_list.remove(proc)
 
-        # if not is_dumped:
-        #
-        #     # Creating a socket so the server will memdump the workstation
-        #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #     s.connect((addr, LIME_PORT))
-        #     if len(diff_list) == 0:
-        #         s.send("No")
-        #         s.close()
-        #     else:
-        #         s.send("Yes")
-        #         s.close()
-        #         is_dumped = True
-        #         recv_dump(addr)
+        #if not is_dumped:
+
+            # Creating a socket so the server will memdump the workstation
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            if len(diff_list) == 0:
+                s.send("No")
+                s.close()
+            else:
+                s.send("Yes")
+                s.close()
+                #is_dumped = True
+                recv_dump(addr)
+        except:
+            pass
 
         es_util = ElasticUtil()
 
@@ -155,7 +160,7 @@ def compare_modules(artifacts_list, addr):
     try:
 
         list2 = list1 = []
-        global is_dumped
+        #global is_dumped
         # timeout = 0
         # while (len(list1) == 0 or len(list2) == 0) and timeout != 10:
         #     for artifact in artifacts_list:
@@ -174,11 +179,11 @@ def compare_modules(artifacts_list, addr):
         #         es.log_error("CompareModule TimeOutError: KernelModules not received")
         #
         # Signal to Workstation to not take a dump
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((addr, LIME_PORT))
-        s.send("No")
-        s.close()
-        return
+        # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # s.connect((addr, LIME_PORT))
+        # s.send("No")
+        # s.close()
+        # return
 
         list1 = artifacts_list["userModule"].parsed_data
         list2 = artifacts_list["kernelModule"].parsed_data
@@ -186,17 +191,20 @@ def compare_modules(artifacts_list, addr):
         # Get a list of modules that are not in both lists
         diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
 
-        # if not is_dumped:
-        #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #     s.connect((addr, LIME_PORT))
-        #     if len(diff_list) == 0:
-        #         s.send("No")
-        #         s.close()
-        #     else:
-        #         s.send("Yes")
-        #         s.close()
-        #         recv_dump(addr)
-
+        #if not is_dumped:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((addr, LIME_PORT))
+            if len(diff_list) == 0:
+                s.send("No")
+                s.close()
+            else:
+                s.send("Yes")
+                s.close()
+                # is_dumped = True
+                recv_dump(addr)
+        except:
+            pass
         es_util = ElasticUtil()
 
         for module in diff_list:
@@ -230,7 +238,7 @@ def searchForMiner(artifacts_list, addr):
     try:
 
         list1 = []
-        global is_dumped
+        #global is_dumped
         # timeout = 0
         # while (len(list1) == 0) and timeout != 10:
         #     for artifact in artifacts_list:
@@ -246,12 +254,17 @@ def searchForMiner(artifacts_list, addr):
         #     return
 
         list1 = artifacts_list["userProcess"].parsed_data
-
+        # print list1
         es_util = ElasticUtil()
+
+        global mlModel
+        if mlModel == None:
+            mlModel = minerMLMode_createModel()
         #print "---"
-        sumList = sum([value[1] for value in list1])
-        avgCpu = "AVG CPU " + sumList / len(list1)
-        print avgCpu
+        sumList = 0
+        sumList = sum([float(value[1]) for value in list1])
+        avgCpu = "AVG CPU " + str(sumList / len(list1))
+        # print avgCpu
         for proc in list1:
             if proc[1] > avgCpu * 2:
                 #print proc
@@ -261,9 +274,20 @@ def searchForMiner(artifacts_list, addr):
                        "UserProcesses.CPU": proc[1],
                        "UserProcesses.AvgCPU": avgCpu,
                        "UserProcesses.ProcessName": proc[2]}
+                es_util.send_to_elastic("gymic-miner", "MinerFinder", doc)
 
+            if minerMLMode_inspect(mlModel, proc) == 1:
+                print "ML FOUND PROC : " + proc
+                doc = {"timestamp": datetime.utcnow(),
+                       "IP": addr,
+                       "UserProcesses.PID": proc[0],
+                       "UserProcesses.CPU": proc[1],
+                       "UserProcesses.AvgCPU": avgCpu,
+                       "UserProcesses.ProcessName": proc[2]}
                 es_util.send_to_elastic("gymic-miner", "MinerFinder", doc)
 
     except Exception as e:
         es = ElasticUtil()
         es.log_error("MinerFinder Error: " + e.message)
+
+

@@ -1,1 +1,1 @@
-cmd_/home/student/Desktop/e/Dr/gymic.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/student/Desktop/e/Dr/gymic.ko /home/student/Desktop/e/Dr/gymic.o /home/student/Desktop/e/Dr/gymic.mod.o ;  true
+cmd_/home/gymic/GYMIC/GYMIC-Client/gymic.ko := ld -r -m elf_x86_64 -T /usr/src/linux-headers-3.13.0-32-generic/scripts/module-common.lds --build-id  -o /home/gymic/GYMIC/GYMIC-Client/gymic.ko /home/gymic/GYMIC/GYMIC-Client/gymic.o /home/gymic/GYMIC/GYMIC-Client/gymic.mod.o
