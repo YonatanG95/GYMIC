@@ -182,9 +182,12 @@ def compare_modules(artifacts_list, addr):
 
         list1 = artifacts_list["userModule"].parsed_data
         list2 = artifacts_list["kernelModule"].parsed_data
+        list3 = artifacts_list["sysModule"].parsed_data
 
         # Get a list of modules that are not in both lists
-        diff_list =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+        diff_list1 =  [i for i in list1 + list2 if i not in list1 or i not in list2]
+        diff_list2 = [i for i in list1 + list3 if i not in list1 or i not in list3]
+        diff_list = list(set(diff_list1 + diff_list2))
 
         # if not is_dumped:
         #     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -200,26 +203,24 @@ def compare_modules(artifacts_list, addr):
         es_util = ElasticUtil()
 
         for module in diff_list:
+            inUser = False
+            inKernel = False
+            inSys = False
             if module in list1:
-                doc = {"timestamp": datetime.utcnow(),
-                       "IP": addr,
-                       "UserModules.ModuleName": module,
-                       "inUser:": True,
-                       "inKernel:": False}
+                inUser = True
+            if module in list2:
+                inKernel = True
+            if module in list3:
+                inSys = True
+            doc = {"timestamp": datetime.utcnow(),
+                   "IP": addr,
+                   "KernelModules.ModuleName": module,
+                   "inUser:": inUser,
+                   "inKernel:": inKernel,
+                   "inSys:": inSys}
 
-                # Connection successful
-
-                es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
-            elif module in list2:
-
-                doc = {"timestamp": datetime.utcnow(),
-                       "IP": addr,
-                       "KernelModules.ModuleName": module,
-                       "inUser:": False,
-                       "inKernel:": True}
-
-                # Connection successful
-                es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
+            # Connection successful
+            es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
     except Exception as e:
         es = ElasticUtil()
         es.log_error("CompareModule Error: " + e.message)
