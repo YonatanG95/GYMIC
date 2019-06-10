@@ -62,7 +62,7 @@ def zmqworker():
                 msg_dic = json.loads(msg_json)
                 msg = msg_dic.get("data")
                 addr = msg_dic.get("addr")
-                print "Worker {0} Received request: {1}".format(worker_id, msg[:20])
+                print "Worker {0} Received request: {1}".format(worker_id, msg)
                 # print "msg: " + msg
                 if msg is not None:
                     # Code for actual work
@@ -80,7 +80,7 @@ def zmqworker():
                             pass
 
                     elif msg.startswith("gymic_finish_mod"):
-                        compare_modules(output_dict[addr],addr)
+                        compare_modules(output_dict[addr], addr)
 
                     elif msg.startswith("gymic_finish_net"):
                         try:
@@ -143,14 +143,16 @@ def tcpserver():
                 data = conn.recv(65536)
                 completed = completed + data
 
-                if "End" in completed and "headerTag" in completed:
-                    if(completed[completed.find("headerTag") + 9 :completed.find("End")] != ""):
-                        msg = {"data": completed[completed.find("headerTag") + 9:completed.find("End")], "addr": addr[0]}
-                        zmqsender(json.dumps(msg))
-                        completed = completed[completed.find("End") + 7:]
+                if "End" in completed:
+                    #if(completed[completed.find("headerTag") + 9 :completed.find("End")] != ""):
+                #       msg = {"data": completed[completed.find("headerTag") + 9:completed.find("End")], "addr": addr[0]}
+                    msg = {"data": completed[:completed.find("End")], "addr": addr[0]}
+                    #msg = {"data": data, "addr": addr[0]}
+                    zmqsender(json.dumps(msg))
+                    completed = completed[completed.find("End") + 7:]
 
                 else:
-                    break
+                   break
 
         except Exception as e:
             es = ElasticUtil()
