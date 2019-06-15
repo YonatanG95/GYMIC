@@ -18,7 +18,7 @@ def minerMLMode_createModel():
 
     # Use label encoder to transform users to integers
     le2 = preprocessing.LabelEncoder()
-    userList = le2.fit(df['User'])
+    le2.fit(df['User'])
     userList = le2.transform(df['User'])
 
     # Get CPU usage

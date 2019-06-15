@@ -19,6 +19,7 @@ class UserNetstat:
                 local_addr = "127.0.0.1"
             else:
                 local_addr = temp_local_addr[0]
+
             temp_remote_addr = temp_line[4].split(':')
             remote_port = temp_remote_addr[-1]
             if len(temp_remote_addr) > 2:

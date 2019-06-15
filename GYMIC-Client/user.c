@@ -1,15 +1,18 @@
 #include "user.h"
+#include <unistd.h>
 
 /* Protocol family, consistent in both kernel prog and user prog. */
 #define MYPROTO NETLINK_USERSOCK
 /* Multicast group, consistent in both kernel prog and user prog. */
 #define MYMGRP 21
 
-#define TCP_SERVER_IP "192.168.196.1"
+#define TCP_SERVER_IP "192.168.17.1"
 #define LIME_PORT 1235
 #define SLEEP_INTERVAL 500000
 
-bool isDumped = false;
+double dumpPeriod = 16;
+
+
 
 int open_netlink(void)
 {
@@ -46,7 +49,7 @@ void read_event(int sock)
     struct msghdr msg;
     struct iovec iov;
     char buffer[65536];
-    //char saveBuff[65536];
+    //buffer[0] = '\0';
     int ret;
 	
     iov.iov_base = (void *) buffer;
@@ -56,84 +59,93 @@ void read_event(int sock)
     msg.msg_iov = &iov;
     msg.msg_iovlen = 1;
 	
-    //printf("Ok, listening.\n");
     ret = recvmsg(sock, &msg, 0);
     if (ret < 0)
         printf("ret < 0.\n");
     else
     {
-	//char buffer[65536];
-	//printf("nl %s", NLMSG_DATA((struct nlmsghdr *) &buffer));
 	sprintf(buffer, "%s", NLMSG_DATA((struct nlmsghdr *) &buffer));
-	//printf("buf %s", buffer);
 	int type = checkType(buffer);
-	//memcpy(saveBuff, buffer, 65536);
-	//printf("%s", buffer);
+
+	
+	
+	//char header[9] = "headerTag";
+	
+	
+	
+	
 	if(type == 1)
 	{
 		
-		//int* processesK = parseProcesses(buffer);
-		getUserProcesses();
+		//sendOverSocket("", header);
 		char kernProcTag[16] = "kernelProcesses";
-		char footer[7] = "EndData";
-		//strcat(buffer, footer);
 		sendOverSocket(buffer, kernProcTag);
+		char footer[7] = "EndData";
 		sendOverSocket("", footer);
-		// printf("%s\n","got the user processes");
+		sleep(1);
+		getUserProcesses();
+		//sendOverSocket("", header);
+		char finishProc[7] = "finish";
 		char finishProcTag[19] = "gymic_finish_proc";
-		char finish[7] = "finish";
-		sendOverSocket(finish, finishProcTag);
+		sendOverSocket(finishProc, finishProcTag);
 		sendOverSocket("", footer);
-		// Open a listener and wait for a message to see if memdump is needed
-        socketForMemdump();
-		//compareProc(processesK, processesU);
+		getUserNetwork();
+		//sendOverSocket("", header);
+		char finishNet[7] = "finish";
+		char finishNetworkTag[17] = "gymic_finish_net";
+		sendOverSocket(finishNet, finishNetworkTag);
+		sendOverSocket("", footer);
+		sleep(1);
+		// Open a listener and wait for a message to see if memdump is 			needed
+        	socketForMemdump();
+		sleep(1);
+		
 	}
 	if(type == 2)
 	{
-		//Thread* threadsK = parseThreads(saveBuff);
-		getUserThreads();
-		char kernThreadTag[14] = "kernelThreads";
 		char footer[7] = "EndData";
-		//strcat(buffer, footer);
+		//sendOverSocket("", header);		
+		char kernThreadTag[14] = "kernelThreads";
 		sendOverSocket(buffer, kernThreadTag);
 		sendOverSocket("", footer);
+		sleep(1);
+		getUserThreads();
+		//sendOverSocket("", header);
 		char finishThreadTag[21] = "gymic_finish_thread";
-		char finish[7] = "finish";
-		sendOverSocket(finish, finishThreadTag);
+		char finishThread[7] = "finish";
+		sendOverSocket(finishThread, finishThreadTag);
 		sendOverSocket("", footer);
-		//compareThreads(threadsK, threadsU);
+		sleep(1);
 	}
 	if(type == 3)
 	{
-	    	getUserNetwork();
-		// printf("%s\n","got the user Network");
-		getUserModules();
-		// printf("%s\n","got the user Modules");
-		char kernModuleTag[14] = "kernelModules";
 		char footer[7] = "EndData";
-		//strcat(buffer, footer);
+		//sendOverSocket("", header);
+		char kernModuleTag[14] = "kernelModules";
 		sendOverSocket(buffer, kernModuleTag);
 		sendOverSocket("", footer);
-		char finishModule[17] = "gymic_finish_mod";
-		char finish[7] = "finish";
-		sendOverSocket(finish, finishModule);
+		sleep(1);
+		getSysModules();
+		getUserModules();
+		//sendOverSocket("", header);
+		char finishMod[7] = "finish";
+		char finishModuleTag[17] = "gymic_finish_mod";
+		sendOverSocket(finishMod, finishModuleTag);
 		sendOverSocket("", footer);
-		// Open a listener and wait for a message to see if memdump is needed
-        socketForMemdump();
-		//compareThreads(threadsK, threadsU);
+		// Open a listener and wait for a message to see if memdump is 			needed
+        	socketForMemdump();
+		sleep(1);
 	}
-    } 
+    }
 }
 
 int checkType(char* in)
 {
-	//printf("%.10s", in);
+
 	if(strncmp(in, "processes", strlen("processes")) == 0)
-	//if(strstr(in, "processes"))
 	{
 		return 1;
 	}
-	//if(strstr(in, "threads"))
 	if(strncmp(in, "threads", strlen("threads")) == 0)	
 	{
 		return 2;
@@ -143,32 +155,6 @@ int checkType(char* in)
 		return 3;
 	}
 	return 0;
-}
-
-Thread* parseThreads(char* buffer)
-{
-	char subbuff[5];
-	memcpy(subbuff, buffer, strstr(buffer, "threads")-buffer);
-	int len = atoi(subbuff);
-	Thread* threads = (Thread*)malloc(sizeof(Thread) * len + 1);
-	buffer = strstr(buffer, "threads") + 7;
-	int i = 0;
-	char *pt; 
-    	pt = strtok (buffer,",");
-    	while (pt != NULL) {
-		char pid[sizeof(pt)];
-		char tid[sizeof(pt)];
-		char* sub = strstr(pt, " ");
-		memcpy(pid, pt, sub-pt);
-		memcpy(tid, sub + 1, strlen(sub));
-		int pidInt = atoi(pid);	
-        	int tidInt = atoi(tid);
-		threads[i].iPid = pidInt;
-		threads[i].iTid = tidInt;
-        	pt = strtok (NULL, ",");
-		i++;
-	}
-	return &threads[0];	
 }
 
 Thread* getUserThreads(void)
@@ -183,9 +169,7 @@ Thread* getUserThreads(void)
 	char userThreadTag[12] = "userThreads";
    	Thread thrlist[65536];
    	in=popen("ps -AT -o pid:1,spid:1", "r");
-  	//fgets(temp, 255, in);
-	//char* prev[255];
-	//fgets(temp, 255, in);
+
 	int i = 0;
 	for(i = 0; i < 65536; i++)
 	{
@@ -195,109 +179,16 @@ Thread* getUserThreads(void)
 	i = 0;
 	while(fgets(temp,sizeof(temp),in) !=NULL)
 	{
-		//strcat(temp," userThread");
-		//printf("%s\n",temp);
-		//i++;
-		//printf("%d\n", i);
+
 		strcat(buf123,temp);
 	}
-	/*while(strcmp(temp,prev) != 0)
-	{
-		strcpy(prev, temp);
-		char subbuff[255];
-		char pid[255];
-		char tid[255];
-		memcpy(subbuff, temp, strstr(temp, "\n")-temp);
-		char* space = strstr(subbuff, " ");
-		memcpy(pid, subbuff, space-subbuff);
-		int pidInt = atoi(pid);
-		memcpy(tid, space + 1, strlen(subbuff) - strlen(space));
-		int tidInt = atoi(tid);
-		thrlist[i].iPid = pidInt;
-		thrlist[i].iTid = tidInt;
-		fgets(temp, 255, in);
-		i++;
-	}	
-	Thread* thrres = (Thread*)malloc(sizeof(Thread) * i + 1);
-	for(int k = 0; k < i; k++)
-	{
-		thrres[k].iPid = thrlist[k].iPid;
-		thrres[k].iTid = thrlist[k].iTid;
-	}*/
 	char footer[7] = "EndData";
-	//strcat(buf123, footer);
-	//printf("%s", buf123);
+	//char header[9] = "headerTag";
+	//sendOverSocket("", header);
 	sendOverSocket(buf123, userThreadTag);
 	sendOverSocket("", footer);
-	//free(ln);
 	pclose(in);
-	//free(in);
-	//strcat(buf123,"\0");
-	//return &thrres[0];*/
 	return 0;
-}
-
-void compareThreads(Thread* threadK, Thread* threadU)
-{
-	printf("****** Threads ******\n");
-	bool equal = true;
-	int cK = 0;
-	int cU = 0;
-	printf("K-Pid\tK-Tid\tU-Pid\tU-Tid\n");
-	while(threadK[0].iPid != NULL && threadU[0].iPid != NULL)
-	{
-		cK++;
-		cU++;
-		//printf("%d\t%d\t%d\t%d\n", threadK[0].iPid, threadK[0].iTid, threadU[0].iPid, threadU[0].iTid);
-		if(threadK[0].iPid != threadU[0].iPid || threadK[0].iTid != threadU[0].iTid)
-			equal = false;
-		threadK++;
-		threadU++;
-	}
-	if(threadK[0].iPid != NULL)
-	{
-		while(threadK[0].iPid != NULL)
-		{
-			cK++;
-			printf("%d\t%d\n", threadK[0].iPid, threadK[0].iTid);
-			threadK++;
-		}
-	}
-	else if(threadU[0].iPid != NULL)
-	{
-		while(threadU[0].iPid != NULL)
-		{
-			cU++;
-			printf("\t\t%d\t%d\n", threadU[0].iPid, threadU[0].iTid);
-			threadU++;
-		}
-	}
-	else
-	{
-		printf("*\t*\t*\t*\n");
-	}
-	printf("Kernel threads count: %d\nUser threads count: %d\n", cK, cU);
-	printf("Found confict: %s\n", equal ? "false" : "true");
-	printf("*********************\n");
-
-}
-int* parseProcesses(char* buffer)
-{
-	char subbuff[5];
-	memcpy(subbuff, buffer, strstr(buffer, "processes")-buffer);
-	int len = atoi(subbuff);
-	int* processes = malloc(sizeof(int) * len + 1);
-	buffer = strstr(buffer, "processes") + 9;
-	int i = 0;
-	char *pt;
-    	pt = strtok (buffer,",");
-    	while (pt != NULL) {
-        	int a = atoi(pt);
-		processes[i] = a;
-        	pt = strtok (NULL, ",");
-		i++;
-	}
-	return &processes[0];
 }
 
 int* getUserProcesses(void)
@@ -309,50 +200,22 @@ int* getUserProcesses(void)
 	memset(buf1234, 0 , sizeof(buf1234));
    	int* prolist[65536];
 	char userProcTag[12] = "userProcess";
-   	//in=popen("ps -Ao pid:1", "r");
-	in2=popen("ps -Ao pid:1,\%cpu:1,comm", "r");
-	//in=popen("netstat", "r");
-  	//fgets(temp, 255, in);
-	//char* prev[255];
-	//fgets(temp, 255, in);
-	//printf("%s",in);
-	//pclose(in);
+	in2=popen("ps -Ao pid:1,\%cpu:1,comm,user", "r");
 	int i = 0;
 	for(i = 0; i < 65536; i++)
 	{
 		prolist[i] = -1;
 	}
 	i = 0;
-	//strcpy(buf123 , "");
 	while(fgets(temp2,sizeof(temp2),in2) !=NULL)
 	{
-		//printf("%s\n",temp);
-		//i++;
-		//printf("%d\n", i);
 		strcat(buf1234,temp2);
 	}
-	//strcat(buf123 , "");
-	//printf("%s",buf1234);
 	char footer[7] = "EndData";
-	//strcat(buf1234, footer);
+	//char header[9] = "headerTag";
+	//sendOverSocket("", header);
 	sendOverSocket(buf1234, userProcTag);
 	sendOverSocket("", footer);
-	/*while(strcmp(temp,prev) != 0)
-	{
-		strcpy(prev, temp);
-		char subbuff[8192];
-		memcpy(subbuff, temp, strstr(temp, "\n")-temp);
-		int pid = atoi(subbuff);
-		prolist[i] = pid;
-		fgets(temp, 8192, in);
-		i++;
-	}	
-	int* prores = malloc(sizeof(int) * i + 1);
-	for(int k = 0; k < i; k++)
-	{
-		prores[k] = prolist[k];
-	}*/
-	//return &prores[0];
 	return 0;
 }
 
@@ -363,20 +226,16 @@ int* getUserNetwork(void)
    	memset(temp, 0 , sizeof(temp));
 	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
 	memset(buf12, 0 , sizeof(buf12));
-	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("netstat -naptu", "r");
 	char userNetTag[12] = "userNetwork";
 	int i = 0;
 	while(fgets(temp,sizeof(temp),in) !=NULL)
 	{
-		//printf("%s\n",temp);
-		//i++;
-		//printf("%d\n", i);
 		strcat(buf12,temp);
 	}
-	//printf("%s\n",buf12);
 	char footer[7] = "EndData";
-	//strcat(buf12, footer);
+	//char header[9] = "headerTag";
+	//sendOverSocket("", header);
 	sendOverSocket(buf12, userNetTag);
 	sendOverSocket("", footer);
 	return 0;
@@ -389,76 +248,29 @@ int* getUserModules(void)
    	memset(temp, 0 , sizeof(temp));
 	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
 	memset(buf12, 0 , sizeof(buf12));
-	//in=popen("ps -Ao pid:1,comm:2", "r");
 	in=popen("lsmod", "r");
 	int i = 0;
 	char userModTag[12] = "userModule";
 	while(fgets(temp,sizeof(temp),in) !=NULL)
 	{
-		//printf("%s\n",temp);
-		//i++;
-		//printf("%d\n", i);
 		strcat(buf12,temp);
 	}
-	//printf("%s\n",buf12);
 	char footer[7] = "EndData";
-	//strcat(buf12, footer);
+	//char header[9] = "headerTag";
+	//sendOverSocket("", header);
 	sendOverSocket(buf12, userModTag);
 	sendOverSocket("", footer);
 	return 0;
 }
 
-void compareProc(int* procK, int* procU)
-{
-	printf("****** Processes ******\n");
-	bool equal = true;
-	int cK = 0;
-	int cU = 0;
-	printf("Kernel\tUser\n");
-	while(procK[0] != 0 && procU[0] != 0)
-	{
-		cK++;
-		cU++;
-		//printf("%d\t%d\n", procK[0], procU[0]);
-		if(procK[0] != procU[0])
-			equal = false;
-		procK++;
-		procU++;
-	}
-	if(procK[0] != 0)
-	{
-		while(procK[0] != 0)
-		{
-			cK++;
-			printf("%d\n", procK[0]);
-			procK++;
-		}
-	}
-	else if(procU[0] != 0)
-	{
-		while(procU[0] != 0)
-		{
-			cU++;
-			printf("\t%d\n", procU[0]);
-			procU++;
-		}
-	}
-	else
-	{
-		printf("*\t*\n");
-	}
-	printf("Kernel processes count: %d\nUser processes count: %d\n", cK, cU);
-	printf("Found confict: %s\n", equal ? "false" : "true");
-	printf("***********************\n");
-}
+
 void sendOverSocket(char* data, char* tag)
 {	
 	int sock;
 	struct sockaddr_in server;
 	char server_reply[2000];
-	//strcat(tag, "\n");
+	printf("%s", tag);
 	strcat(tag,data);
-	//printf("%s", tag);
 	//Create Socket
 	usleep(SLEEP_INTERVAL);
 	sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -468,7 +280,6 @@ void sendOverSocket(char* data, char* tag)
 	}
 	puts("Socket created");
 	
-	//server.sin_addr.s_addr = inet_addr("192.168.1.246");
 	server.sin_addr.s_addr = inet_addr(TCP_SERVER_IP);
 	server.sin_family = AF_INET;
 	server.sin_port = htons (1234);
@@ -483,26 +294,13 @@ void sendOverSocket(char* data, char* tag)
 	
 	//keep communicating with server
 
-	
-		//printf("Enter message :");
-		//scanf("%s", message);
-
-		//send some data
+	//send some data
 	if( send(sock , tag , strlen(tag) , 0) < 0 )
 	{
 		puts("Send failed");
 		return 1;
 	}
 		
-	//REcieve a reply from the server
-	//if( recv(sock , server_reply, 2000, 0) < 0)
-	//{
-	//	puts("recv failed");
-	//	
-	//}
-	//puts("Server reply:");
-	//puts(server_reply);
-	
 	close(sock);
 	puts("Socket Closed\n");
 	return 0;
@@ -510,10 +308,12 @@ void sendOverSocket(char* data, char* tag)
 
 int socketForMemdump()
 {
-    if (isDumped)
-    {
+	//Change to activate / deactivate memory dump
+	dumpPeriod = dumpPeriod + 0;
+	if (dumpPeriod < 15000000)
+   	{
         return 0;
-    }
+    	}
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
 	char client_message[10];
@@ -563,7 +363,7 @@ int socketForMemdump()
 	{
 		if (strcmp(client_message,"Yes")==0)
 		{
-		    isDumped=true;
+		    dumpPeriod = 0;
 		    close(client_sock);
 		    close(socket_desc);
             take_dump();
@@ -584,6 +384,7 @@ int socketForMemdump()
 	}
     close(socket_desc);
 	return 0;
+	
 }
 
 
@@ -625,6 +426,32 @@ void take_dump() {
     }
 }
 
+int* getSysModules(void)
+{
+   	FILE *in=NULL;
+   	char temp[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+   	memset(temp, 0 , sizeof(temp));
+	char buf12[65536*(sizeof(int)+(sizeof(char)*17)+1)];
+	memset(buf12, 0 , sizeof(buf12));
+	//in=popen("ps -Ao pid:1,comm:2", "r");
+	in=popen("ls /sys/module/*/initstate | sed -e 's/^\\/sys\\/module\\///' -e 's/\\/initstate$//'", "r");
+	int i = 0;
+	char sysModTag[12] = "sysModule";
+	while(fgets(temp,sizeof(temp),in) !=NULL)
+	{
+		//printf("%s\n",temp);
+		//i++;
+		//printf("%d\n", i);
+		strcat(buf12,temp);
+	}
+	//printf("%s\n",buf12);
+	char footer[7] = "EndData";
+	//strcat(buf12, footer);
+	sendOverSocket(buf12, sysModTag);
+	sendOverSocket("", footer);
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {	
    
@@ -633,7 +460,7 @@ int main(int argc, char *argv[])
     if (nls < 0)
         return nls;
 
-    printf("$$$$ WELCOME $$$$\nDon't forget to choose parameters in main file!\nPlease insert the module!\n");
+    printf("Agent started...\nChoose parameters in main file!\nPlease insert the module!\n");
     for (;;)
         read_event(nls);
 	

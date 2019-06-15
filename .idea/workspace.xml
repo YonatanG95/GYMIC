@@ -3,9 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b0a23058-c8bc-414f-9c88-93c448383197" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GYMIC-Client/gymic_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Client/gymic_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GYMIC-Client/gymic_syscalls.c" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Client/gymic_syscalls.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GYMIC-Client/user.c" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Client/user.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GYMIC-Server/Artifacts/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Server/Artifacts/compare.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GYMIC-Server/Artifacts/ml.py" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Server/Artifacts/ml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GYMIC-Server/conf.py" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Server/conf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GYMIC-Server/listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/GYMIC-Server/listener.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/GYMIC-Server/venv/" />
     <ignored path="$PROJECT_DIR$/venv/" />
@@ -32,62 +36,22 @@
     <expand />
     <select />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1428712285">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="6" />
-          <entry key="project.open.time.113" value="1" />
-          <entry key="project.open.time.114" value="1" />
-          <entry key="project.open.time.116" value="1" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.125" value="1" />
-          <entry key="project.open.time.15" value="1" />
-          <entry key="project.open.time.33" value="1" />
-          <entry key="project.open.time.43" value="1" />
-          <entry key="project.open.time.45" value="1" />
-          <entry key="project.open.time.54" value="1" />
-          <entry key="project.open.time.61" value="1" />
-          <entry key="project.open.time.75" value="1" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="c" value="2" />
-          <entry key="py" value="33" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="C++" value="2" />
-          <entry key="Python" value="33" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="Python Console" value="46" />
-          <entry key="py" value="1855" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Python" value="1901" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GYMIC-Server/listener.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="2431">
+              <caret line="153" column="21" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/conf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -95,10 +59,70 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/compare.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="197" column="31" selection-start-line="188" selection-start-column="6" selection-end-line="197" selection-end-column="31" />
+            <state relative-caret-position="122">
+              <caret line="224" column="16" selection-start-line="224" selection-start-column="16" selection-end-line="224" selection-end-column="16" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_modules.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_processes.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/artifact.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="748">
+              <caret line="52" column="34" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#36#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/ml.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,6 +154,11 @@
       <find>nets</find>
       <find>while T</find>
       <find>break</find>
+      <find>com</find>
+      <find>compare p</find>
+      <find>compa</find>
+      <find>parseE</find>
+      <find>miner</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -140,9 +169,11 @@
       <list>
         <option value="$PROJECT_DIR$/GYMIC-Server/Artifacts/user_processes.py" />
         <option value="$PROJECT_DIR$/GYMIC-Server/Artifacts/artifact.py" />
-        <option value="$PROJECT_DIR$/GYMIC-Server/conf.py" />
         <option value="$PROJECT_DIR$/GYMIC-Server/listener.py" />
+        <option value="$PROJECT_DIR$/GYMIC-Server/conf.py" />
         <option value="$PROJECT_DIR$/GYMIC-Server/Artifacts/compare.py" />
+        <option value="$PROJECT_DIR$/GYMIC-Server/Artifacts/ml.py" />
+        <option value="$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py" />
       </list>
     </option>
   </component>
@@ -152,12 +183,16 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="20" />
-    <option name="width" value="1346" />
-    <option name="height" value="688" />
+  <component name="NamedScopeManager">
+    <order>
+      <scope name="dataFrame" />
+    </order>
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="980" />
+    <option name="height" value="1030" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -185,6 +220,12 @@
               <item name="GYMIC" type="462c0819:PsiDirectoryNode" />
               <item name="GYMIC-Server" type="462c0819:PsiDirectoryNode" />
               <item name="Artifacts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GYMIC" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GYMIC" type="462c0819:PsiDirectoryNode" />
+              <item name="GYMIC-Server" type="462c0819:PsiDirectoryNode" />
+              <item name="ML_Files" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -249,27 +290,41 @@
       <option name="presentableId" value="Default" />
       <updated>1556396663167</updated>
     </task>
+    <task id="LOCAL-00001" summary="ML + Diffs">
+      <created>1560204358791</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1560204358791</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Files - dont push">
+      <created>1560204632788</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1560204632789</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2912254" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13681428" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295082" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3295082" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.38688526" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.38668555" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32786885" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50033045" side_tool="true" weight="0.32719547" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49966952" weight="0.32719547" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32851985" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.3295082" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -282,19 +337,11 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Files - dont push" />
+    <option name="LAST_COMMIT_MESSAGE" value="Files - dont push" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/GYMIC-Server/listener.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="45" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="output_dict" language="Python" />
@@ -386,34 +433,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/socket.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="205" selection-start-line="205" selection-end-line="205" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="753" selection-start-line="753" selection-end-line="753" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GYMIC-Server/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="243" selection-start-line="243" selection-end-line="243" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://C:/Python27/Lib/socket.py" />
+    <entry file="file://C:/Python27/Lib/threading.py" />
+    <entry file="file://C:/Python27/Lib/json/__init__.py" />
     <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/kernel_threads.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -423,42 +445,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/artifact.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="21" column="45" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_threads.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_processes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_modules.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
@@ -485,20 +472,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_modules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GYMIC-Server/listener.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+        <state relative-caret-position="264">
+          <caret line="153" column="21" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/ml.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-193">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_processes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/user_netstat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-20">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/artifact.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GYMIC-Server/Artifacts/compare.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="197" column="31" selection-start-line="188" selection-start-column="6" selection-end-line="197" selection-end-column="31" />
+        <state relative-caret-position="122">
+          <caret line="224" column="16" lean-forward="true" selection-start-line="224" selection-start-column="16" selection-end-line="224" selection-end-column="16" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

@@ -54,7 +54,7 @@ def compare_proc(artifacts_list, addr):
         #for proc in diff_list:
         #    if proc[-1] in irelevant_processes or proc[-1] == '':
         #        diff_list.remove(proc)
-        for proc in diff_list:
+        for proc in list(diff_list):
             if proc[1] != '':
                 for p in irelevant_processes:
                     if p in proc[1]:
@@ -107,6 +107,7 @@ def compare_proc(artifacts_list, addr):
 
                 # Connection successful
                 es_util.send_to_elastic("gymic-compareprocess", "ProcessCompare", doc)
+        print "Sent diffs"
     except Exception as e:
         es = ElasticUtil()
         es.log_error("CompareProc Error: " + e.message)
@@ -219,6 +220,8 @@ def compare_modules(artifacts_list, addr):
         except:
             pass
         for module in diff_list:
+            if not module:
+                break
             inUser = False
             inKernel = False
             inSys = False
