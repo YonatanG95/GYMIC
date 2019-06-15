@@ -1508,3 +1508,1010 @@ array([0], dtype=int64)
 >>> le.transform(["sh"])[0]
 408
 >>>
+
+----------------------------------------
+
+
+Python 2.7.15 (v2.7.15:ca079a3ea3, Apr 30 2018, 16:30:26) [MSC v.1500 64 bit (AMD64)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>> import elasticsearch
+>>> from elasticsearch inport Elasticsearch
+SyntaxError: invalid syntax
+>>> from elasticsearch import Elasticsearch
+>>> es = Elasticsearch([{'host': "192.168.17.128", 'port': 9200}])
+>>> res = es.search(index="gymic-userprocesses", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-22h", "lt":"now" } } } })
+
+
+
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+
+Traceback (most recent call last):
+  File "<pyshell#5>", line 1, in <module>
+    df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+NameError: name 'pandas' is not defined
+>>> import pandas
+>>> df = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+
+Warning (from warnings module):
+  File "__main__", line 2
+FutureWarning: Sorting because non-concatenation axis is not aligned. A future version
+of pandas will change to not sort by default.
+
+To accept the future behavior, pass 'sort=False'.
+
+To retain the current behavior and silence the warning, pass 'sort=True'.
+
+>>> df.head()
+                     IP  ...                   timestamp
+_source  192.168.17.134  ...  2019-06-09T20:11:47.601000
+_source  192.168.17.134  ...  2019-06-09T20:11:47.790000
+_source  192.168.17.134  ...  2019-06-09T20:11:47.808000
+_source  192.168.17.134  ...  2019-06-09T20:11:47.819000
+_source  192.168.17.134  ...  2019-06-09T20:11:47.852000
+
+[5 rows x 6 columns]
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU', u'UserProcesses.USER']].copy()
+>>> df1.head()
+        UserProcesses.ProcessName UserProcesses.CPU UserProcesses.USER
+_source                  rcuob/44                 0                NaN
+_source                  rcuob/53                 0                NaN
+_source                  rcuob/55                 0                NaN
+_source                  rcuob/56                 0                NaN
+_source                  rcuob/58                 0                NaN
+>>> df1.count()
+UserProcesses.ProcessName    10000
+UserProcesses.CPU            10000
+UserProcesses.USER            9271
+dtype: int64
+>>> df1[df1.u'UserProcesses.USER' != "NaN"]
+SyntaxError: invalid syntax
+>>> df1[df1.'UserProcesses.USER' != "NaN"]
+SyntaxError: invalid syntax
+>>> df1[df1.UserProcesses.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#14>", line 1, in <module>
+    df1[df1.UserProcesses.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'UserProcesses'
+>>> df1[df1.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#15>", line 1, in <module>
+    df1[df1.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'USER'
+>>> df1.columns
+Index([u'UserProcesses.ProcessName', u'UserProcesses.CPU',
+       u'UserProcesses.USER'],
+      dtype='object')
+>>> df1[u'UserProcesses.USER' != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#17>", line 1, in <module>
+    df1[u'UserProcesses.USER' != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2927, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 2659, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: True
+>>> df1[u'UserProcesses.USER'] != "NaN"
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+           ...
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+_source    True
+Name: UserProcesses.USER, Length: 10000, dtype: bool
+>>> df1[df1[u'UserProcesses.USER'] != "NaN"]
+        UserProcesses.ProcessName UserProcesses.CPU UserProcesses.USER
+_source                  rcuob/44                 0                NaN
+_source                  rcuob/53                 0                NaN
+_source                  rcuob/55                 0                NaN
+_source                  rcuob/56                 0                NaN
+_source                  rcuob/58                 0                NaN
+_source                  rcuob/60                 0                NaN
+_source                  rcuob/61                 0                NaN
+_source                  rcuob/62                 0                NaN
+_source                  rcuob/66                 0                NaN
+_source                  rcuob/68                 0                NaN
+_source                  rcuob/74                 0                NaN
+_source                  rcuob/81                 0                NaN
+_source                  rcuob/83                 0                NaN
+_source                  rcuob/84                 0                NaN
+_source                 rcuob/100                 0                NaN
+_source                 rcuob/106                 0                NaN
+_source                 rcuob/110                 0                NaN
+_source                 rcuob/112                 0                NaN
+_source            NetworkManager                 0                NaN
+_source                      cron                 0                NaN
+_source                      Xorg               1.5                NaN
+_source                     acpid                 0                NaN
+_source                   dnsmasq                 0                NaN
+_source                 ssh-agent                 0                NaN
+_source                gvfsd-fuse                 0                NaN
+_source           indicator-sound                 0                NaN
+_source           indicator-print                 0                NaN
+_source           indicator-sessi                 0                NaN
+_source                notify-osd                 0                NaN
+_source           gvfs-udisks2-vo                 0                NaN
+...                           ...               ...                ...
+_source                  rcuos/36                 0               root
+_source                  rcuos/37                 0               root
+_source                  rcuos/42                 0               root
+_source                  rcuos/46                 0               root
+_source                  rcuos/51                 0               root
+_source                  rcuos/65                 0               root
+_source                  rcuos/66                 0               root
+_source                  rcuos/78                 0               root
+_source                  rcuos/92                 0               root
+_source                  rcuos/96                 0               root
+_source                  rcuos/99                 0               root
+_source                    compiz               2.9              gymic
+_source           polkit-gnome-au                 0              gymic
+_source           gvfs-afc-volume                 0              gymic
+_source                     cupsd                 0               root
+_source           telepathy-indic                 0              gymic
+_source           unity-scope-loa               0.1              gymic
+_source           unity-files-dae                 0              gymic
+_source           gnome-pty-helpe                 0              gymic
+_source            kworker/u256:0                 0               root
+_source                        sh                 0               root
+_source                   rcuos/3                 0               root
+_source                   rcuos/6                 0               root
+_source                  rcuos/11                 0               root
+_source                  rcuos/14                 0               root
+_source                  rcuos/17                 0               root
+_source                  rcuos/27                 0               root
+_source                  rcuos/37                 0               root
+_source                  rcuos/41                 0               root
+_source                  rcuos/44                 0               root
+
+[10000 rows x 3 columns]
+>>> df1.dtypes
+UserProcesses.ProcessName    object
+UserProcesses.CPU            object
+UserProcesses.USER           object
+dtype: object
+>>> df1[df1.UserProcesses.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#21>", line 1, in <module>
+    df1[df1.UserProcesses.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'UserProcesses'
+>>> df1[df1.'UserProcesses.USER' != "NaN"]
+SyntaxError: invalid syntax
+>>> df1[df1.uUserProcesses.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#23>", line 1, in <module>
+    df1[df1.uUserProcesses.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'uUserProcesses'
+>>> df1[df1.u'UserProcesses.USER' != "NaN"]
+SyntaxError: invalid syntax
+>>> df1[df1.UserProcesses.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#25>", line 1, in <module>
+    df1[df1.UserProcesses.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'UserProcesses'
+>>> df.rename(index=str, columns={'UserProcesses.USER': "User", "UserProcesses.ProcessName": "ProcessName", "UserProcesses.CPU": "CPU"})
+                     IP UserProccesess.PID  ...   User                   timestamp
+_source  192.168.17.134                181  ...    NaN  2019-06-09T20:11:47.601000
+_source  192.168.17.134                190  ...    NaN  2019-06-09T20:11:47.790000
+_source  192.168.17.134                192  ...    NaN  2019-06-09T20:11:47.808000
+_source  192.168.17.134                193  ...    NaN  2019-06-09T20:11:47.819000
+_source  192.168.17.134                195  ...    NaN  2019-06-09T20:11:47.852000
+_source  192.168.17.134                197  ...    NaN  2019-06-09T20:11:47.875000
+_source  192.168.17.134                198  ...    NaN  2019-06-09T20:11:47.886000
+_source  192.168.17.134                199  ...    NaN  2019-06-09T20:11:47.898000
+_source  192.168.17.134                203  ...    NaN  2019-06-09T20:11:47.951000
+_source  192.168.17.134                205  ...    NaN  2019-06-09T20:11:47.977000
+_source  192.168.17.134                211  ...    NaN  2019-06-09T20:11:48.092000
+_source  192.168.17.134                218  ...    NaN  2019-06-09T20:11:48.288000
+_source  192.168.17.134                220  ...    NaN  2019-06-09T20:11:48.310000
+_source  192.168.17.134                221  ...    NaN  2019-06-09T20:11:48.325000
+_source  192.168.17.134                237  ...    NaN  2019-06-09T20:11:48.503000
+_source  192.168.17.134                243  ...    NaN  2019-06-09T20:11:48.595000
+_source  192.168.17.134                247  ...    NaN  2019-06-09T20:11:48.696000
+_source  192.168.17.134                249  ...    NaN  2019-06-09T20:11:48.716000
+_source  192.168.17.134               1185  ...    NaN  2019-06-09T20:11:54.330000
+_source  192.168.17.134               1221  ...    NaN  2019-06-09T20:11:54.588000
+_source  192.168.17.134               1268  ...    NaN  2019-06-09T20:11:54.952000
+_source  192.168.17.134               1278  ...    NaN  2019-06-09T20:11:55.102000
+_source  192.168.17.134               1426  ...    NaN  2019-06-09T20:11:55.240000
+_source  192.168.17.134               2018  ...    NaN  2019-06-09T20:11:55.432000
+_source  192.168.17.134               2099  ...    NaN  2019-06-09T20:11:55.721000
+_source  192.168.17.134               2153  ...    NaN  2019-06-09T20:11:55.869000
+_source  192.168.17.134               2155  ...    NaN  2019-06-09T20:11:55.879000
+_source  192.168.17.134               2162  ...    NaN  2019-06-09T20:11:55.919000
+_source  192.168.17.134               2243  ...    NaN  2019-06-09T20:11:56.138000
+_source  192.168.17.134               2321  ...    NaN  2019-06-09T20:11:56.472000
+...                 ...                ...  ...    ...                         ...
+_source  192.168.17.136                 44  ...   root  2019-06-10T08:14:55.471000
+_source  192.168.17.136                 45  ...   root  2019-06-10T08:14:55.476000
+_source  192.168.17.136                 50  ...   root  2019-06-10T08:14:55.499000
+_source  192.168.17.136                 54  ...   root  2019-06-10T08:14:55.520000
+_source  192.168.17.136                 59  ...   root  2019-06-10T08:14:55.545000
+_source  192.168.17.136                 73  ...   root  2019-06-10T08:14:55.778000
+_source  192.168.17.136                 74  ...   root  2019-06-10T08:14:55.784000
+_source  192.168.17.136                 86  ...   root  2019-06-10T08:14:55.889000
+_source  192.168.17.136                100  ...   root  2019-06-10T08:14:56.004000
+_source  192.168.17.136                104  ...   root  2019-06-10T08:14:56.032000
+_source  192.168.17.136                107  ...   root  2019-06-10T08:14:56.188000
+_source  192.168.17.134               2259  ...  gymic  2019-06-09T21:51:08.646000
+_source  192.168.17.134               2312  ...  gymic  2019-06-09T21:51:08.931000
+_source  192.168.17.134               2348  ...  gymic  2019-06-09T21:51:08.968000
+_source  192.168.17.134               2438  ...   root  2019-06-09T21:51:09.053000
+_source  192.168.17.134               2444  ...  gymic  2019-06-09T21:51:09.057000
+_source  192.168.17.134               2579  ...  gymic  2019-06-09T21:51:09.261000
+_source  192.168.17.134               2583  ...  gymic  2019-06-09T21:51:09.389000
+_source  192.168.17.134               2948  ...  gymic  2019-06-09T21:51:09.404000
+_source  192.168.17.134               4198  ...   root  2019-06-09T21:51:09.590000
+_source  192.168.17.134               4460  ...   root  2019-06-09T21:51:09.870000
+_source  192.168.17.136                 11  ...   root  2019-06-10T08:21:26.220000
+_source  192.168.17.136                 14  ...   root  2019-06-10T08:21:26.253000
+_source  192.168.17.136                 19  ...   root  2019-06-10T08:21:26.274000
+_source  192.168.17.136                 22  ...   root  2019-06-10T08:21:26.288000
+_source  192.168.17.136                 25  ...   root  2019-06-10T08:21:26.304000
+_source  192.168.17.136                 35  ...   root  2019-06-10T08:21:27.769000
+_source  192.168.17.136                 45  ...   root  2019-06-10T08:21:28.032000
+_source  192.168.17.136                 49  ...   root  2019-06-10T08:21:28.046000
+_source  192.168.17.136                 52  ...   root  2019-06-10T08:21:28.059000
+
+[10000 rows x 6 columns]
+>>> df1 = df[['ProcessName', 'CPU', 'USER']].copy()
+
+Traceback (most recent call last):
+  File "<pyshell#27>", line 1, in <module>
+    df1 = df[['ProcessName', 'CPU', 'USER']].copy()
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2934, in __getitem__
+    raise_missing=True)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1354, in _convert_to_indexer
+    return self._get_listlike_indexer(obj, axis, **kwargs)[1]
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1161, in _get_listlike_indexer
+    raise_missing=raise_missing)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1246, in _validate_read_indexer
+    key=key, axis=self.obj._get_axis_name(axis)))
+KeyError: u"None of [Index([u'ProcessName', u'CPU', u'USER'], dtype='object')] are in the [columns]"
+>>> df1 = df[["ProcessName", "CPU", "USER"]].copy()
+
+Traceback (most recent call last):
+  File "<pyshell#28>", line 1, in <module>
+    df1 = df[["ProcessName", "CPU", "USER"]].copy()
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2934, in __getitem__
+    raise_missing=True)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1354, in _convert_to_indexer
+    return self._get_listlike_indexer(obj, axis, **kwargs)[1]
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1161, in _get_listlike_indexer
+    raise_missing=raise_missing)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1246, in _validate_read_indexer
+    key=key, axis=self.obj._get_axis_name(axis)))
+KeyError: u"None of [Index([u'ProcessName', u'CPU', u'USER'], dtype='object')] are in the [columns]"
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU', u'UserProcesses.USER']].copy()
+>>> df1.rename(index=str, columns={'UserProcesses.USER': "User", "UserProcesses.ProcessName": "ProcessName", "UserProcesses.CPU": "CPU"})
+             ProcessName  CPU   User
+_source         rcuob/44    0    NaN
+_source         rcuob/53    0    NaN
+_source         rcuob/55    0    NaN
+_source         rcuob/56    0    NaN
+_source         rcuob/58    0    NaN
+_source         rcuob/60    0    NaN
+_source         rcuob/61    0    NaN
+_source         rcuob/62    0    NaN
+_source         rcuob/66    0    NaN
+_source         rcuob/68    0    NaN
+_source         rcuob/74    0    NaN
+_source         rcuob/81    0    NaN
+_source         rcuob/83    0    NaN
+_source         rcuob/84    0    NaN
+_source        rcuob/100    0    NaN
+_source        rcuob/106    0    NaN
+_source        rcuob/110    0    NaN
+_source        rcuob/112    0    NaN
+_source   NetworkManager    0    NaN
+_source             cron    0    NaN
+_source             Xorg  1.5    NaN
+_source            acpid    0    NaN
+_source          dnsmasq    0    NaN
+_source        ssh-agent    0    NaN
+_source       gvfsd-fuse    0    NaN
+_source  indicator-sound    0    NaN
+_source  indicator-print    0    NaN
+_source  indicator-sessi    0    NaN
+_source       notify-osd    0    NaN
+_source  gvfs-udisks2-vo    0    NaN
+...                  ...  ...    ...
+_source         rcuos/36    0   root
+_source         rcuos/37    0   root
+_source         rcuos/42    0   root
+_source         rcuos/46    0   root
+_source         rcuos/51    0   root
+_source         rcuos/65    0   root
+_source         rcuos/66    0   root
+_source         rcuos/78    0   root
+_source         rcuos/92    0   root
+_source         rcuos/96    0   root
+_source         rcuos/99    0   root
+_source           compiz  2.9  gymic
+_source  polkit-gnome-au    0  gymic
+_source  gvfs-afc-volume    0  gymic
+_source            cupsd    0   root
+_source  telepathy-indic    0  gymic
+_source  unity-scope-loa  0.1  gymic
+_source  unity-files-dae    0  gymic
+_source  gnome-pty-helpe    0  gymic
+_source   kworker/u256:0    0   root
+_source               sh    0   root
+_source          rcuos/3    0   root
+_source          rcuos/6    0   root
+_source         rcuos/11    0   root
+_source         rcuos/14    0   root
+_source         rcuos/17    0   root
+_source         rcuos/27    0   root
+_source         rcuos/37    0   root
+_source         rcuos/41    0   root
+_source         rcuos/44    0   root
+
+[10000 rows x 3 columns]
+>>> df1.head()
+        UserProcesses.ProcessName UserProcesses.CPU UserProcesses.USER
+_source                  rcuob/44                 0                NaN
+_source                  rcuob/53                 0                NaN
+_source                  rcuob/55                 0                NaN
+_source                  rcuob/56                 0                NaN
+_source                  rcuob/58                 0                NaN
+>>> df1 = df1.rename(index=str, columns={'UserProcesses.USER': "User", "UserProcesses.ProcessName": "ProcessName", "UserProcesses.CPU": "CPU"})
+>>> df1.head()
+        ProcessName CPU User
+_source    rcuob/44   0  NaN
+_source    rcuob/53   0  NaN
+_source    rcuob/55   0  NaN
+_source    rcuob/56   0  NaN
+_source    rcuob/58   0  NaN
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df1[df1.USER != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#35>", line 1, in <module>
+    df1[df1.USER != "NaN"]
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 5067, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'USER'
+>>> df1.columns
+Index([u'ProcessName', u'CPU', u'User'], dtype='object')
+>>> df1.drop(df1.loc[df1['USER'] == 'NaN'])
+
+Traceback (most recent call last):
+  File "<pyshell#37>", line 1, in <module>
+    df1.drop(df1.loc[df1['USER'] == 'NaN'])
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2927, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 2659, in get_loc
+    return self._engine.get_loc(self._maybe_cast_indexer(key))
+  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 132, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1601, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\_libs\hashtable_class_helper.pxi", line 1608, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'USER'
+>>> df1[df1.User != "NaN"]
+             ProcessName  CPU   User
+_source         rcuob/44    0    NaN
+_source         rcuob/53    0    NaN
+_source         rcuob/55    0    NaN
+_source         rcuob/56    0    NaN
+_source         rcuob/58    0    NaN
+_source         rcuob/60    0    NaN
+_source         rcuob/61    0    NaN
+_source         rcuob/62    0    NaN
+_source         rcuob/66    0    NaN
+_source         rcuob/68    0    NaN
+_source         rcuob/74    0    NaN
+_source         rcuob/81    0    NaN
+_source         rcuob/83    0    NaN
+_source         rcuob/84    0    NaN
+_source        rcuob/100    0    NaN
+_source        rcuob/106    0    NaN
+_source        rcuob/110    0    NaN
+_source        rcuob/112    0    NaN
+_source   NetworkManager    0    NaN
+_source             cron    0    NaN
+_source             Xorg  1.5    NaN
+_source            acpid    0    NaN
+_source          dnsmasq    0    NaN
+_source        ssh-agent    0    NaN
+_source       gvfsd-fuse    0    NaN
+_source  indicator-sound    0    NaN
+_source  indicator-print    0    NaN
+_source  indicator-sessi    0    NaN
+_source       notify-osd    0    NaN
+_source  gvfs-udisks2-vo    0    NaN
+...                  ...  ...    ...
+_source         rcuos/36    0   root
+_source         rcuos/37    0   root
+_source         rcuos/42    0   root
+_source         rcuos/46    0   root
+_source         rcuos/51    0   root
+_source         rcuos/65    0   root
+_source         rcuos/66    0   root
+_source         rcuos/78    0   root
+_source         rcuos/92    0   root
+_source         rcuos/96    0   root
+_source         rcuos/99    0   root
+_source           compiz  2.9  gymic
+_source  polkit-gnome-au    0  gymic
+_source  gvfs-afc-volume    0  gymic
+_source            cupsd    0   root
+_source  telepathy-indic    0  gymic
+_source  unity-scope-loa  0.1  gymic
+_source  unity-files-dae    0  gymic
+_source  gnome-pty-helpe    0  gymic
+_source   kworker/u256:0    0   root
+_source               sh    0   root
+_source          rcuos/3    0   root
+_source          rcuos/6    0   root
+_source         rcuos/11    0   root
+_source         rcuos/14    0   root
+_source         rcuos/17    0   root
+_source         rcuos/27    0   root
+_source         rcuos/37    0   root
+_source         rcuos/41    0   root
+_source         rcuos/44    0   root
+
+[10000 rows x 3 columns]
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df1[df1.User != ""]
+             ProcessName  CPU   User
+_source         rcuob/44    0    NaN
+_source         rcuob/53    0    NaN
+_source         rcuob/55    0    NaN
+_source         rcuob/56    0    NaN
+_source         rcuob/58    0    NaN
+_source         rcuob/60    0    NaN
+_source         rcuob/61    0    NaN
+_source         rcuob/62    0    NaN
+_source         rcuob/66    0    NaN
+_source         rcuob/68    0    NaN
+_source         rcuob/74    0    NaN
+_source         rcuob/81    0    NaN
+_source         rcuob/83    0    NaN
+_source         rcuob/84    0    NaN
+_source        rcuob/100    0    NaN
+_source        rcuob/106    0    NaN
+_source        rcuob/110    0    NaN
+_source        rcuob/112    0    NaN
+_source   NetworkManager    0    NaN
+_source             cron    0    NaN
+_source             Xorg  1.5    NaN
+_source            acpid    0    NaN
+_source          dnsmasq    0    NaN
+_source        ssh-agent    0    NaN
+_source       gvfsd-fuse    0    NaN
+_source  indicator-sound    0    NaN
+_source  indicator-print    0    NaN
+_source  indicator-sessi    0    NaN
+_source       notify-osd    0    NaN
+_source  gvfs-udisks2-vo    0    NaN
+...                  ...  ...    ...
+_source         rcuos/36    0   root
+_source         rcuos/37    0   root
+_source         rcuos/42    0   root
+_source         rcuos/46    0   root
+_source         rcuos/51    0   root
+_source         rcuos/65    0   root
+_source         rcuos/66    0   root
+_source         rcuos/78    0   root
+_source         rcuos/92    0   root
+_source         rcuos/96    0   root
+_source         rcuos/99    0   root
+_source           compiz  2.9  gymic
+_source  polkit-gnome-au    0  gymic
+_source  gvfs-afc-volume    0  gymic
+_source            cupsd    0   root
+_source  telepathy-indic    0  gymic
+_source  unity-scope-loa  0.1  gymic
+_source  unity-files-dae    0  gymic
+_source  gnome-pty-helpe    0  gymic
+_source   kworker/u256:0    0   root
+_source               sh    0   root
+_source          rcuos/3    0   root
+_source          rcuos/6    0   root
+_source         rcuos/11    0   root
+_source         rcuos/14    0   root
+_source         rcuos/17    0   root
+_source         rcuos/27    0   root
+_source         rcuos/37    0   root
+_source         rcuos/41    0   root
+_source         rcuos/44    0   root
+
+[9728 rows x 3 columns]
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df1 = df1[df1.User != "NaN"]
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df1 = df1[df1.User != ""]
+>>> df1.count()
+ProcessName    9728
+CPU            9728
+User           8999
+dtype: int64
+>>> df1 = df[[u'UserProcesses.ProcessName', u'UserProcesses.CPU', u'UserProcesses.USER']].copy()
+>>> df1 = df1.rename(index=str, columns={'UserProcesses.USER': "User", "UserProcesses.ProcessName": "ProcessName", "UserProcesses.CPU": "CPU"})
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> ddf1[df1.User != "NaN"]
+
+Traceback (most recent call last):
+  File "<pyshell#49>", line 1, in <module>
+    ddf1[df1.User != "NaN"]
+NameError: name 'ddf1' is not defined
+>>> df2 = df1[df1.User != "None"]
+>>> df2.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df2 = df1[df1.User != " "]
+>>> df2.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df2 = df1[df1.User != ' ']
+>>> df2.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df2 = df1[df1.User != '']
+>>> df2.count()
+ProcessName    9728
+CPU            9728
+User           8999
+dtype: int64
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>>
+>>> df2 = df1[df1.User != "Nan"]
+>>> df2.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df1.count()
+ProcessName    10000
+CPU            10000
+User            9271
+dtype: int64
+>>> df2 = df1[df1.User.notnull()]
+>>> df2.count()
+ProcessName    9271
+CPU            9271
+User           9271
+dtype: int64
+>>> df2.head()
+          ProcessName  CPU   User
+_source       dnsmasq  0.1
+_source       lightdm    0
+_source  rtkit-daemon  0.5  rtkit
+_source          init    0
+_source   dbus-daemon  0.1  gymic
+>>> df2 = df1[df1.User.nonzero()]
+
+Warning (from warnings module):
+  File "__main__", line 2
+FutureWarning: Series.nonzero() is deprecated and will be removed in a future version.Use Series.to_numpy().nonzero() instead
+
+Traceback (most recent call last):
+  File "<pyshell#66>", line 1, in <module>
+    df2 = df1[df1.User.nonzero()]
+  File "D:\Python27\lib\site-packages\pandas\core\frame.py", line 2927, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 2657, in get_loc
+    return self._engine.get_loc(key)
+  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\_libs\index.pyx", line 110, in pandas._libs.index.IndexEngine.get_loc
+TypeError: '(array([   0,    1,    2, ..., 9997, 9998, 9999], dtype=int64),)' is an invalid key
+>>> df2.count()
+ProcessName    9271
+CPU            9271
+User           9271
+dtype: int64
+>>> df3 = df2[df2.User != ""]
+>>> df3.count()
+ProcessName    8999
+CPU            8999
+User           8999
+dtype: int64
+>>> df3.head()
+             ProcessName  CPU   User
+_source     rtkit-daemon  0.5  rtkit
+_source      dbus-daemon  0.1  gymic
+_source  indicator-bluet    0  gymic
+_source  indicator-datet  0.3  gymic
+_source  gvfs-udisks2-vo    0  gymic
+>>> df3.loc[df1['ProcessName'] == 'xmrig']
+
+Traceback (most recent call last):
+  File "<pyshell#71>", line 1, in <module>
+    df3.loc[df1['ProcessName'] == 'xmrig']
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1500, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1869, in _getitem_axis
+    return self._getbool_axis(key, axis=axis)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1515, in _getbool_axis
+    key = check_bool_indexer(labels, key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 2483, in check_bool_indexer
+    result = result.reindex(ax)
+  File "D:\Python27\lib\site-packages\pandas\core\series.py", line 3738, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 4356, in reindex
+    fill_value, copy).__finalize__(self)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 4369, in _reindex_axes
+    tolerance=tolerance, method=method)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 3140, in reindex
+    indexer, missing = self.get_indexer_non_unique(target)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 4444, in get_indexer_non_unique
+    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)
+  File "pandas\_libs\index.pyx", line 335, in pandas._libs.index.IndexEngine.get_indexer_non_unique
+  File "D:\Python27\lib\site-packages\numpy\core\fromnumeric.py", line 1320, in resize
+    a = concatenate((a,) * n_copies)
+KeyboardInterrupt
+
+>>> df3.loc[df1['ProcessName'] == 'sh']
+
+Traceback (most recent call last):
+  File "<pyshell#72>", line 1, in <module>
+    df3.loc[df1['ProcessName'] == 'sh']
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1500, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1869, in _getitem_axis
+    return self._getbool_axis(key, axis=axis)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 1515, in _getbool_axis
+    key = check_bool_indexer(labels, key)
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 2483, in check_bool_indexer
+    result = result.reindex(ax)
+  File "D:\Python27\lib\site-packages\pandas\core\series.py", line 3738, in reindex
+    return super(Series, self).reindex(index=index, **kwargs)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 4356, in reindex
+    fill_value, copy).__finalize__(self)
+  File "D:\Python27\lib\site-packages\pandas\core\generic.py", line 4369, in _reindex_axes
+    tolerance=tolerance, method=method)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 3140, in reindex
+    indexer, missing = self.get_indexer_non_unique(target)
+  File "D:\Python27\lib\site-packages\pandas\core\indexes\base.py", line 4444, in get_indexer_non_unique
+    indexer, missing = self._engine.get_indexer_non_unique(tgt_values)
+  File "pandas\_libs\index.pyx", line 335, in pandas._libs.index.IndexEngine.get_indexer_non_unique
+  File "D:\Python27\lib\site-packages\numpy\core\fromnumeric.py", line 1320, in resize
+    a = concatenate((a,) * n_copies)
+KeyboardInterrupt
+>>> df4 = df3[:1000]
+>>> df4.count()
+ProcessName    1000
+CPU            1000
+User           1000
+dtype: int64
+>>> df3.loc[df3['ProcessName'] == 'xmrig']
+        ProcessName  CPU  User
+_source       xmrig  171  root
+_source       xmrig  182  root
+_source       xmrig  0.1  root
+_source       xmrig  190  root
+_source       xmrig  172  root
+_source       xmrig  0.2  root
+_source       xmrig  0.1  root
+_source       xmrig  0.1  root
+_source       xmrig  0.3  root
+_source       xmrig  173  root
+_source       xmrig  0.2  root
+_source       xmrig  0.1  root
+_source       xmrig  0.4  root
+_source       xmrig  0.2  root
+_source       xmrig  0.2  root
+_source       xmrig  0.4  root
+>>> df3['Network'] = 0
+
+Warning (from warnings module):
+  File "__main__", line 2
+SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+>>> df3.head()
+             ProcessName  CPU   User  Network
+_source     rtkit-daemon  0.5  rtkit        0
+_source      dbus-daemon  0.1  gymic        0
+_source  indicator-bluet    0  gymic        0
+_source  indicator-datet  0.3  gymic        0
+_source  gvfs-udisks2-vo    0  gymic        0
+>>> df3['Class'] = 0
+>>> df3.head()
+             ProcessName  CPU   User  Network  Class
+_source     rtkit-daemon  0.5  rtkit        0      0
+_source      dbus-daemon  0.1  gymic        0      0
+_source  indicator-bluet    0  gymic        0      0
+_source  indicator-datet  0.3  gymic        0      0
+_source  gvfs-udisks2-vo    0  gymic        0      0
+>>> res = es.search(index="gymic-usernetstat", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-22h", "lt":"now" } } } })
+>>> dfdf = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> dfdf.count()
+IP                           1675
+UserNetstat.LocalAddress     1675
+UserNetstat.LocalPort        1675
+UserNetstat.PID              1675
+UserNetstat.ProgramName      1675
+UserNetstat.Protocol         1675
+UserNetstat.RemoteAddress    1675
+UserNetstat.RemotePort       1675
+UserNetstat.State            1675
+timestamp                    1675
+dtype: int64
+>>> res = es.search(index="gymic-usernetstat", size=10000, body={"query": {"range": {"timestamp": {"gte":"now-2d", "lt":"now" } } } })
+>>> dfdf = pandas.concat(map(pandas.DataFrame.from_dict, res['hits']['hits']), axis=1)['_source'].T
+>>> dfdf.count()
+IP                           3966
+UserNetstat.LocalAddress     3966
+UserNetstat.LocalPort        3966
+UserNetstat.PID              3966
+UserNetstat.ProgramName      3966
+UserNetstat.Protocol         3966
+UserNetstat.RemoteAddress    3966
+UserNetstat.RemotePort       3966
+UserNetstat.State            3966
+timestamp                    3966
+dtype: int64
+>>> dfdf1 = dfdf[[u'UserNetstat.ProgramName', u'UserNetstat.RemoteAddress', u'UserNetstat.RemotePort']].copy()
+>>> dfdf1.count()
+UserNetstat.ProgramName      3966
+UserNetstat.RemoteAddress    3966
+UserNetstat.RemotePort       3966
+dtype: int64
+>>> dfdf1.head()
+        UserNetstat.ProgramName  ... UserNetstat.RemotePort
+_source                       -  ...                   1234
+_source                       -  ...                   1234
+_source                       -  ...                   1234
+_source                   cupsd  ...                      *
+_source            cups-browsed  ...                      *
+
+[5 rows x 3 columns]
+>>> dfdf1 = dfdf[[u'UserNetstat.ProgramName', u'UserNetstat.RemotePort']].copy()
+>>> dfdf1.head()
+        UserNetstat.ProgramName UserNetstat.RemotePort
+_source                       -                   1234
+_source                       -                   1234
+_source                       -                   1234
+_source                   cupsd                      *
+_source            cups-browsed                      *
+>>> dfdf1 = dfdf1.rename(index=str, columns={'UserNetstat.ProgramName': "Name", "UserNetstat.RemotePort": "Port"})
+>>> dfdf1.head()
+                 Name  Port
+_source             -  1234
+_source             -  1234
+_source             -  1234
+_source         cupsd     *
+_source  cups-browsed     *
+>>> dfdf2 = dfdf2[dfdf2.Name != "-"]
+
+Traceback (most recent call last):
+  File "<pyshell#93>", line 1, in <module>
+    dfdf2 = dfdf2[dfdf2.Name != "-"]
+NameError: name 'dfdf2' is not defined
+>>> dfdf2 = dfdf1[dfdf1.Name != "-"]
+>>> dfdf2.count()
+Name    978
+Port    978
+dtype: int64
+>>> dfdf2.head()
+                  Name Port
+_source          cupsd    *
+_source   cups-browsed    *
+_source  avahi-daemon:    *
+_source  avahi-daemon:    *
+_source        dnsmasq    *
+>>> for index, row in dfdf2[:10].iterrows():
+	print row['Name']
+
+
+cupsd
+cups-browsed
+avahi-daemon:
+avahi-daemon:
+dnsmasq
+avahi-daemon:
+dhclient
+cupsd
+127.0.1.1:53
+dhclient
+>>> for index, row in dfdf2[:10].iterrows():
+	print row['Name'].replace(":", "")
+
+
+cupsd
+cups-browsed
+avahi-daemon
+avahi-daemon
+dnsmasq
+avahi-daemon
+dhclient
+cupsd
+127.0.1.153
+dhclient
+>>> for index, row in dfdf2.iterrows():
+	df3.loc[df3['ProcessName'] == row['Name'].replace(":", ""), 'Network'] = 1
+
+
+
+Warning (from warnings module):
+  File "D:\Python27\lib\site-packages\pandas\core\indexing.py", line 543
+    self.obj[item] = s
+SettingWithCopyWarning:
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+>>> df3.loc[df3['Network'] == '1']
+
+Warning (from warnings module):
+  File "D:\Python27\lib\site-packages\pandas\core\ops.py", line 1649
+    result = method(y)
+FutureWarning: elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+Empty DataFrame
+Columns: [ProcessName, CPU, User, Network, Class]
+Index: []
+>>> df3.loc[df3['Network'] == 1]
+          ProcessName  CPU    User  Network  Class
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source      dhclient  0.1    root        1      0
+_source         xmrig  171    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source       dnsmasq  0.2  nobody        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source      dhclient    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source  cups-browsed    0    root        1      0
+_source  cups-browsed    0    root        1      0
+_source       dnsmasq    0  nobody        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source         xmrig  182    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source      dhclient    0    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source      dhclient    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source      dhclient    0    root        1      0
+_source         xmrig  0.1    root        1      0
+_source      dhclient    0    root        1      0
+...               ...  ...     ...      ...    ...
+_source         xmrig  0.2    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source  cups-browsed    0    root        1      0
+_source      dhclient    0    root        1      0
+_source      dhclient    0    root        1      0
+_source      dhclient    0    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source         cupsd    0    root        1      0
+_source       dnsmasq    0  nobody        1      0
+_source      dhclient  0.5    root        1      0
+_source         cupsd    0    root        1      0
+_source         xmrig  0.4    root        1      0
+_source         cupsd    0    root        1      0
+_source         cupsd    0    root        1      0
+_source  cups-browsed    0    root        1      0
+_source       dnsmasq  0.1  nobody        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source         cupsd    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source  cups-browsed    0    root        1      0
+_source         cupsd    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source         cupsd    0    root        1      0
+_source  cups-browsed    0    root        1      0
+_source  avahi-daemon    0   avahi        1      0
+_source         cupsd    0    root        1      0
+
+[133 rows x 5 columns]
+>>> df3.to_pickle(r"D:\Projects\GYMIC\GYMIC-Server\ML_Files\ProcDataFrame")
+>>>

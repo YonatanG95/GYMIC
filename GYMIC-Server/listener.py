@@ -80,7 +80,7 @@ def zmqworker():
                             pass
 
                     elif msg.startswith("gymic_finish_mod"):
-                        compare_modules(output_dict[addr],addr)
+                        compare_modules(output_dict[addr], addr)
 
                     elif msg.startswith("gymic_finish_net"):
                         try:

@@ -63,9 +63,9 @@ void placeback_unlink(void)
 // Modified unlink syscall
 asmlinkage int our_sys_unlink(const char* filename)
 {
-    if (strcmp(filename,"cool.txt") == 0)
+    if (strcmp(filename,"user.o") == 0)
     {
-        printk("%s has tried to remove cool.txt!", current->comm);
+        printk("%s has tried to remove user.o!", current->comm);
         return -1;
     }
 
@@ -126,9 +126,9 @@ void placeback_unlinkat(void)
 // Modified unlink syscall
 asmlinkage int our_sys_unlinkat(int dirfd, const char *pathname, int flags)
 {
-    if (strcmp(pathname,"cool.txt") == 0)
+    if (strcmp(pathname,"user.o") == 0)
     {
-        printk("%s has tried to remove cool.txt!", current->comm);
+        printk("%s has tried to remove user.o!", current->comm);
         return -1;
     }
 

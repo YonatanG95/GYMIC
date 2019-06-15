@@ -6,6 +6,7 @@ from kernel_processes import KernelProcesses
 from user_netstat import UserNetstat
 from user_modules import UserModules
 from kernel_modules import KernelModules
+from sys_modules import SysModules
 
 class Artifact:
     def __init__(self, raw_data, addr):
@@ -34,9 +35,10 @@ class Artifact:
         elif raw_data.startswith("kernelModule"):
             self.artifact_type = KernelModules
             self.artifact_header = "kernelModule"
+        elif raw_data.startswith("sysModule"):
+            self.artifact_type = SysModules
+            self.artifact_header = "sysModule"
         else: self.artifact_type = None
-
-
 
     def parse_to_json(self):
         if self.artifact_type is not None:

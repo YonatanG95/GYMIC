@@ -76,7 +76,6 @@ void read_event(int sock)
 	
 	if(type == 1)
 	{
-		getUserProcesses();
 		
 		//sendOverSocket("", header);
 		char kernProcTag[16] = "kernelProcesses";
@@ -84,6 +83,7 @@ void read_event(int sock)
 		char footer[7] = "EndData";
 		sendOverSocket("", footer);
 		sleep(1);
+		getUserProcesses();
 		//sendOverSocket("", header);
 		char finishProc[7] = "finish";
 		char finishProcTag[19] = "gymic_finish_proc";
@@ -200,7 +200,7 @@ int* getUserProcesses(void)
 	memset(buf1234, 0 , sizeof(buf1234));
    	int* prolist[65536];
 	char userProcTag[12] = "userProcess";
-	in2=popen("ps -Ao pid:1,\%cpu:1,comm", "r");
+	in2=popen("ps -Ao pid:1,\%cpu:1,comm,user", "r");
 	int i = 0;
 	for(i = 0; i < 65536; i++)
 	{
@@ -308,11 +308,12 @@ void sendOverSocket(char* data, char* tag)
 
 int socketForMemdump()
 {
-	dumpPeriod = dumpPeriod + 0.5;
-	if (dumpPeriod < 15)
-    {
+	//Change to activate / deactivate memory dump
+	dumpPeriod = dumpPeriod + 0;
+	if (dumpPeriod < 15000000)
+   	{
         return 0;
-    }
+    	}
 	int socket_desc , client_sock, c , read_size;
 	struct sockaddr_in server , client;
 	char client_message[10];

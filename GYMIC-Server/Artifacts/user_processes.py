@@ -7,15 +7,17 @@ class UserProcesses:
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_processes = []
-        raw_str = raw_data.strip("userProcessPID %CPU COMMAND\n").strip("<defunct>")
+        raw_str = raw_data.strip("userProcessPID %CPU COMMAND USER\n").replace("<defunct>", "")
         raw_lines = raw_str.split("\n")
         for line in raw_lines:
-            temp_line=line.split(" ")
+            temp_line = (" ".join(line.split())).split(" ")
+            #print temp_line
             name = temp_line[2]
             cpu = float(temp_line[1])
             pid = temp_line[0]
+            user = temp_line[3]
             if name is not None:
-                parsed_user_processes.append((pid, cpu, name))
+                parsed_user_processes.append((pid, cpu, name, user))
         return parsed_user_processes
 
     @staticmethod
@@ -24,13 +26,16 @@ class UserProcesses:
         for line in parsed_data:
 
             try:
-                name = line[-1]
-                cpu = line[-2]
+                pid = line[0]
+                name = line[2]
+                cpu = line[1]
+                user = line[3]
                 doc = {"timestamp": datetime.utcnow(),
                        "IP": addr,
-                       "UserProccesess.PID": line[0],
+                       "UserProccesess.PID": pid,
                        "UserProcesses.ProcessName": name,
-                       "UserProcesses.CPU": cpu}
+                       "UserProcesses.CPU": cpu,
+                       "UserProcesses.USER": user}
 
                 # Connection successful
                 es_util.send_to_elastic("gymic-userprocesses", "UserProcesses", doc)
