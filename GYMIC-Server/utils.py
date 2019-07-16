@@ -5,6 +5,7 @@ from datetime import datetime
 from conf import LIME_PORT
 from elastic_util import ElasticUtil
 
+# Receive dump from client
 def recv_dump(ip):
 
     try:

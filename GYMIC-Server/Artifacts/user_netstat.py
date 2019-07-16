@@ -2,8 +2,10 @@ from datetime import datetime
 
 from elastic_util import ElasticUtil
 
+# Dedicated Class for user mode network data
 class UserNetstat:
 
+    # Parse user mode network data
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_connections = []
@@ -39,6 +41,7 @@ class UserNetstat:
             parsed_user_connections.append((protocol, local_addr, local_port, remote_addr, remote_port, state, pid, prog_name))
         return parsed_user_connections
 
+    # Send parsed network data to elastic
     @staticmethod
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()

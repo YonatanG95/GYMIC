@@ -2,8 +2,10 @@ from datetime import datetime
 
 from elastic_util import ElasticUtil
 
+# Dedicated Class for user mode threads
 class UserThreads:
 
+    # Parse user mode threads data
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_threads = []
@@ -15,6 +17,7 @@ class UserThreads:
                 parsed_user_threads.append((temp_line[0],temp_line[-1]))
         return parsed_user_threads
 
+    # Send parsed threads to elastic
     @staticmethod
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()

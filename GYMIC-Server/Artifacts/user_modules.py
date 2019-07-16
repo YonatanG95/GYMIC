@@ -2,8 +2,10 @@ from datetime import datetime
 
 from elastic_util import ElasticUtil
 
+# Dedicated Class for user mode modules
 class UserModules:
 
+    # Parse user mode modules data
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_modules = []
@@ -15,6 +17,7 @@ class UserModules:
                 parsed_user_modules.append(temp_line[0])
         return parsed_user_modules
 
+    # Send parsed modules to elastic
     @staticmethod
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()

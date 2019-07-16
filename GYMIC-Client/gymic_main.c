@@ -53,8 +53,11 @@ static const struct file_operations gymic_main_fops= {
 	.owner				= THIS_MODULE,
 };
 
+
+//start of main
 static int __init gymic_main_init(void)
 {
+    //variable declaration and load module
 	int i;
 	int res;
 	
@@ -99,10 +102,12 @@ static int __init gymic_main_init(void)
 		{
 			printk(KERN_INFO "Unable to replace unlinkat.");
 		}
-	}	
+	}
+	//start of infinite loop of the driver functions
 	for(;;)
 	{
 		PINFO("Send Again");
+		//checks if threads mode is activated and retrieve accordingly
 		if (threads)
 		{
 			char* threadsArr = kcalloc(65536, 1, GFP_KERNEL);
@@ -111,6 +116,7 @@ static int __init gymic_main_init(void)
 			send_to_user(threadsArr);
 			kfree(threadsArr);
 		}
+	//checks if processes mode is activated and retrieve accordingly
 	if (processes)
 	{
 		char* processesArr = kcalloc(65536, 1, GFP_KERNEL);
@@ -119,6 +125,7 @@ static int __init gymic_main_init(void)
 		send_to_user(processesArr);
 		kfree(processesArr);
 	}
+	    //checks if modules mode is activated and retrieve accordingly
 		if (modules)
 		{
 			char* modulesArr = kcalloc(65536, 1, GFP_KERNEL);
