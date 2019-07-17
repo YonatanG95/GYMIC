@@ -3,21 +3,45 @@ from user_threads import UserThreads
 from kernel_threads import KernelThreads
 from user_processes import UserProcesses
 from kernel_processes import KernelProcesses
+from user_netstat import UserNetstat
+from user_modules import UserModules
+from kernel_modules import KernelModules
+from sys_modules import SysModules
 
+# Global class for all data type
 class Artifact:
     def __init__(self, raw_data, addr):
         self.addr = addr
         self.raw_data = raw_data
         self.parsed_data = ""
-
-        if raw_data.startswith("userThreads"): self.artifact_type = UserThreads
-        elif raw_data.startswith("kernelThreads"): self.artifact_type = KernelThreads
-        elif raw_data.startswith("userProcess"): self.artifact_type = UserProcesses
-        elif raw_data.startswith("kernelProcesses"): self.artifact_type = KernelProcesses
+        # Determine and define artifact type based on data
+        if raw_data.startswith("userThreads"):
+            self.artifact_type = UserThreads
+            self.artifact_header = "userThreads"
+        elif raw_data.startswith("kernelThreads"):
+            self.artifact_type = KernelThreads
+            self.artifact_header = "kernelThreads"
+        elif raw_data.startswith("userProcess"):
+            self.artifact_type = UserProcesses
+            self.artifact_header = "userProcess"
+        elif raw_data.startswith("kernelProcesses"):
+            self.artifact_type = KernelProcesses
+            self.artifact_header = "kernelProcesses"
+        elif raw_data.startswith("userNetwork"):
+            self.artifact_type = UserNetstat
+            self.artifact_header = "userNetwork"
+        elif raw_data.startswith("userModule"):
+            self.artifact_type = UserModules
+            self.artifact_header = "userModule"
+        elif raw_data.startswith("kernelModule"):
+            self.artifact_type = KernelModules
+            self.artifact_header = "kernelModule"
+        elif raw_data.startswith("sysModule"):
+            self.artifact_type = SysModules
+            self.artifact_header = "sysModule"
         else: self.artifact_type = None
 
-
-
+    # Parse the data to json with a specified function based on his type
     def parse_to_json(self):
         if self.artifact_type is not None:
             try:
@@ -41,10 +65,10 @@ class Artifact:
         print "json dumps worked"
         """
         
-
+    # Send parsed data to elastic
     def send_to_elastic(self):
         if self.artifact_type is not None:
             self.artifact_type.send_to_elastic(self.parsed_data, self.addr)
-
+    # Add new data
     def append_data(self, new_data):
         self.raw_data += new_data

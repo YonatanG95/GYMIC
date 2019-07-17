@@ -7,13 +7,16 @@
 
 struct sock *nl_sk = NULL;
 
+// Send data from the kernel to the user
 void send_to_user(char *msg)
 {
+    // Variables initialization
     struct sk_buff *skb;
     struct nlmsghdr *nlh;
     int msg_size = strlen(msg) + 1;
     int res;
 
+    // Creating skb
     pr_info("Creating skb.\n");
     skb = nlmsg_new(NLMSG_ALIGN(msg_size + 1), GFP_KERNEL);
     if (!skb) {
@@ -21,9 +24,11 @@ void send_to_user(char *msg)
         return;
     }
 
+    //copy msg to skb
     nlh = nlmsg_put(skb, 0, 1, NLMSG_DONE, msg_size + 1, 0);
     strcpy(nlmsg_data(nlh), msg);
 
+    // Sending skb
     pr_info("Sending skb.\n");
     res = nlmsg_multicast(nl_sk, skb, 0, MYGRP, GFP_KERNEL);
     if (res < 0)
@@ -32,6 +37,7 @@ void send_to_user(char *msg)
         pr_info("Success.\n");
 }
 
+// Create netlink
 int createNetlink(void)
 {
     pr_info("Inserting hello module.\n");
@@ -48,6 +54,7 @@ int createNetlink(void)
     return 0;
 }
 
+// Release netlink
 int releaseNetlink(void)
 {
 	netlink_kernel_release(nl_sk);	

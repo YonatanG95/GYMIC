@@ -5,6 +5,7 @@ from datetime import datetime
 from conf import LIME_PORT
 from elastic_util import ElasticUtil
 
+# Receive dump from client
 def recv_dump(ip):
 
     try:
@@ -12,7 +13,7 @@ def recv_dump(ip):
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
         output_path = os.path.join(output_dir, datetime.now().strftime("%Y-%m-%d %H-%M-%S") + " - " + ip + ".lime")
-        with open(output_path, 'w') as out:
+        with open(output_path, 'wb') as out:
             try:
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect((ip, LIME_PORT))
