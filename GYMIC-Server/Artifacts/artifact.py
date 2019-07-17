@@ -8,12 +8,13 @@ from user_modules import UserModules
 from kernel_modules import KernelModules
 from sys_modules import SysModules
 
+# Global class for all data type
 class Artifact:
     def __init__(self, raw_data, addr):
         self.addr = addr
         self.raw_data = raw_data
         self.parsed_data = ""
-
+        # Determine and define artifact type based on data
         if raw_data.startswith("userThreads"):
             self.artifact_type = UserThreads
             self.artifact_header = "userThreads"
@@ -40,6 +41,7 @@ class Artifact:
             self.artifact_header = "sysModule"
         else: self.artifact_type = None
 
+    # Parse the data to json with a specified function based on his type
     def parse_to_json(self):
         if self.artifact_type is not None:
             try:
@@ -63,10 +65,10 @@ class Artifact:
         print "json dumps worked"
         """
         
-
+    # Send parsed data to elastic
     def send_to_elastic(self):
         if self.artifact_type is not None:
             self.artifact_type.send_to_elastic(self.parsed_data, self.addr)
-
+    # Add new data
     def append_data(self, new_data):
         self.raw_data += new_data

@@ -21,7 +21,7 @@ mlModel = None
 lableEncoderProc = None
 lableEncoderUser = None
 
-
+# Compare processes from user and kernel and send the differences to elastic
 def compare_proc(artifacts_list, addr):
 
     print "Compare processes"
@@ -54,9 +54,6 @@ def compare_proc(artifacts_list, addr):
         print "diff prev: " + str(len(diff_list))
 
         # Delete from the diff list procceses that we know that suppose to be there
-        #for proc in diff_list:
-        #    if proc[-1] in irelevant_processes or proc[-1] == '':
-        #        diff_list.remove(proc)
         for proc in list(diff_list):
             if proc[1] != '':
                 for p in irelevant_processes:
@@ -70,7 +67,7 @@ def compare_proc(artifacts_list, addr):
         print "diff new: " + str(len(diff_list))
         #if not is_dumped:
 
-            # Creating a socket so the server will memdump the workstation
+        # Creating a socket so the server will memdump the workstation if the list isn't empty
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((addr, LIME_PORT))
@@ -85,6 +82,8 @@ def compare_proc(artifacts_list, addr):
         except:
             pass
 
+        # Send the list to elastic with the information of which list the process was found
+        # and which list the process was missing
         es_util = ElasticUtil()
 
         for tup in diff_list:
@@ -121,7 +120,7 @@ def compare_proc(artifacts_list, addr):
 
 
 
-
+# Compare threads from user and kernel and send the differences to elastic
 def compare_threads(artifacts_list, addr):
     print "Compare threads"
     try:
@@ -135,7 +134,11 @@ def compare_threads(artifacts_list, addr):
         list1 = artifacts_list["userThreads"].parsed_data
         list2 = artifacts_list["kernelThreads"].parsed_data
 
+        # Get a list of threads that are not in both lists
         diff_list = [i for i in list1 + list2 if i not in list1 or i not in list2]
+
+        # Send the list to elastic with the information of which list the thread was found
+        # and which list the thread was missing
         es_util = ElasticUtil()
         if len(diff_list) != 0:
             for tup in diff_list:
@@ -165,31 +168,12 @@ def compare_threads(artifacts_list, addr):
         es = ElasticUtil()
         es.log_error("CompareThread Error: " + e.message)
 
-
+# Compare modules from all the different sources and send the differences to elastic
 def compare_modules(artifacts_list, addr):
 
     print "Compare modules"
     try:
 
-        list3 = list2 = list1 = []
-        #global is_dumped
-        # timeout = 0
-        # while (len(list1) == 0 or len(list2) == 0) and timeout != 10:
-        #     for artifact in artifacts_list:
-        #         if artifact.artifact_type is UserModules and len(list1) == 0:
-        #             list1 = artifact.parsed_data
-        #         elif artifact.artifact_type is KernelModules and len(list2) == 0:
-        #             list2 = artifact.parsed_data
-        #     sleep(1)
-        #     timeout += 1
-        #
-        # if timeout == 10:
-        #     es = ElasticUtil()
-        #     if len(list1) == 0:
-        #         es.log_error("CompareModule TimeOutError: UserModules not received")
-        #     elif len(list2) == 0:
-        #         es.log_error("CompareModule TimeOutError: KernelModules not received")
-        #
         # Signal to Workstation to not take a dump
         # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # s.connect((addr, LIME_PORT))
@@ -197,6 +181,7 @@ def compare_modules(artifacts_list, addr):
         # s.close()
         # return
 
+        list3 = list2 = list1 = []
         list1 = artifacts_list["userModule"].parsed_data
         list2 = artifacts_list["kernelModule"].parsed_data
         list3 = artifacts_list["sysModule"].parsed_data
@@ -209,6 +194,7 @@ def compare_modules(artifacts_list, addr):
         #if not is_dumped:
         es_util = ElasticUtil()
 
+        # Creating a socket so the server will memdump the workstation if the list isn't empty
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((addr, LIME_PORT))
@@ -222,6 +208,9 @@ def compare_modules(artifacts_list, addr):
                 recv_dump(addr)
         except:
             pass
+
+        # Send the list to elastic with the information of which list the module was found
+        # and which list the module was missing
         for module in diff_list:
             if module:
                 if module.isalpha():

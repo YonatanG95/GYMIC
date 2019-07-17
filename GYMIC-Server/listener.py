@@ -13,7 +13,7 @@ from utils import recv_dump
 # Output dict, Key-Value: IP-Artifacts list
 output_dict = {}
 
-
+# initialize zmqserver
 def zmqserver():
 
     context = zmq.Context()
@@ -36,7 +36,7 @@ def zmqserver():
 
 
 def zmqworker():
-
+    # Initialize worker
     worker_id = random.randrange(1, 10005)
     print "Worker {0} has started.".format(worker_id)
     context = zmq.Context()
@@ -63,11 +63,11 @@ def zmqworker():
                 msg = msg_dic.get("data")
                 addr = msg_dic.get("addr")
                 print "Worker {0} Received request: {1}".format(worker_id, msg)
-                # print "msg: " + msg
                 if msg is not None:
                     # Code for actual work
                     result = {"worker_id" : worker_id, 'data' : msg}
 
+                    # Check the data type and act accordingly (parse and analyze data and send it to elastic)
                     if msg.startswith("gymic_finish_thread"):
                         compare_threads(output_dict[addr], addr)
 
@@ -102,7 +102,6 @@ def zmqworker():
                                     output_dict[addr][artifact.artifact_header] = artifact
                                 except KeyError:
                                     pass
-                                #output_dict.get(addr).append(artifact)
                             else:
                                 output_dict[addr] = {}
                                 output_dict[addr][artifact.artifact_header] = artifact
@@ -113,6 +112,7 @@ def zmqworker():
             es = ElasticUtil()
             es.log_error("ZMQWorker ReceiveError: " + e.message)
 
+# Get the data from tcp server and send in to zmqserver
 def zmqsender(msg):
 
     try:
@@ -125,9 +125,11 @@ def zmqsender(msg):
         es = ElasticUtil()
         es.log_error("ZMQSender SendError: " + e.message)
 
+# Initialize the tcp server to receive the data from the clients and pass is to zmqserver
 def tcpserver():
 
     try:
+        # Initialize server
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind((TCP_SERVER_IP, TCP_SERVER_PORT))
         sock.listen(10)
@@ -136,6 +138,7 @@ def tcpserver():
         es.log_error("TCPServer BindError: " + e.message)
 
     completed = ""
+    # Infinite loop to receive data from clients
     while True:
         conn, addr = sock.accept()
         try:
@@ -144,10 +147,8 @@ def tcpserver():
                 completed = completed + data
 
                 if "End" in completed:
-                    #if(completed[completed.find("headerTag") + 9 :completed.find("End")] != ""):
-                #       msg = {"data": completed[completed.find("headerTag") + 9:completed.find("End")], "addr": addr[0]}
                     msg = {"data": completed[:completed.find("End")], "addr": addr[0]}
-                    #msg = {"data": data, "addr": addr[0]}
+                    # Send the data to zmqserver
                     zmqsender(json.dumps(msg))
                     completed = completed[completed.find("End") + 7:]
 
@@ -158,13 +159,12 @@ def tcpserver():
             es = ElasticUtil()
             es.log_error("TCPServer ReceiveError: " + e.message)
 
-        # finally:
-        #     conn.close()
 
 
 def main():
 
     try:
+        # initializing zmqserver and workers and their function
         thread_zmqserver = threading.Thread(target=zmqserver)
         thread_zmqserver.daemon = True
         thread_zmqserver.start()

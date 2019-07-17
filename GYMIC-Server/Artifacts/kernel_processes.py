@@ -2,8 +2,10 @@ from datetime import datetime
 
 from elastic_util import ElasticUtil
 
+# Dedicated Class for kernel mode processes
 class KernelProcesses:
 
+    # Parse kernel mode processes data
     @staticmethod
     def parse_to_json(raw_data):
         parsed_kernel_processes = []
@@ -15,6 +17,7 @@ class KernelProcesses:
                 parsed_kernel_processes.append((temp_line[0],temp_line[-1]))
         return parsed_kernel_processes
 
+    # Send parsed processes to elastic
     @staticmethod
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()

@@ -2,8 +2,10 @@ from datetime import datetime
 
 from elastic_util import ElasticUtil
 
+# Dedicated Class for user mode processes
 class UserProcesses:
 
+    # Parse user mode processes data
     @staticmethod
     def parse_to_json(raw_data):
         parsed_user_processes = []
@@ -21,6 +23,7 @@ class UserProcesses:
                     parsed_user_processes.append((pid, cpu, name, user))
         return parsed_user_processes
 
+    # Send parsed processes to elastic
     @staticmethod
     def send_to_elastic(parsed_data, addr):
         es_util = ElasticUtil()
