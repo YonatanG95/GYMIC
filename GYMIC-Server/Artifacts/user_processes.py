@@ -11,13 +11,14 @@ class UserProcesses:
         raw_lines = raw_str.split("\n")
         for line in raw_lines:
             temp_line = (" ".join(line.split())).split(" ")
-            #print temp_line
-            name = temp_line[2]
-            cpu = float(temp_line[1])
-            pid = temp_line[0]
-            user = temp_line[3]
-            if name is not None:
-                parsed_user_processes.append((pid, cpu, name, user))
+            if len(temp_line) > 3:
+                #print temp_line
+                name = temp_line[2]
+                cpu = float(temp_line[1])
+                pid = temp_line[0]
+                user = temp_line[3]
+                if name is not None:
+                    parsed_user_processes.append((pid, cpu, name, user))
         return parsed_user_processes
 
     @staticmethod

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 from time import sleep
 import socket
@@ -220,26 +223,26 @@ def compare_modules(artifacts_list, addr):
         except:
             pass
         for module in diff_list:
-            if not module:
-                break
-            inUser = False
-            inKernel = False
-            inSys = False
-            if module in list1:
-                inUser = True
-            if module in list2:
-                inKernel = True
-            if module in list3:
-                inSys = True
-            doc = {"timestamp": datetime.utcnow(),
-                   "IP": addr,
-                   "KernelModules.ModuleName": module,
-                   "inUser:": inUser,
-                   "inKernel:": inKernel,
-                   "inSys:": inSys}
+            if module:
+                if module.isalpha():
+                    inUser = False
+                    inKernel = False
+                    inSys = False
+                    if module in list1:
+                        inUser = True
+                    if module in list2:
+                        inKernel = True
+                    if module in list3:
+                        inSys = True
+                    doc = {"timestamp": datetime.utcnow(),
+                           "IP": addr,
+                           "KernelModules.ModuleName": module,
+                           "inUser:": inUser,
+                           "inKernel:": inKernel,
+                           "inSys:": inSys}
 
-            # Connection successful
-            es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
+                    # Connection successful
+                    es_util.send_to_elastic("gymic-comparemodule", "ModulesCompare", doc)
 
     except Exception as e:
         es = ElasticUtil()
@@ -273,17 +276,19 @@ def searchForMiner(artifacts_list, addr):
         # Inspect each process
         for proc in procs:
             if proc[2] != "":
-
                 # Set communication value
                 comm = 50 if proc[2] in netProcs else 0
-                if minerMLMode_inspect(mlModel, lableEncoderProc, lableEncoderUser, proc, comm) == 1:
-                    print "ML FOUND PROC : " + proc[2]
-                    doc = {"timestamp": datetime.utcnow(),
-                           "IP": addr,
-                           "UserProcesses.PID": proc[0],
-                           "UserProcesses.CPU": proc[1],
-                           "UserProcesses.ProcessName": proc[2]}
-                    es_util.send_to_elastic("gymic-miner", "MinerFinder", doc)
+                try:
+                    if minerMLMode_inspect(mlModel, lableEncoderProc, lableEncoderUser, proc, comm) == 1:
+                        print "ML FOUND PROC : " + proc[2]
+                        doc = {"timestamp": datetime.utcnow(),
+                               "IP": addr,
+                               "UserProcesses.PID": proc[0],
+                               "UserProcesses.CPU": proc[1],
+                               "UserProcesses.ProcessName": proc[2]}
+                        es_util.send_to_elastic("gymic-miner", "MinerFinder", doc)
+                except Exception as e:
+                    continue
 
     except Exception as e:
         es = ElasticUtil()
