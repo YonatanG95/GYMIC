@@ -16,6 +16,7 @@
 #include <linux/highmem.h>
 #include "gymic_syscalls.h"
 #include "gymic_process.h"
+#include "gymic_modules.h"
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h> 
